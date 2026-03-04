@@ -46,32 +46,35 @@
       <section id="about">
         <h2>$ about --me</h2>
         <div class="terminal-window reveal-on-scroll">
-          <div class="terminal-content" style="display: flex; gap: 2rem; flex-wrap: wrap;">
-            <div style="flex: 1; min-width: 200px; max-width: 300px; display: flex; flex-direction: column; align-items: center;">
-               <p class="comment">// avatar.bin</p>
-               <div class="profile-frame">
-                 <img src="/profile.jpg" alt="Anna Patricia Vida" onerror="this.src='https://via.placeholder.com/250?text=Upload+Photo+to+/public'" style="width: 100%; height: auto; border: 1px solid var(--primary); filter: grayscale(0.5) contrast(1.2);">
-                 <div class="scanline"></div>
-               </div>
-            </div>
-            <div style="flex: 2; min-width: 300px;">
-              <p class="comment">// developer.object</p>
-              <pre style="color: var(--primary); background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 4px;">
-{
+          <div class="terminal-content">
+            <div class="about-grid">
+              <div class="about-avatar">
+                 <p class="comment">// avatar.bin</p>
+                 <div class="profile-frame">
+                   <img src="/profile.jpg" alt="Anna Patricia Vida" onerror="this.src='https://via.placeholder.com/250?text=Portrait'" style="width: 100%; height: 100%; object-fit: cover; border: 1px solid var(--primary); filter: grayscale(0.5) contrast(1.2);">
+                   <div class="scanline"></div>
+                 </div>
+              </div>
+              <div class="about-details">
+                <p class="comment">// developer.object</p>
+                <div class="code-block">
+                  <pre>{
   "name": "Anna Patricia Bolor Vida",
   "role": "BS Information Technology Student",
   "objective": "Fresh graduate seeking a challenging role in software development. Committed to continuous learning and contributing to meaningful projects."
 }</pre>
-            </div>
-            <div style="flex: 1; min-width: 300px;">
-              <p class="comment">// contact_info.json</p>
-              <ul style="list-style: none;">
-                <li><i class="fas fa-map-marker-alt" style="color: var(--secondary)"></i> No. 61 Palosapis Street, Project 3, Quezon City</li>
-                <li><i class="fas fa-envelope" style="color: var(--secondary)"></i> qapvida01@tip.edu.ph</li>
-                <li><i class="fas fa-envelope" style="color: var(--secondary)"></i> annapatriciavida12@gmail.com</li>
-                <li><i class="fas fa-phone" style="color: var(--secondary)"></i> +63 945 870 9064</li>
-                <li><i class="fas fa-university" style="color: var(--secondary)"></i> TIP QC</li>
-              </ul>
+                </div>
+              </div>
+              <div class="about-contact">
+                <p class="comment">// contact_info.json</p>
+                <ul class="contact-list">
+                  <li><i class="fas fa-map-marker-alt"></i> No. 61 Palosapis Street, Project 3, Quezon City</li>
+                  <li><i class="fas fa-envelope"></i> qapvida01@tip.edu.ph</li>
+                  <li><i class="fas fa-envelope"></i> annapatriciavida12@gmail.com</li>
+                  <li><i class="fas fa-phone"></i> +63 945 870 9064</li>
+                  <li><i class="fas fa-university"></i> TIP QC</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
