@@ -9,24 +9,31 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="/src/style.css" />
+    <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
     <nav>
       <div class="nav-left">
-        <a href="index.html" class="logo">>_ root@apv:~#</a>
-        <div class="breadcrumb"></div>
+        <button class="menu-toggle" id="menu-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <a href="#hero" class="logo">>_ root@apv:~#</a>
+      </div>
+
+      <div class="nav-center" id="nav-menu">
         <div class="nav-items">
-          <a href="about.html">~/about</a>
-          <a href="skills.html">~/skills</a>
-          <a href="projects.html">~/projects</a>
-          <a href="certs.html">~/certs</a>
-          <a href="contact.html">~/contact</a>
+          <a href="#about">~/about</a>
+          <a href="#skills">~/skills</a>
+          <a href="#projects">~/projects</a>
+          <a href="#achievements">~/achievements</a>
+          <a href="#affiliations">~/affiliations</a>
+          <a href="#contact">~/contact</a>
         </div>
       </div>
+
       <div class="nav-right">
         <div class="nav-profile-thumb">
-          <img src="/profile.jpg" alt="Anna Patricia Vida" />
+          <img src="/profile.jpg" alt="Anna Patricia Vida" onerror="this.src='https://via.placeholder.com/35'"/>
         </div>
         <a href="/resume.pdf" target="_blank" class="btn-resume">
           <i class="fas fa-download"></i> ./resume.sh
@@ -82,8 +89,730 @@
               </div>
             </div>
             <div class="cta-group" style="margin-top: 2rem">
-              <a href="projects.html" class="btn-cmd">./execute_projects.sh</a>
-              <a href="contact.html" class="btn-cmd btn-outline">ping --contact</a>
+              <a href="#projects" class="btn-cmd">./execute_projects.sh</a>
+              <a href="#contact" class="btn-cmd btn-outline">ping --contact</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about">
+        <h2>$ about --me</h2>
+
+        <div class="about-grid-top">
+          <!-- Profile Block -->
+          <div class="terminal-window reveal-on-scroll">
+            <div class="terminal-header">
+              <span class="dot"></span><span class="dot"></span
+              ><span class="dot"></span>
+            </div>
+            <div class="terminal-content">
+              <div class="profile-container">
+                <div class="profile-frame">
+                  <img src="/profile.jpg" alt="Anna Patricia Vida" />
+                  <div class="profile-badge">&lt;/&gt;</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Developer Object Block -->
+          <div class="terminal-window reveal-on-scroll">
+            <div class="terminal-header">
+              <span class="dot"></span><span class="dot"></span
+              ><span class="dot"></span>
+            </div>
+            <div class="terminal-content">
+              <div
+                class="code-block"
+                style="border: none; background: transparent; padding: 0"
+              >
+                <p>
+                  <span style="color: #c678dd">const</span>
+                  <span style="color: #61afef">developer</span> = {
+                </p>
+                <div style="padding-left: 20px">
+                  <p>
+                    <span style="color: #61afef">name</span>:
+                    <span style="color: #98c379"
+                      >"Anna Patricia Bolor Vida"</span
+                    >,
+                  </p>
+                  <p>
+                    <span style="color: #61afef">role</span>:
+                    <span style="color: #98c379"
+                      >"BS Information Technology Student"</span
+                    >,
+                  </p>
+                  <p>
+                    <span style="color: #61afef">internship</span>:
+                    <span style="color: #98c379"
+                      >"Ateneo Innovation Center"</span
+                    >,
+                  </p>
+                  <p><span style="color: #61afef">objective</span>: `</p>
+                  <p style="color: #98c379; padding-left: 10px">
+                    Fresh graduate with a Bachelor of Science in Information
+                    Technology seeking a challenging role in software
+                    development. Eager to apply my technical skills, project
+                    experience, and passion for innovation in a professional
+                    environment. Committed to continuous learning and
+                    contributing to meaningful projects.
+                  </p>
+                  <p>`</p>
+                </div>
+                <p>}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-grid-bottom">
+          <div class="terminal-window reveal-on-scroll">
+            <div class="terminal-header">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <div class="terminal-content">
+              <p class="prompt">>_ contact_info.json</p>
+              <hr style="border: 0; border-top: 1px solid var(--border); margin: 10px 0;" />
+              <ul class="contact-list" style="font-size: 0.85rem">
+                <li><i class="fas fa-map-marker-alt"></i> "No. 61 Palosapis Street, Project 3, Quezon City"</li>
+                <li><i class="fas fa-envelope"></i> "qapvida01@tip.edu.ph"</li>
+                <li><i class="fas fa-envelope"></i> "annapatriciavida12@gmail.com"</li>
+                <li><i class="fas fa-phone"></i> "+63 945 870 9064"</li>
+                <hr style="border: 0; border-top: 1px solid var(--border); margin: 10px 0;" />
+                <li><i class="fas fa-university"></i> "Technological Institute of the Philippines - Quezon City"</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="about-right-subgrid">
+            <div class="terminal-window reveal-on-scroll">
+              <div class="terminal-header">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              </div>
+              <div class="terminal-content">
+                <p style="color: var(--primary); font-size: 1.2rem; margin-bottom: 0.5rem;">&lt;/&gt;</p>
+                <p style="color: var(--primary); font-weight: bold; margin-bottom: 0.5rem;">> Software_Dev</p>
+                <p class="comment" style="font-size: 0.85rem">Passionate about building robust web and mobile applications.</p>
+              </div>
+            </div>
+
+            <div class="terminal-window reveal-on-scroll">
+              <div class="terminal-header">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              </div>
+              <div class="terminal-content">
+                <p style="color: var(--secondary); font-size: 1.2rem; margin-bottom: 0.5rem;"><i class="fas fa-bolt"></i></p>
+                <p style="color: var(--primary); font-weight: bold; margin-bottom: 0.5rem;">> Continuous_Learner</p>
+                <p class="comment" style="font-size: 0.85rem">Always exploring new technologies, AI/ML, and modern cloud architectures.</p>
+              </div>
+            </div>
+
+            <div class="terminal-window reveal-on-scroll cyber-security-block">
+              <div class="terminal-header">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              </div>
+              <div class="terminal-content">
+                <p style="color: #ff00ff; font-size: 1.2rem; margin-bottom: 0.5rem;"><i class="fas fa-shield-alt"></i></p>
+                <p style="color: var(--primary); font-weight: bold; margin-bottom: 0.5rem;">> Cyber_Security</p>
+                <p class="comment" style="font-size: 0.85rem">Knowledgeable in network security, vulnerability assessment, and threat management.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section id="skills">
+        <h2>$ sysinfo --tech</h2>
+        <div class="skills-grid">
+          <!-- Web Dev -->
+          <div class="skill-category reveal-on-scroll">
+            <h3><i class="fas fa-window-maximize"></i> [web_dev]</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">HTML</span>
+              <span class="skill-tag">CSS</span>
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">Bootstrap</span>
+              <span class="skill-tag">React.js</span>
+              <span class="skill-tag">Vue.js</span>
+              <span class="skill-tag">Angular</span>
+              <span class="skill-tag">jQuery</span>
+              <span class="skill-tag">PHP</span>
+              <span class="skill-tag">Node.js</span>
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">Java</span>
+              <span class="skill-tag">REST API</span>
+            </div>
+          </div>
+
+          <!-- App Dev -->
+          <div class="skill-category reveal-on-scroll">
+            <h3><i class="fas fa-mobile-alt"></i> [app_dev]</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">React Native</span>
+              <span class="skill-tag">Dart/Flutter</span>
+              <span class="skill-tag">Android Studio</span>
+              <span class="skill-tag">Mobile UI/UX</span>
+            </div>
+          </div>
+
+          <!-- Languages -->
+          <div class="skill-category reveal-on-scroll">
+            <h3><i class="fas fa-code"></i> [languages]</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">C</span>
+              <span class="skill-tag">C++</span>
+              <span class="skill-tag">Java</span>
+              <span class="skill-tag">R</span>
+              <span class="skill-tag">Ruby</span>
+              <span class="skill-tag">PHP</span>
+              <span class="skill-tag">Arduino/Wiring</span>
+              <span class="skill-tag">Bash Scripting</span>
+            </div>
+          </div>
+
+          <!-- Databases -->
+          <div class="skill-category reveal-on-scroll">
+            <h3><i class="fas fa-database"></i> [databases]</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">MySQL</span>
+              <span class="skill-tag">Supabase/PostgreSQL</span>
+              <span class="skill-tag">Firebase</span>
+            </div>
+          </div>
+
+          <!-- OS Environments -->
+          <div class="skill-category reveal-on-scroll">
+            <h3><i class="fas fa-desktop"></i> [os_environments]</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Windows</span>
+              <span class="skill-tag">Ubuntu</span>
+              <span class="skill-tag">Linux</span>
+              <span class="skill-tag">Kali Linux</span>
+            </div>
+          </div>
+
+          <!-- AI/ML -->
+          <div class="skill-category reveal-on-scroll">
+            <h3><i class="fas fa-brain"></i> [ai_ml]</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">1D CNN & LSTM</span>
+              <span class="skill-tag">Gesture Recognition</span>
+              <span class="skill-tag">Data Preprocessing</span>
+              <span class="skill-tag">Real-Time AI Data Handling</span>
+              <span class="skill-tag">TensorFlow</span>
+            </div>
+          </div>
+
+          <!-- Cybersecurity -->
+          <div class="skill-category reveal-on-scroll">
+            <h3><i class="fas fa-shield-alt"></i> [cybersecurity]</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Wireshark</span>
+              <span class="skill-tag">Nmap</span>
+              <span class="skill-tag">Burp Suite</span>
+              <span class="skill-tag">John the Ripper</span>
+              <span class="skill-tag">ELK Stack</span>
+              <span class="skill-tag">Wazuh</span>
+            </div>
+          </div>
+
+          <!-- Tools/VCS -->
+          <div class="skill-category reveal-on-scroll">
+            <h3><i class="fas fa-pen-nib"></i> [tools_vcs]</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Figma</span>
+              <span class="skill-tag">Canva</span>
+              <span class="skill-tag">Draw.io/Lucidchart</span>
+              <span class="skill-tag">Unity</span>
+              <span class="skill-tag">GitHub</span>
+              <span class="skill-tag">Google Colab</span>
+            </div>
+          </div>
+
+          <!-- Soft Skills -->
+          <div class="skill-category reveal-on-scroll">
+            <h3><i class="fas fa-users"></i> [soft_skills]</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Problem Solving</span>
+              <span class="skill-tag">Analytical Thinking</span>
+              <span class="skill-tag">Time Management</span>
+              <span class="skill-tag">Teamwork & Collaboration</span>
+              <span class="skill-tag">Effective Communication</span>
+              <span class="skill-tag">Adaptability</span>
+              <span class="skill-tag">Continuous Learning</span>
+              <span class="skill-tag">Documentation</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects Section -->
+      <section id="projects">
+        <h2>$ ls -la ./projects</h2>
+
+        <div class="skills-grid">
+          <!-- EchoWear -->
+          <div class="terminal-window reveal-on-scroll">
+            <div class="terminal-header">
+              <span class="dot"></span><span class="dot"></span
+              ><span class="dot"></span>
+            </div>
+            <div class="terminal-content">
+              <div class="project-item">
+                <h3>
+                  <i class="fas fa-wave-square"></i> ./EchoWear.exe
+                  <a href="https://github.com/zandrellez/EchoWear" target="_blank" style="float: right; opacity: 0.7; color: inherit; text-decoration: none;">
+                    <i class="fab fa-github"></i>
+                  </a>
+                </h3>
+                <p
+                  class="comment"
+                  style="
+                    font-size: 0.8rem;
+                    margin-bottom: 0.5rem;
+                    color: #ff00ff;
+                  "
+                >
+                  # Smart Glove Translator for Two-Way FSL Communication Using
+                  LSTM Algorithm (2025-2026)
+                </p>
+                <p style="font-size: 0.9rem">
+                  A gesture-to-speech wearable device designed for deaf and mute
+                  users. Involved setting up Supabase, training Machine Learning
+                  models for FSL/ASL, converting models to TensorFlow Lite, and
+                  handling hardware assembly and testing.
+                </p>
+                <div class="project-tags">
+                  <span class="project-meta">deps:</span>
+                  <span class="skill-tag">Python</span>
+                  <span class="skill-tag">TensorFlow Lite</span>
+                  <span class="skill-tag">LSTM</span>
+                  <span class="skill-tag">Supabase</span>
+                  <span class="skill-tag">Hardware/Sensors</span>
+                  <span class="skill-tag">C++</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PocketHive -->
+          <div class="terminal-window reveal-on-scroll">
+            <div class="terminal-header">
+              <span class="dot"></span><span class="dot"></span
+              ><span class="dot"></span>
+            </div>
+            <div class="terminal-content">
+              <div class="project-item blue-theme">
+                <h3 style="color: var(--secondary)">
+                  <i class="fas fa-layer-group"></i> ./PocketHive.app
+                  <a href="https://github.com/zandrellez/pockethive" target="_blank" style="float: right; opacity: 0.7; color: inherit; text-decoration: none;">
+                    <i class="fab fa-github"></i>
+                  </a>
+                </h3>
+                <p
+                  class="comment"
+                  style="
+                    font-size: 0.8rem;
+                    margin-bottom: 0.5rem;
+                    color: var(--secondary);
+                  "
+                >
+                  # AI-Powered Personal Finance and Expense Management
+                  (2024-2025)
+                </p>
+                <p style="font-size: 0.9rem">
+                  A comprehensive mobile budgeting application. Developed the
+                  Bill Reminder and Payment Tracker pages, and successfully
+                  integrated Firebase Authentication and Realtime Database for
+                  secure user data management.
+                </p>
+                <div class="project-tags">
+                  <span class="project-meta">deps:</span>
+                  <span class="skill-tag">React Native</span>
+                  <span class="skill-tag">Firebase Auth</span>
+                  <span class="skill-tag">Firebase DB</span>
+                  <span class="skill-tag">JavaScript</span>
+                  <span class="skill-tag">AI Integration</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PourDecision -->
+          <div class="terminal-window reveal-on-scroll">
+            <div class="terminal-header">
+              <span class="dot"></span><span class="dot"></span
+              ><span class="dot"></span>
+            </div>
+            <div class="terminal-content">
+              <div class="project-item">
+                <h3 style="color: #ff00ff">
+                  <i class="fas fa-cog"></i> ./PourDecision.sys
+                </h3>
+                <p
+                  class="comment"
+                  style="
+                    font-size: 0.8rem;
+                    margin-bottom: 0.5rem;
+                    color: #ff00ff;
+                  "
+                >
+                  # Smart Liquor Consumption Tracking System (2024-2025)
+                </p>
+                <p style="font-size: 0.9rem">
+                  A smart monitoring system for liquor consumption. Developed
+                  core features including Login, Sign-Up, Checkout, and Admin
+                  dashboard pages. Implemented Location API and Age Verification
+                  functionalities.
+                </p>
+                <div class="project-tags">
+                  <span class="project-meta">deps:</span>
+                  <span class="skill-tag">React</span>
+                  <span class="skill-tag">Node.js</span>
+                  <span class="skill-tag">Location API</span>
+                  <span class="skill-tag">Express</span>
+                  <span class="skill-tag">MongoDB</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MediMate -->
+          <div class="terminal-window reveal-on-scroll">
+            <div class="terminal-header">
+              <span class="dot"></span><span class="dot"></span
+              ><span class="dot"></span>
+            </div>
+            <div class="terminal-content">
+              <div class="project-item">
+                <h3 style="color: var(--primary)">
+                  <i class="fas fa-heartbeat"></i> ./MediMate.sh
+                  <a href="https://github.com/Ap-bv0829/Medimate" target="_blank" style="float: right; opacity: 0.7; color: inherit; text-decoration: none;">
+                    <i class="fab fa-github"></i>
+                  </a>
+                </h3>
+                <p
+                  class="comment"
+                  style="
+                    font-size: 0.8rem;
+                    margin-bottom: 0.5rem;
+                    color: var(--primary);
+                  "
+                >
+                  # Healthcare & Medical Assistance Platform
+                </p>
+                <p style="font-size: 0.9rem">
+                  A modern healthcare application designed to assist users with
+                  medical tracking, appointments, and health monitoring. Focuses
+                  on accessible UI/UX and secure patient data handling.
+                </p>
+                <div class="project-tags">
+                  <span class="project-meta">deps:</span>
+                  <span class="skill-tag">React</span>
+                  <span class="skill-tag">Tailwind CSS</span>
+                  <span class="skill-tag">Node.js</span>
+                  <span class="skill-tag">PostgreSQL</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ClarifyApp -->
+          <div class="terminal-window reveal-on-scroll">
+            <div class="terminal-header">
+              <span class="dot"></span><span class="dot"></span
+              ><span class="dot"></span>
+            </div>
+            <div class="terminal-content">
+              <div class="project-item blue-theme">
+                <h3 style="color: var(--secondary)">
+                  <i class="fas fa-terminal"></i> ./ClarifyApp.iot
+                  <a href="https://github.com/Ap-bv0829/ClarifyApp" target="_blank" style="float: right; opacity: 0.7; color: inherit; text-decoration: none;">
+                    <i class="fab fa-github"></i>
+                  </a>
+                </h3>
+                <p
+                  class="comment"
+                  style="
+                    font-size: 0.8rem;
+                    margin-bottom: 0.5rem;
+                    color: #ff00ff;
+                  "
+                >
+                  # IoT Environmental Monitoring Dashboard
+                </p>
+                <p style="font-size: 0.9rem">
+                  An innovative IoT solution integrating hardware sensors with a
+                  modern web dashboard for real-time data visualization,
+                  analytics, and automated alerts.
+                </p>
+                <div class="project-tags">
+                  <span class="project-meta">deps:</span>
+                  <span class="skill-tag">React</span>
+                  <span class="skill-tag">Node.js</span>
+                  <span class="skill-tag">MQTT</span>
+                  <span class="skill-tag">Arduino</span>
+                  <span class="skill-tag">WebSockets</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Portfolio -->
+          <div class="terminal-window reveal-on-scroll">
+            <div class="terminal-header">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <div class="terminal-content">
+              <div class="project-item">
+                <h3 style="color: var(--primary)">
+                  <i class="fas fa-code"></i> ./Portfolio.web
+                  <a href="https://github.com/Ap-bv0829/Portfolio" target="_blank" style="float: right; opacity: 0.7; color: inherit; text-decoration: none;">
+                    <i class="fab fa-github"></i>
+                  </a>
+                </h3>
+                <p class="comment" style="font-size: 0.8rem; margin-bottom: 0.5rem; color: var(--primary);"># Terminal-Style Personal Portfolio (2025-2026)</p>
+                <p style="font-size: 0.9rem;">
+                  A sleek, terminal-inspired responsive portfolio platform built with modern HTML, CSS, and interactive JavaScript. Features smooth animations and a premium developer aesthetic.
+                </p>
+                <div class="project-tags">
+                  <span class="project-meta">deps:</span>
+                  <span class="skill-tag">Vite</span> <span class="skill-tag">JavaScript</span> <span class="skill-tag">HTML5</span> <span class="skill-tag">CSS3</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Achievements Section -->
+      <section id="achievements">
+        <h2>$ achievements --list</h2>
+
+        <div class="skills-grid">
+          <div class="terminal-window reveal-on-scroll">
+            <div class="terminal-header">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <div class="terminal-content">
+              <div class="project-item">
+                <h3><i class="fas fa-certificate"></i> [certifications]</h3>
+                <ul class="achievement-list">
+                  <li>
+                    <span class="prompt">></span> 
+                    Advanced Photonics Technologies 
+                    <span class="comment">(Ateneo)</span>
+                  </li>
+                  <li>
+                    <span class="prompt">></span> 
+                    Cyber Threat Management 
+                    <span class="comment">(Cisco)</span>
+                  </li>
+                  <li>
+                    <span class="prompt">></span> 
+                    Operating Systems Basics 
+                    <span class="comment">(Cisco)</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="terminal-window reveal-on-scroll blue-theme">
+            <div class="terminal-header">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <div class="terminal-content">
+              <div class="project-item blue-theme">
+                <h3 style="color: var(--secondary)"><i class="fas fa-microphone"></i> [seminars]</h3>
+                <ul class="achievement-list">
+                  <li>
+                    <span class="prompt">></span> 
+                    Current Trends and Issues in Computing 
+                    <span class="comment">(CTI)</span>
+                  </li>
+                  <li>
+                    <span class="prompt">></span> 
+                    Fintech Fridays: Cybersecurity for MSMEs
+                  </li>
+                  <li>
+                    <span class="prompt">></span> 
+                    Python and Data Analytics 
+                    <span class="comment">(Bransmitha)</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Affiliations Section -->
+      <section id="affiliations">
+        <h2>$ ls -la ./affiliations</h2> <div class="skills-grid"> <div class="terminal-window reveal-on-scroll">
+            <div class="terminal-header">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <div class="terminal-content">
+              <div class="project-item"> <div class="icon-box"><i class="fas fa-users"></i></div>
+                <span class="date-tag">2025 - 2026</span>
+                <h3 class="org-name">JPCS</h3>
+                <p class="comment"># Junior Philippine Computer Science</p>
+                <p class="org-chapter">T.I.P QC Student Chapter</p>
+                <p class="org-role">> Member</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="terminal-window reveal-on-scroll blue-theme">
+            <div class="terminal-header">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <div class="terminal-content">
+              <div class="project-item blue-theme">
+                <div class="icon-box"><i class="fas fa-shield-halved"></i></div>
+                <span class="date-tag">2024 - Present</span>
+                <h3 class="org-name">JISSA</h3>
+                <p class="comment"># Junior Information Systems Security Association</p>
+                <p class="org-chapter">T.I.P. Q.C. Student Chapter</p>
+                <p class="org-role">> Member</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="terminal-window reveal-on-scroll">
+            <div class="terminal-header">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <div class="terminal-content">
+              <div class="project-item">
+                <div class="icon-box"><i class="fas fa-brain"></i></div>
+                <span class="date-tag">2024 - 2025</span>
+                <h3 class="org-name">ACEQ</h3>
+                <p class="comment"># Abstract Combination with Emotional Quotient</p>
+                <p class="org-chapter">T.I.P. Q.C. Student Chapter</p>
+                <p class="org-role">> Member</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact">
+        <h2>$ contact --message</h2>
+        <div class="contact-container">
+          <!-- Node Info -->
+          <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column;">
+            <p class="prompt">>_ ./network_nodes</p>
+            <div
+              class="terminal-window reveal-on-scroll"
+              style="margin-top: 1rem; flex-grow: 1;"
+            >
+              <div class="terminal-content">
+                <p class="comment">--email</p>
+                <p style="color: var(--primary)">
+                  "annapatriciavida12@gmail.com"
+                </p>
+                <div style="margin-top: 1.5rem">
+                  <p class="comment">--phone</p>
+                  <p style="color: var(--primary)">"09458709064"</p>
+                </div>
+                <div style="margin-top: 1.5rem">
+                  <p class="comment">--github</p>
+                  <p>
+                    <a
+                      href="https://github.com/Ap-bv0829"
+                      target="_blank"
+                      style="color: var(--primary); text-decoration: none"
+                      >"Ap-bv0829"</a
+                    >
+                  </p>
+                </div>
+                <div style="margin-top: 1.5rem">
+                  <p class="comment">--linkedin</p>
+                  <p>
+                    <a
+                      href="https://www.linkedin.com/in/anna-patricia-vida-227176189"
+                      target="_blank"
+                      style="color: var(--primary); text-decoration: none"
+                      >"Anna Patricia Vida"</a
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Send Packet Form -->
+          <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column;">
+            <div
+              class="terminal-window reveal-on-scroll form-terminal"
+              style="border-color: var(--secondary); flex-grow: 1;"
+            >
+              <div
+                class="terminal-header"
+                style="background: rgba(0, 209, 255, 0.1)"
+              >
+                <span class="dot dot-red"></span>
+                <span class="dot dot-yellow"></span>
+                <span class="dot dot-green"></span>
+              </div>
+              <div class="terminal-content">
+                
+                <form id="contact-form" name="contact" class="contact-form" style="margin-top: 1.5rem" data-netlify="true">
+                  <input type="hidden" name="form-name" value="contact" />
+                  <div class="form-group">
+                    <p class="comment">--name</p>
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Enter your identifier"
+                      required
+                      class="form-input"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <p class="comment">--email</p>
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Enter return address"
+                      required
+                      class="form-input"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <p class="comment">--payload</p>
+                    <textarea
+                      name="message"
+                      placeholder="Enter message payload..."
+                      required
+                      class="form-input"
+                      style="height: 100px; resize: vertical;"
+                    ></textarea>
+                  </div>
+                  <button
+                    type="submit"
+                    class="btn-cmd form-submit"
+                    style="
+                      width: 100%;
+                      border-color: var(--secondary);
+                      color: var(--secondary);
+                    "
+                  >
+                    <span class="submit-text">>_ send_packet.sh</span>
+                    <span class="submit-loader" style="display: none;">
+                      <i class="fas fa-spinner"></i>
+                    </span>
+                  </button>
+                  <div class="form-message" style="display: none; margin-top: 1rem; padding: 0.8rem; border-radius: 4px; text-align: center; font-size: 0.9rem;"></div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
@@ -102,11 +831,11 @@
         <div class="footer-section footer-nav">
           <p class="prompt">./directories</p>
           <ul class="footer-links">
-            <li><a href="index.html" class="comment">cd ~/home</a></li>
-            <li><a href="about.html" class="comment">cd ~/about</a></li>
-            <li><a href="projects.html" class="comment">cd ~/projects</a></li>
-            <li><a href="skills.html" class="comment">cd ~/skills</a></li>
-            <li><a href="contact.html" class="comment">cd ~/contact</a></li>
+            <li><a href="#hero" class="comment">cd ~/home</a></li>
+            <li><a href="#about" class="comment">cd ~/about</a></li>
+            <li><a href="#projects" class="comment">cd ~/projects</a></li>
+            <li><a href="#skills" class="comment">cd ~/skills</a></li>
+            <li><a href="#contact" class="comment">cd ~/contact</a></li>
           </ul>
         </div>
         <div class="footer-section footer-socials">

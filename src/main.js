@@ -3,6 +3,29 @@ import { setupBreadcrumb } from './breadcrumb.js';
 
 setupBreadcrumb();
 
+
+const menuToggle = document.getElementById('menu-toggle');
+const navMenu = document.getElementById('nav-menu');
+
+// Toggle menu on click
+menuToggle.addEventListener('click', () => {
+  navMenu.classList.toggle('active');
+  // Change icon from bars to X
+  const icon = menuToggle.querySelector('i');
+  icon.classList.toggle('fa-bars');
+  icon.classList.toggle('fa-times');
+});
+
+// Close menu when a link is clicked
+document.querySelectorAll('.nav-items a').forEach(link => {
+  link.addEventListener('click', () => {
+    navMenu.classList.remove('active');
+    const icon = menuToggle.querySelector('i');
+    icon.classList.add('fa-bars');
+    icon.classList.remove('fa-times');
+  });
+});
+
 // Navbar scroll effect
 const navbar = document.querySelector("#navbar");
 if (navbar) {
