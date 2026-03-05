@@ -9,25 +9,31 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="/src/style.css" />
+    <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
     <nav>
       <div class="nav-left">
+        <button class="menu-toggle" id="menu-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
         <a href="#hero" class="logo">>_ root@apv:~#</a>
-        <div class="breadcrumb"></div>
+      </div>
+
+      <div class="nav-center" id="nav-menu">
         <div class="nav-items">
           <a href="#about">~/about</a>
           <a href="#skills">~/skills</a>
           <a href="#projects">~/projects</a>
-          <a href="#achievements">~/achievements</a> 
+          <a href="#achievements">~/achievements</a>
           <a href="#affiliations">~/affiliations</a>
           <a href="#contact">~/contact</a>
         </div>
       </div>
+
       <div class="nav-right">
         <div class="nav-profile-thumb">
-          <img src="/profile.jpg" alt="Anna Patricia Vida" />
+          <img src="/profile.jpg" alt="Anna Patricia Vida" onerror="this.src='https://via.placeholder.com/35'"/>
         </div>
         <a href="/resume.pdf" target="_blank" class="btn-resume">
           <i class="fas fa-download"></i> ./resume.sh
@@ -163,110 +169,56 @@
         </div>
 
         <div class="about-grid-bottom">
-          <!-- Contact Block -->
           <div class="terminal-window reveal-on-scroll">
             <div class="terminal-header">
-              <span class="dot"></span><span class="dot"></span
-              ><span class="dot"></span>
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
             </div>
             <div class="terminal-content">
               <p class="prompt">>_ contact_info.json</p>
-              <hr
-                style="
-                  border: 0;
-                  border-top: 1px solid var(--border);
-                  margin: 10px 0;
-                "
-              />
+              <hr style="border: 0; border-top: 1px solid var(--border); margin: 10px 0;" />
               <ul class="contact-list" style="font-size: 0.85rem">
-                <li>
-                  <i class="fas fa-map-marker-alt"></i> "No. 61 Palosapis
-                  Street, Project 3, Quezon City"
-                </li>
+                <li><i class="fas fa-map-marker-alt"></i> "No. 61 Palosapis Street, Project 3, Quezon City"</li>
                 <li><i class="fas fa-envelope"></i> "qapvida01@tip.edu.ph"</li>
-                <li>
-                  <i class="fas fa-envelope"></i> "annapatriciavida12@gmail.com"
-                </li>
+                <li><i class="fas fa-envelope"></i> "annapatriciavida12@gmail.com"</li>
                 <li><i class="fas fa-phone"></i> "+63 945 870 9064"</li>
-                <hr
-                  style="
-                    border: 0;
-                    border-top: 1px solid var(--border);
-                    margin: 10px 0;
-                  "
-                />
-                <li>
-                  <i class="fas fa-university"></i> "Technological Institute of
-                  the Philippines - Quezon City"
-                </li>
+                <hr style="border: 0; border-top: 1px solid var(--border); margin: 10px 0;" />
+                <li><i class="fas fa-university"></i> "Technological Institute of the Philippines - Quezon City"</li>
               </ul>
             </div>
           </div>
 
-          <!-- Software Dev Block -->
-          <div class="terminal-window reveal-on-scroll">
-            <div class="terminal-header">
-              <span class="dot"></span><span class="dot"></span
-              ><span class="dot"></span>
+          <div class="about-right-subgrid">
+            <div class="terminal-window reveal-on-scroll">
+              <div class="terminal-header">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              </div>
+              <div class="terminal-content">
+                <p style="color: var(--primary); font-size: 1.2rem; margin-bottom: 0.5rem;">&lt;/&gt;</p>
+                <p style="color: var(--primary); font-weight: bold; margin-bottom: 0.5rem;">> Software_Dev</p>
+                <p class="comment" style="font-size: 0.85rem">Passionate about building robust web and mobile applications.</p>
+              </div>
             </div>
-            <div class="terminal-content">
-              <p
-                style="
-                  color: var(--primary);
-                  font-size: 1.2rem;
-                  margin-bottom: 0.5rem;
-                "
-              >
-                &lt;/&gt;
-              </p>
-              <p
-                style="
-                  color: var(--primary);
-                  font-weight: bold;
-                  margin-bottom: 0.5rem;
-                "
-              >
-                > Software_Dev
-              </p>
-              <p class="comment" style="font-size: 0.85rem">
-                Passionate about building robust web and mobile applications.
-              </p>
-            </div>
-          </div>
 
-          <!-- Continuous Learner Block -->
-          <div class="terminal-window reveal-on-scroll">
-            <div class="terminal-header">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <div class="terminal-window reveal-on-scroll">
+              <div class="terminal-header">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              </div>
+              <div class="terminal-content">
+                <p style="color: var(--secondary); font-size: 1.2rem; margin-bottom: 0.5rem;"><i class="fas fa-bolt"></i></p>
+                <p style="color: var(--primary); font-weight: bold; margin-bottom: 0.5rem;">> Continuous_Learner</p>
+                <p class="comment" style="font-size: 0.85rem">Always exploring new technologies, AI/ML, and modern cloud architectures.</p>
+              </div>
             </div>
-            <div class="terminal-content">
-              <p style="color: var(--secondary); font-size: 1.2rem; margin-bottom: 0.5rem;">
-                <i class="fas fa-bolt"></i>
-              </p>
-              <p style="color: var(--primary); font-weight: bold; margin-bottom: 0.5rem;">
-                > Continuous_Learner
-              </p>
-              <p class="comment" style="font-size: 0.85rem">
-                Always exploring new technologies, AI/ML, and modern cloud architectures.
-              </p>
-            </div>
-          </div>
 
-          <!-- Cyber Security Block -->
-          <div class="terminal-window reveal-on-scroll">
-            <div class="terminal-header">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-            </div>
-            <div class="terminal-content">
-              <p style="color: #ff00ff; font-size: 1.2rem; margin-bottom: 0.5rem;">
-                <i class="fas fa-shield-alt"></i>
-              </p>
-              <p style="color: var(--primary); font-weight: bold; margin-bottom: 0.5rem;">
-                > Cyber_Security
-              </p>
-              <p class="comment" style="font-size: 0.85rem">
-                Knowledgeable in network security, vulnerability assessment, and threat management.
-              </p>
+            <div class="terminal-window reveal-on-scroll cyber-security-block">
+              <div class="terminal-header">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              </div>
+              <div class="terminal-content">
+                <p style="color: #ff00ff; font-size: 1.2rem; margin-bottom: 0.5rem;"><i class="fas fa-shield-alt"></i></p>
+                <p style="color: var(--primary); font-weight: bold; margin-bottom: 0.5rem;">> Cyber_Security</p>
+                <p class="comment" style="font-size: 0.85rem">Knowledgeable in network security, vulnerability assessment, and threat management.</p>
+              </div>
             </div>
           </div>
         </div>
