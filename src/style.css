@@ -1046,6 +1046,20 @@ nav .nav-items a.active { color: var(--primary); }
   }
 }
 
+.breadcrumb {
+  display: none;
+  color: var(--text-dim);
+}
+
+.breadcrumb a {
+  color: var(--text-dim);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: var(--primary);
+}
+
 @media (max-width: 768px) {
   nav {
     padding: 1rem;
@@ -1058,7 +1072,10 @@ nav .nav-items a.active { color: var(--primary); }
     gap: 1rem;
   }
   .nav-items {
-    gap: 1rem;
+    display: none;
+  }
+  .breadcrumb {
+    display: block;
   }
   h1 { font-size: 2rem; }
   .terminal-content { padding: 1rem; }

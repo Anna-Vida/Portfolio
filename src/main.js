@@ -1,4 +1,8 @@
 
+import { setupBreadcrumb } from './breadcrumb.js';
+
+setupBreadcrumb();
+
 // Navbar scroll effect
 const navbar = document.querySelector("#navbar");
 if (navbar) {
