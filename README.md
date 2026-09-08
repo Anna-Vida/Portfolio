@@ -1,242 +1,110 @@
-Anna Patricia Vida — Portfolio
+# Anna Patricia Vida - Portfolio
 
-A modern, responsive personal portfolio website built with React + Vite.
+A responsive personal portfolio for Anna Patricia Vida, an Information Technology graduate and software developer focused on mobile development, web applications, and emerging technology.
 
-This portfolio showcases my projects, experience, technical skills, certifications, and contact information, with interactive UI features inspired by modern developer portfolios.
+The site presents selected projects, experience, skills, certifications, and contact details in an interactive single-page experience built with React and Vite.
 
-Live Portfolio
+## Links
 
-Add your deployed portfolio URL here after hosting:
+- [GitHub profile](https://github.com/Anna-Vida)
+- [LinkedIn](https://www.linkedin.com/in/annavida12/)
+- [Portfolio repository](https://github.com/Anna-Vida/Portfolio)
+- [Download resume](public/Anna-Patricia-Vida-Resume.pdf)
 
-https://your-portfolio-url.com
+## Features
 
-Features
+- Responsive single-page layout for desktop and mobile
+- Animated hero section and technology orbit
+- Selected projects with links to their repositories
+- Experience, education, skills, certifications, and contact sections
+- Downloadable resume
+- Click-to-flip skill cards
+- Custom cursor with an on/off setting
+- Fullscreen and compact viewing modes
+- Accent themes: Original, Ember, Forest, Midnight, Burgundy, and Plum
+- Appearance preferences saved with browser `localStorage`
 
-Responsive single-page portfolio
+## Featured Projects
 
-Modern dark / light editorial layout
-
-Animated hero section
-
-Selected projects showcase
-
-About section with animated technology orbit
-
-Work experience and education section
-
-Animated two-row technology wall
-
-Click-to-flip skill cards
-
-Certifications section
-
-Contact section
-
-Downloadable resume
-
-Custom cursor
-
-Fullscreen mode
-
-Compact view
-
-Dark accent themes
-
-Reset appearance option
-
-LocalStorage support for saved appearance preferences
-
-Mobile-friendly design
-
-Appearance Settings
-
-The portfolio includes an interactive settings panel.
-
-Visitors can customize:
-
-Full screen
-
-Compact view
-
-Accent theme
-
-Custom cursor visibility
-
-Available accent themes include:
-
-Original
-
-Ember
-
-Forest
-
-Midnight
-
-Burgundy
-
-Plum
-
-The Original theme restores the default black, white, gray, and off-white design.
-
-Appearance preferences are stored using browser localStorage, so the selected settings remain after refreshing or revisiting the website from the same browser.
-
-Tech Stack
-
-Frontend
-
-React
-
-JavaScript
-
-Vite
-
-CSS3
-
-React Icons
-
-Technologies Highlighted in the Portfolio
-
-Mobile
-
-React Native
-
-Jetpack Compose
-
-Ionic
-
-Flutter
-
-Dart
-
-Android Studio
-
-Frontend
-
-React.js
-
-Next.js
-
-TypeScript
-
-JavaScript
-
-HTML5
-
-Tailwind CSS
-
-Vite
-
-Material UI
-
-Redux
-
-Backend & APIs
-
-Node.js
-
-PHP
-
-REST APIs
-
-GraphQL
-
-Python
-
-Java
-
-Kotlin
-
-C/C++
-
-Databases
-
-Supabase
-
-PostgreSQL
-
-Firebase
-
-MySQL
-
-SQLite
-
-Cloud & Tools
-
-Git
-
-GitHub
-
-Docker
-
-CI/CD
-
-AWS
-
-Cypress
-
-Playwright
-
-Linux
-
-Bash
-
-GitHub Copilot
-
-Cursor
-
-AI, IoT & Security
-
-TensorFlow Lite
-
-Edge Computing
-
-OCR
-
-Image Recognition
-
-Arduino
-
-Raspberry Pi
-
-Wearable Technology
-
-Featured Projects
-
-EchoWear
+### [EchoWear](https://github.com/Anna-Vida/EchoWear)
 
 A smart wearable glove designed for two-way Filipino Sign Language communication using ESP32 hardware, motion sensors, machine learning, and real-time translation.
 
-Technologies: React Native, ESP32, TensorFlow Lite, Supabase, IoT
+**Technologies:** React Native, ESP32, TensorFlow Lite, Supabase, IoT
 
-PocketHive
+### [PocketHive](https://github.com/Anna-Vida/pockethive)
 
 An AI-powered personal finance application for expense tracking, budgeting, bill management, and financial insights.
 
-Technologies: Mobile Development, Firebase, AI, Authentication
+**Technologies:** Mobile development, Firebase, AI, authentication
 
-Medimate
+### [Medimate](https://github.com/Anna-Vida/Medimate)
 
-A healthcare-focused mobile application centered around accessible workflows and intelligent health-related functionality.
+A healthcare-focused mobile application centered on accessible workflows and intelligent health-related functionality.
 
-Technologies: Mobile Development, Healthcare, AI
+**Technologies:** Mobile development, healthcare, AI
 
-Portfolio Sections
+## Tech Stack
 
-The website currently contains:
+- React 19
+- JavaScript
+- Vite
+- CSS3
+- React Icons
 
-Home
+The portfolio also highlights experience with React Native, Next.js, TypeScript, Node.js, Python, Java, Kotlin, PHP, Firebase, Supabase, PostgreSQL, MySQL, Docker, AWS, GitHub, and embedded technologies such as Arduino and Raspberry Pi.
 
-Selected Work
+## Getting Started
 
-About
+### Prerequisites
 
-Experience
+- Node.js 18 or newer
+- npm
 
-Skills
+### Installation
 
-Certifications
+```bash
+npm install
+```
 
-Contact
+### Development
+
+```bash
+npm run dev
+```
+
+Vite will print the local development URL in the terminal.
+
+### Production build
+
+```bash
+npm run build
+```
+
+### Lint
+
+```bash
+npm run lint
+```
+
+## Project Structure
+
+```text
+public/       Static assets, icons, and resume
+src/App.jsx   Portfolio layout and interactions
+src/index.css Global styles and responsive design
+src/main.jsx  React entry point
+```
+
+## Portfolio Sections
+
+Home, Selected Work, About, Experience, Skills, Certifications, and Contact.
+
+## Contact
+
+- Email: [annapatriciavida12@gmail.com](mailto:annapatriciavida12@gmail.com)
+- [LinkedIn](https://www.linkedin.com/in/annavida12/)
+- [GitHub](https://github.com/Anna-Vida)
 
 Getting Started
 
