@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./index.css";
+import GradientBlobCard from "./components/ui/gradient-bold-card";
+import HeroHexBackground from "./components/ui/hero-hex-background";
 
 import {
   FaReact,
@@ -334,6 +336,7 @@ function App() {
             HERO
         ========================== */}
         <section className="hero" id="home">
+          <HeroHexBackground />
           <div className="hero-inner">
             <p className="eyebrow">
               SOFTWARE DEVELOPER — QUEZON CITY, PHILIPPINES
@@ -995,7 +998,8 @@ function App() {
                 rel="noreferrer"
                 className="certification-item"
               >
-                <div className="certification-company">
+                                <GradientBlobCard />
+<div className="certification-company">
                   Google
                 </div>
 
@@ -1020,7 +1024,8 @@ function App() {
                 rel="noreferrer"
                 className="certification-item"
               >
-                <div className="certification-company">
+                                <GradientBlobCard />
+<div className="certification-company">
                   OPSWAT Academy
                 </div>
 
@@ -1043,7 +1048,8 @@ function App() {
                 rel="noreferrer"
                 className="certification-item"
               >
-                <div className="certification-company">
+                                <GradientBlobCard />
+<div className="certification-company">
                   Appkademiya
                 </div>
 
@@ -1068,7 +1074,8 @@ function App() {
                 rel="noreferrer"
                 className="certification-item"
               >
-                <div className="certification-company">
+                                <GradientBlobCard />
+<div className="certification-company">
                   Google
                 </div>
 
@@ -1091,7 +1098,8 @@ function App() {
                 rel="noreferrer"
                 className="certification-item"
               >
-                <div className="certification-company">
+                                <GradientBlobCard />
+<div className="certification-company">
                   HackerRank
                 </div>
 
@@ -1114,7 +1122,8 @@ function App() {
                 rel="noreferrer"
                 className="certification-item"
               >
-                <div className="certification-company">
+                                <GradientBlobCard />
+<div className="certification-company">
                   HackerRank
                 </div>
 
@@ -1139,7 +1148,8 @@ function App() {
                 rel="noreferrer"
                 className="certification-item"
               >
-                <div className="certification-company">
+                                <GradientBlobCard />
+<div className="certification-company">
                   HackerRank
                 </div>
 
@@ -1159,7 +1169,8 @@ function App() {
               </a>
 
               <div className="certification-item no-link">
-                <div className="certification-company">
+                                <GradientBlobCard />
+<div className="certification-company">
                   Ateneo de Manila University
                 </div>
 
@@ -1185,7 +1196,8 @@ function App() {
                 rel="noreferrer"
                 className="certification-item"
               >
-                <div className="certification-company">
+                                <GradientBlobCard />
+<div className="certification-company">
                   Cisco
                 </div>
 
@@ -1208,7 +1220,8 @@ function App() {
                 rel="noreferrer"
                 className="certification-item"
               >
-                <div className="certification-company">
+                                <GradientBlobCard />
+<div className="certification-company">
                   Cisco
                 </div>
 
