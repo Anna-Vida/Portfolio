@@ -6,6 +6,7 @@ The site presents selected projects, experience, skills, certifications, and con
 
 ## Links
 
+- [Live portfolio](https://apv-portfolio.vercel.app/)
 - [GitHub profile](https://github.com/Anna-Vida)
 - [LinkedIn](https://www.linkedin.com/in/annavida12/)
 - [Portfolio repository](https://github.com/Anna-Vida/Portfolio)
