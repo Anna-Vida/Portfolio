@@ -453,26 +453,26 @@ function App() {
 
                 <div className="project-content">
                   <p className="project-type">
-                    MOBILE · FINTECH · AI
+                    FULL-STACK · APPOINTMENTS
                   </p>
 
-                  <h3>PocketHive</h3>
+                  <h3>ServEase</h3>
 
                   <p className="project-description">
-                    An AI-powered personal finance application built for
-                    expense management, budgeting, bill tracking, and financial
-                    insights.
+                    A full-stack appointment management application for
+                    businesses to manage customers, staff, services, and
+                    bookings in one place.
                   </p>
 
                   <div className="project-tags">
-                    <span>Mobile</span>
-                    <span>Firebase</span>
-                    <span>AI</span>
-                    <span>Authentication</span>
+                    <span>TypeScript</span>
+                    <span>Full-stack</span>
+                    <span>Bookings</span>
+                    <span>Web application</span>
                   </div>
 
                   <a
-                    href="https://github.com/Anna-Vida/pockethive"
+                    href="https://github.com/Anna-Vida/ServEase"
                     target="_blank"
                     rel="noreferrer"
                     className="project-link"
@@ -482,7 +482,7 @@ function App() {
                 </div>
 
                 <div className="project-visual">
-                  <span>POCKETHIVE</span>
+                  <span>SERVEASE</span>
                 </div>
               </article>
 
@@ -492,25 +492,27 @@ function App() {
 
                 <div className="project-content">
                   <p className="project-type">
-                    HEALTHCARE · MOBILE
+                    FULL-STACK · FINTECH · AI
                   </p>
 
-                  <h3>Medimate</h3>
+                  <h3>Stock Price Prediction</h3>
 
                   <p className="project-description">
-                    A healthcare-focused application project centered around
-                    accessible mobile workflows and intelligent health-related
-                    functionality.
+                    A full-stack stock tracking and forecasting platform with
+                    live market data, watchlists, alerts, authentication, and
+                    persistent market data storage.
                   </p>
 
                   <div className="project-tags">
-                    <span>Mobile</span>
-                    <span>Healthcare</span>
-                    <span>AI</span>
+                    <span>JavaScript</span>
+                    <span>Node.js</span>
+                    <span>Supabase</span>
+                    <span>PostgreSQL</span>
+                    <span>Market data</span>
                   </div>
 
                   <a
-                    href="https://github.com/Anna-Vida/Medimate"
+                    href="https://github.com/Anna-Vida/Stock-Price-Prediction"
                     target="_blank"
                     rel="noreferrer"
                     className="project-link"
@@ -520,7 +522,7 @@ function App() {
                 </div>
 
                 <div className="project-visual">
-                  <span>MEDIMATE</span>
+                  <span>STOCK PREDICTION</span>
                 </div>
               </article>
             </div>

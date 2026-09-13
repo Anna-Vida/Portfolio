@@ -33,17 +33,17 @@ A smart wearable glove designed for two-way Filipino Sign Language communication
 
 **Technologies:** React Native, ESP32, TensorFlow Lite, Supabase, IoT
 
-### [PocketHive](https://github.com/Anna-Vida/pockethive)
+### [ServEase](https://github.com/Anna-Vida/ServEase)
 
-An AI-powered personal finance application for expense tracking, budgeting, bill management, and financial insights.
+A full-stack appointment management application for businesses to manage customers, staff, services, and bookings in one place.
 
-**Technologies:** Mobile development, Firebase, AI, authentication
+**Technologies:** TypeScript, full-stack web development, bookings
 
-### [Medimate](https://github.com/Anna-Vida/Medimate)
+### [Stock Price Prediction](https://github.com/Anna-Vida/Stock-Price-Prediction)
 
-A healthcare-focused mobile application centered on accessible workflows and intelligent health-related functionality.
+A full-stack stock tracking and forecasting platform with live market data, watchlists, alerts, authentication, and persistent market data storage.
 
-**Technologies:** Mobile development, healthcare, AI
+**Technologies:** JavaScript, Node.js, Supabase, PostgreSQL, market data
 
 ## Tech Stack
 
