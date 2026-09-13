@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "./index.css";
 import GradientBlobCard from "./components/ui/gradient-bold-card";
 import HeroHexBackground from "./components/ui/hero-hex-background";
+import CinematicFooter from "./components/ui/motion-footer";
 
 import {
   FaReact,
@@ -1323,56 +1324,7 @@ function App() {
         </section>
       </main>
 
-      {/* =========================
-          FOOTER
-      ========================== */}
-      <footer className="footer">
-        <div className="footer-container">
-
-          <div className="footer-brand">
-            <h2>
-              ANNA PATRICIA VIDA
-            </h2>
-
-            <p>
-              Software Developer
-            </p>
-          </div>
-
-          <div className="footer-links">
-            <a href="#home">
-              Back to top ↑
-            </a>
-
-            <a
-              href="https://github.com/Anna-Vida"
-              target="_blank"
-              rel="noreferrer"
-            >
-              GitHub ↗
-            </a>
-
-            <a
-              href="https://www.linkedin.com/in/annavida12/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              LinkedIn ↗
-            </a>
-          </div>
-
-          <div className="footer-bottom">
-            <p>
-              © 2026 Anna Patricia Vida
-            </p>
-
-            <p>
-              Designed & developed by Anna Patricia Vida
-            </p>
-          </div>
-
-        </div>
-      </footer>
+      <CinematicFooter />
     </>
   );
 }
