@@ -36,6 +36,108 @@ import {
 } from "react-icons/si";
 
 
+
+const PROJECT_FILTERS = ["All Projects", "Fullstack", "Mobile Apps", "AI & IoT"];
+
+const PROJECTS = [
+  {
+    number: "01",
+    title: "EchoWear",
+    type: "AI · IOT · MOBILE",
+    categories: ["Mobile Apps", "AI & IoT"],
+    shortDescription:
+      "A smart wearable glove for two-way Filipino Sign Language communication using real-time gesture recognition.",
+    description:
+      "EchoWear combines wearable hardware and a mobile application to translate Filipino Sign Language gestures into speech and support two-way communication. The project uses ESP32 hardware, motion sensing, Bluetooth Low Energy, and on-device TensorFlow Lite inference.",
+    tags: ["React Native", "Expo", "ESP32", "TensorFlow Lite", "BLE", "Three.js"],
+    image:
+      "https://raw.githubusercontent.com/Anna-Vida/EchoWear/main/assets/echowear.png",
+    github: "https://github.com/Anna-Vida/EchoWear",
+    live: null,
+    year: "2026",
+  },
+  {
+    number: "02",
+    title: "ServEase",
+    type: "FULL-STACK · BUSINESS OPERATIONS",
+    categories: ["Fullstack"],
+    shortDescription:
+      "A full-stack appointment and business operations platform for customers, staff, services, bookings, and payments.",
+    description:
+      "ServEase is a full-stack service-business platform with dedicated customer, staff, and admin workflows. It includes authentication, role-based access, appointment management, payments, analytics, audit logging, email notifications, and PostgreSQL Row Level Security.",
+    tags: ["React 19", "TypeScript", "Node.js", "Express", "Supabase", "PostgreSQL"],
+    image:
+      "https://raw.githubusercontent.com/Anna-Vida/ServEase/main/client/src/assets/hero.png",
+    github: "https://github.com/Anna-Vida/ServEase",
+    live: "https://servease-iota.vercel.app/",
+    year: "2026",
+  },
+  {
+    number: "03",
+    title: "NexFlow",
+    type: "FULL-STACK · WORKFLOW AUTOMATION",
+    categories: ["Fullstack"],
+    shortDescription:
+      "A visual workflow automation engine with webhooks, schedules, background workers, retries, and execution history.",
+    description:
+      "NexFlow lets users build directed workflow graphs, trigger them through webhooks or schedules, execute actions, inspect execution history, and recover safely from worker failures. PostgreSQL stores durable state while Redis and BullMQ handle background delivery.",
+    tags: ["React", "TypeScript", "NestJS", "PostgreSQL", "Redis", "BullMQ"],
+    image:
+      "https://raw.githubusercontent.com/Anna-Vida/Nexflow/main/apps/web/src/assets/hero.png",
+    github: "https://github.com/Anna-Vida/Nexflow",
+    live: "https://nexflow-one.vercel.app/",
+    year: "2026",
+  },
+  {
+    number: "04",
+    title: "Stock Price Prediction",
+    type: "FULL-STACK · MARKET RESEARCH",
+    categories: ["Fullstack"],
+    shortDescription:
+      "A stock and crypto research workspace with live market data, analytics, forecasts, watchlists, and alerts.",
+    description:
+      "A market research workspace combining a JavaScript stock interface, a React and TypeScript crypto dashboard, and a Python Flask API. It supports historical analytics, statistical forecasts, evaluation metrics, watchlists, research notes, alerts, and optional Supabase accounts.",
+    tags: ["JavaScript", "React", "TypeScript", "Python", "Flask", "Supabase"],
+    image:
+      "https://opengraph.githubassets.com/1/Anna-Vida/Stock-Price-Prediction",
+    github: "https://github.com/Anna-Vida/Stock-Price-Prediction",
+    live: null,
+    year: "2026",
+  },
+  {
+    number: "05",
+    title: "PocketHive",
+    type: "MOBILE · FINTECH",
+    categories: ["Mobile Apps", "AI & IoT"],
+    shortDescription:
+      "A mobile personal-finance application for expense tracking, budgeting, charts, and intelligent financial insights.",
+    description:
+      "PocketHive is a React Native finance application built around practical personal-money workflows. It combines authentication, local mobile interactions, finance visualizations, Firebase services, and a responsive dashboard experience.",
+    tags: ["React Native", "Expo", "Firebase", "Authentication", "Charts", "Mobile"],
+    image:
+      "https://raw.githubusercontent.com/Anna-Vida/pockethive/master/assets/Dash.png",
+    github: "https://github.com/Anna-Vida/pockethive",
+    live: null,
+    year: "2025",
+  },
+  {
+    number: "06",
+    title: "Medimate",
+    type: "MOBILE · HEALTHCARE · AI",
+    categories: ["Mobile Apps", "AI & IoT"],
+    shortDescription:
+      "A healthcare-focused mobile application using OCR, camera workflows, speech features, and generative AI assistance.",
+    description:
+      "Medimate is an Expo and React Native healthcare application that combines camera-based workflows, ML Kit text recognition, Google Generative AI, speech features, notifications, and Firebase-backed functionality in a mobile-first experience.",
+    tags: ["React Native", "Expo", "Gemini AI", "ML Kit OCR", "Firebase", "TypeScript"],
+    image:
+      "https://opengraph.githubassets.com/1/Anna-Vida/Medimate",
+    github: "https://github.com/Anna-Vida/Medimate",
+    live: null,
+    year: "2026",
+  },
+];
+
 const DEFAULT_THEME = "original";
 
 const ACCENT_OPTIONS = [
@@ -49,6 +151,8 @@ const ACCENT_OPTIONS = [
 
 function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [projectFilter, setProjectFilter] = useState("All Projects");
+  const [selectedProject, setSelectedProject] = useState(null);
   const [flippedSkill, setFlippedSkill] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [compactView, setCompactView] = useState(() => {
@@ -169,6 +273,27 @@ function App() {
     };
   }, [settingsOpen]);
 
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+
+    if (selectedProject) {
+      document.body.style.overflow = "hidden";
+    }
+
+    const handleProjectModalKey = (event) => {
+      if (event.key === "Escape") {
+        setSelectedProject(null);
+      }
+    };
+
+    document.addEventListener("keydown", handleProjectModalKey);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleProjectModalKey);
+    };
+  }, [selectedProject]);
+
   const toggleFullscreen = async () => {
     try {
       if (!document.fullscreenElement) {
@@ -190,6 +315,13 @@ function App() {
     localStorage.removeItem("portfolio-show-cursor");
     localStorage.removeItem("portfolio-accent-color");
   };
+
+  const visibleProjects =
+    projectFilter === "All Projects"
+      ? PROJECTS
+      : PROJECTS.filter((project) =>
+          project.categories.includes(projectFilter)
+        );
 
   return (
     <>
@@ -396,141 +528,100 @@ function App() {
         {/* =========================
             SELECTED WORK
         ========================== */}
-        <section className="work-section" id="work">
-          <div className="work-container">
-            <div className="work-heading">
-              <p className="section-kicker">SELECTED WORK</p>
+        <section className="work-section work-section-v2" id="work">
+          <div className="work-container work-container-v2">
+            <div className="work-v2-top">
+              <div className="work-heading work-heading-v2">
+                <p className="section-kicker work-kicker">PROJECTS CREATED</p>
+                <h2>Selected Works</h2>
+                <p className="work-v2-intro">
+                  A collection of mobile applications, full-stack platforms,
+                  intelligent systems, and connected technology.
+                </p>
+              </div>
 
-              <h2>
-                Projects built across
-                <span> mobile, AI, IoT and full-stack development.</span>
-              </h2>
+              <div className="project-filters" aria-label="Project categories">
+                {PROJECT_FILTERS.map((filter) => (
+                  <button
+                    type="button"
+                    key={filter}
+                    className={`project-filter-btn ${
+                      projectFilter === filter ? "is-active" : ""
+                    }`}
+                    onClick={() => setProjectFilter(filter)}
+                    aria-pressed={projectFilter === filter}
+                  >
+                    {filter}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <div className="project-list">
-              {/* PROJECT 01 */}
-              <article className="project-card project-featured">
-                <div className="project-number">01</div>
+            <div className="project-showcase-grid">
+              {visibleProjects.map((project) => (
+                <button
+                  type="button"
+                  key={project.title}
+                  className="project-showcase-card"
+                  onClick={() => setSelectedProject(project)}
+                  aria-label={`Open details for ${project.title}`}
+                >
+                  <span className="project-showcase-preview">
+                    <span className="project-preview-fallback" aria-hidden="true">
+                      {project.title}
+                    </span>
 
-                <div className="project-content">
-                  <p className="project-type">
-                    AI · IOT · MOBILE
-                  </p>
+                    <img
+                      src={project.image}
+                      alt=""
+                      loading="lazy"
+                      onError={(event) => {
+                        event.currentTarget.style.display = "none";
+                      }}
+                    />
 
-                  <h3>EchoWear</h3>
+                    <span className="project-preview-badge" aria-hidden="true">
+                      ↗
+                    </span>
 
-                  <p className="project-description">
-                    A smart wearable glove designed for two-way Filipino Sign
-                    Language communication using ESP32 hardware, motion
-                    sensors, machine learning, and real-time translation.
-                  </p>
+                    <span className="project-open-hint">View details ↗</span>
+                  </span>
 
-                  <div className="project-tags">
-                    <span>React Native</span>
-                    <span>ESP32</span>
-                    <span>TensorFlow Lite</span>
-                    <span>Supabase</span>
-                    <span>IoT</span>
-                  </div>
+                  <span className="project-showcase-content">
+                    <span className="project-showcase-topline">
+                      <span className="project-showcase-number">
+                        {project.number}
+                      </span>
+                      <span className="project-showcase-type">
+                        {project.type}
+                      </span>
+                    </span>
 
-                  <a
-                    href="https://github.com/Anna-Vida/EchoWear"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="project-link"
-                  >
-                    View project ↗
-                  </a>
-                </div>
+                    <span className="project-showcase-title">
+                      {project.title}
+                    </span>
 
-                <div className="project-visual">
-                  <span>ECHOWEAR</span>
-                </div>
-              </article>
+                    <span className="project-showcase-description">
+                      {project.shortDescription}
+                    </span>
 
-              {/* PROJECT 02 */}
-              <article className="project-card">
-                <div className="project-number">02</div>
+                    <span className="project-showcase-tags">
+                      {project.tags.slice(0, 3).map((tag) => (
+                        <span key={tag}>{tag}</span>
+                      ))}
 
-                <div className="project-content">
-                  <p className="project-type">
-                    FULL-STACK · APPOINTMENTS
-                  </p>
-
-                  <h3>ServEase</h3>
-
-                  <p className="project-description">
-                    A full-stack appointment management application for
-                    businesses to manage customers, staff, services, and
-                    bookings in one place.
-                  </p>
-
-                  <div className="project-tags">
-                    <span>TypeScript</span>
-                    <span>Full-stack</span>
-                    <span>Bookings</span>
-                    <span>Web application</span>
-                  </div>
-
-                  <a
-                    href="https://github.com/Anna-Vida/ServEase"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="project-link"
-                  >
-                    View project ↗
-                  </a>
-                </div>
-
-                <div className="project-visual">
-                  <span>SERVEASE</span>
-                </div>
-              </article>
-
-              {/* PROJECT 03 */}
-              <article className="project-card">
-                <div className="project-number">03</div>
-
-                <div className="project-content">
-                  <p className="project-type">
-                    FULL-STACK · FINTECH · AI
-                  </p>
-
-                  <h3>Stock Price Prediction</h3>
-
-                  <p className="project-description">
-                    A full-stack stock tracking and forecasting platform with
-                    live market data, watchlists, alerts, authentication, and
-                    persistent market data storage.
-                  </p>
-
-                  <div className="project-tags">
-                    <span>JavaScript</span>
-                    <span>Node.js</span>
-                    <span>Supabase</span>
-                    <span>PostgreSQL</span>
-                    <span>Market data</span>
-                  </div>
-
-                  <a
-                    href="https://github.com/Anna-Vida/Stock-Price-Prediction"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="project-link"
-                  >
-                    View project ↗
-                  </a>
-                </div>
-
-                <div className="project-visual">
-                  <span>STOCK PREDICTION</span>
-                </div>
-              </article>
+                      {project.tags.length > 3 && (
+                        <span>+{project.tags.length - 3}</span>
+                      )}
+                    </span>
+                  </span>
+                </button>
+              ))}
             </div>
 
-            <div className="all-projects">
+            <div className="work-all-projects">
               <a
-                href="https://github.com/Anna-Vida"
+                href="https://github.com/Anna-Vida?tab=repositories"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -540,10 +631,95 @@ function App() {
           </div>
         </section>
 
+        {selectedProject && (
+          <div
+            className="project-modal-backdrop"
+            role="presentation"
+            onMouseDown={(event) => {
+              if (event.target === event.currentTarget) {
+                setSelectedProject(null);
+              }
+            }}
+          >
+            <div
+              className="project-modal-card"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="project-modal-title"
+            >
+              <button
+                type="button"
+                className="project-modal-close"
+                onClick={() => setSelectedProject(null)}
+                aria-label="Close project details"
+              >
+                ×
+              </button>
+
+              <div className="project-modal-preview">
+                <span className="project-preview-fallback" aria-hidden="true">
+                  {selectedProject.title}
+                </span>
+
+                <img
+                  src={selectedProject.image}
+                  alt=""
+                  onError={(event) => {
+                    event.currentTarget.style.display = "none";
+                  }}
+                />
+              </div>
+
+              <div className="project-modal-body">
+                <div className="project-modal-meta">
+                  <span>{selectedProject.type}</span>
+                  <span>{selectedProject.year}</span>
+                </div>
+
+                <h3 id="project-modal-title">{selectedProject.title}</h3>
+
+                <p>{selectedProject.description}</p>
+
+                <div className="project-modal-tech">
+                  <span className="project-modal-label">TECHNOLOGIES USED</span>
+
+                  <div className="project-modal-tags">
+                    {selectedProject.tags.map((tag) => (
+                      <span key={tag}>{tag}</span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="project-modal-actions">
+                  {selectedProject.live && (
+                    <a
+                      href={selectedProject.live}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="project-modal-primary"
+                    >
+                      Live project ↗
+                    </a>
+                  )}
+
+                  <a
+                    href={selectedProject.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="project-modal-secondary"
+                  >
+                    View GitHub ↗
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* =========================
-    ABOUT
-========================== */}
-<section className="about-section" id="about">
+            ABOUT
+        ========================== */}
+        <section className="about-section" id="about">
   <div className="about-container">
 
     {/* LEFT SIDE */}
