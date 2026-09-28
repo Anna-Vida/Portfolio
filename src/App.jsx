@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "./index.css";
 import GradientBlobCard from "./components/ui/gradient-bold-card";
 import HeroHexBackground from "./components/ui/hero-hex-background";
+import { AnimatedText } from "./components/ui/animated-text";
 import CinematicFooter from "./components/ui/motion-footer";
 
 import {
@@ -50,8 +51,6 @@ const PROJECTS = [
     description:
       "EchoWear combines wearable hardware and a mobile application to translate Filipino Sign Language gestures into speech and support two-way communication. The project uses ESP32 hardware, motion sensing, Bluetooth Low Energy, and on-device TensorFlow Lite inference.",
     tags: ["React Native", "Expo", "ESP32", "TensorFlow Lite", "BLE", "Three.js"],
-    image:
-      "https://raw.githubusercontent.com/Anna-Vida/EchoWear/main/assets/echowear.png",
     github: "https://github.com/Anna-Vida/EchoWear",
     live: null,
     year: "2026",
@@ -66,8 +65,6 @@ const PROJECTS = [
     description:
       "ServEase is a full-stack service-business platform with dedicated customer, staff, and admin workflows. It includes authentication, role-based access, appointment management, payments, analytics, audit logging, email notifications, and PostgreSQL Row Level Security.",
     tags: ["React 19", "TypeScript", "Node.js", "Express", "Supabase", "PostgreSQL"],
-    image:
-      "https://raw.githubusercontent.com/Anna-Vida/ServEase/main/client/src/assets/hero.png",
     github: "https://github.com/Anna-Vida/ServEase",
     live: "https://servease-iota.vercel.app/",
     year: "2026",
@@ -82,8 +79,6 @@ const PROJECTS = [
     description:
       "NexFlow lets users build directed workflow graphs, trigger them through webhooks or schedules, execute actions, inspect execution history, and recover safely from worker failures. PostgreSQL stores durable state while Redis and BullMQ handle background delivery.",
     tags: ["React", "TypeScript", "NestJS", "PostgreSQL", "Redis", "BullMQ"],
-    image:
-      "https://raw.githubusercontent.com/Anna-Vida/Nexflow/main/apps/web/src/assets/hero.png",
     github: "https://github.com/Anna-Vida/Nexflow",
     live: "https://nexflow-one.vercel.app/",
     year: "2026",
@@ -98,8 +93,6 @@ const PROJECTS = [
     description:
       "A market research workspace combining a JavaScript stock interface, a React and TypeScript crypto dashboard, and a Python Flask API. It supports historical analytics, statistical forecasts, evaluation metrics, watchlists, research notes, alerts, and optional Supabase accounts.",
     tags: ["JavaScript", "React", "TypeScript", "Python", "Flask", "Supabase"],
-    image:
-      "https://opengraph.githubassets.com/1/Anna-Vida/Stock-Price-Prediction",
     github: "https://github.com/Anna-Vida/Stock-Price-Prediction",
     live: null,
     year: "2026",
@@ -114,8 +107,6 @@ const PROJECTS = [
     description:
       "PocketHive is a React Native finance application built around practical personal-money workflows. It combines authentication, local mobile interactions, finance visualizations, Firebase services, and a responsive dashboard experience.",
     tags: ["React Native", "Expo", "Firebase", "Authentication", "Charts", "Mobile"],
-    image:
-      "https://raw.githubusercontent.com/Anna-Vida/pockethive/master/assets/Dash.png",
     github: "https://github.com/Anna-Vida/pockethive",
     live: null,
     year: "2025",
@@ -130,8 +121,6 @@ const PROJECTS = [
     description:
       "Medimate is an Expo and React Native healthcare application that combines camera-based workflows, ML Kit text recognition, Google Generative AI, speech features, notifications, and Firebase-backed functionality in a mobile-first experience.",
     tags: ["React Native", "Expo", "Gemini AI", "ML Kit OCR", "Firebase", "TypeScript"],
-    image:
-      "https://opengraph.githubassets.com/1/Anna-Vida/Medimate",
     github: "https://github.com/Anna-Vida/Medimate",
     live: null,
     year: "2026",
@@ -566,18 +555,25 @@ function App() {
                   onClick={() => setSelectedProject(project)}
                   aria-label={`Open details for ${project.title}`}
                 >
-                  <span className="project-showcase-preview">
-                    <span className="project-preview-fallback" aria-hidden="true">
-                      {project.title}
+                  <span className="project-showcase-preview project-text-preview">
+                    <span className="project-preview-index" aria-hidden="true">
+                      PROJECT {project.number}
                     </span>
 
-                    <img
-                      src={project.image}
-                      alt=""
-                      loading="lazy"
-                      onError={(event) => {
-                        event.currentTarget.style.display = "none";
-                      }}
+                    <AnimatedText
+                      text={project.title}
+                      fontSize={
+                        project.title.length > 18
+                          ? "clamp(2rem, 3vw, 3.65rem)"
+                          : project.title.length > 10
+                            ? "clamp(2.35rem, 3.5vw, 4.25rem)"
+                            : "clamp(2.8rem, 4vw, 4.9rem)"
+                      }
+                      minWeight={260}
+                      maxWeight={760}
+                      animationDuration={1.8}
+                      delayMultiplier={0.07}
+                      className="animated-text--project"
                     />
 
                     <span className="project-preview-badge" aria-hidden="true">
@@ -656,17 +652,23 @@ function App() {
                 ×
               </button>
 
-              <div className="project-modal-preview">
-                <span className="project-preview-fallback" aria-hidden="true">
-                  {selectedProject.title}
+              <div className="project-modal-preview project-modal-text-preview">
+                <span className="project-modal-preview-index" aria-hidden="true">
+                  PROJECT {selectedProject.number}
                 </span>
 
-                <img
-                  src={selectedProject.image}
-                  alt=""
-                  onError={(event) => {
-                    event.currentTarget.style.display = "none";
-                  }}
+                <AnimatedText
+                  text={selectedProject.title}
+                  fontSize={
+                    selectedProject.title.length > 18
+                      ? "clamp(3rem, 7vw, 6.6rem)"
+                      : "clamp(4rem, 9vw, 8.4rem)"
+                  }
+                  minWeight={240}
+                  maxWeight={780}
+                  animationDuration={1.9}
+                  delayMultiplier={0.08}
+                  className="animated-text--modal"
                 />
               </div>
 
