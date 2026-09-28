@@ -5285,3 +5285,36 @@ body.compact-mode .footer-bottom {
     padding-top: 58px;
   }
 }
+
+
+/* =========================================================
+   SELECTED WORK THEME FIX
+   Original = black / white / grey.
+   Accent colors appear only after the user selects one in Settings.
+========================================================= */
+
+html[data-theme="original"] .work-section.work-section-v2 {
+  --work-accent: #f2f2f2;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.065), transparent 30%),
+    #08090b;
+}
+
+html[data-theme="original"] .project-modal-card {
+  --work-accent: #f2f2f2;
+}
+
+html[data-theme="accent"] .work-section.work-section-v2,
+html[data-theme="accent"] .project-modal-card {
+  --work-accent: var(--accent);
+}
+
+html[data-theme="accent"] .work-section.work-section-v2 {
+  background:
+    radial-gradient(
+      circle at 0% 0%,
+      color-mix(in srgb, var(--accent) 11%, transparent),
+      transparent 30%
+    ),
+    #08090b;
+}
