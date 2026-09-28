@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300..600&family=Manrope:wght@200..800&display=swap");
 
 :root {
   --bg: #0b0b0b;
@@ -4755,4 +4755,215 @@ html[data-theme="accent"] .work-section.work-section-v2 {
 
 html[data-theme="original"] .work-section.work-section-v2 {
   --work-accent: #d99418;
+}
+
+
+/* =========================================================
+   ANIMATED PROJECT TEXT — NEUTRAL BLACK / WHITE / GREY
+========================================================= */
+
+.animated-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  line-height: 0.86;
+  letter-spacing: -0.075em;
+  color: #f2f2f2;
+  white-space: nowrap;
+}
+
+.animated-text__char {
+  display: inline-block;
+  will-change: font-variation-settings, opacity;
+  animation-name: animatedTextBreath;
+  animation-duration: var(--animated-duration, 1.5s);
+  animation-direction: alternate;
+  animation-timing-function: cubic-bezier(0.37, 0, 0.63, 1);
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+  font-variation-settings: "wght" var(--animated-min-weight, 250);
+}
+
+@keyframes animatedTextBreath {
+  0% {
+    font-variation-settings: "wght" var(--animated-min-weight, 250);
+    opacity: 0.42;
+  }
+
+  100% {
+    font-variation-settings: "wght" var(--animated-max-weight, 780);
+    opacity: 1;
+  }
+}
+
+.work-section-v2,
+.project-modal-card,
+html[data-theme="original"] .work-section-v2,
+html[data-theme="original"] .project-modal-card,
+html[data-theme="accent"] .work-section-v2,
+html[data-theme="accent"] .project-modal-card {
+  --work-accent: #f2f2f2;
+}
+
+.work-section.work-section-v2,
+html[data-theme="original"] .work-section.work-section-v2,
+html[data-theme="accent"] .work-section.work-section-v2 {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.07), transparent 30%),
+    #08090b;
+  color: #f2f2f2;
+}
+
+.project-text-preview,
+.project-modal-text-preview {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.012)),
+    #0c0d0f;
+}
+
+.project-text-preview::before,
+.project-modal-text-preview::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at center, black 18%, transparent 72%);
+  opacity: 0.62;
+}
+
+.project-text-preview::after,
+.project-modal-text-preview::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 72%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 34px rgba(255, 255, 255, 0.018),
+    0 0 0 74px rgba(255, 255, 255, 0.012);
+}
+
+.project-preview-index,
+.project-modal-preview-index {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 3;
+  color: #696d75;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.animated-text--project {
+  position: relative;
+  z-index: 2;
+  width: 88%;
+  overflow: visible;
+  text-align: center;
+}
+
+.project-showcase-card:hover .animated-text--project {
+  color: #ffffff;
+}
+
+.project-showcase-card:first-child {
+  border-color: rgba(255, 255, 255, 0.19);
+}
+
+.project-showcase-card:hover {
+  border-color: rgba(255, 255, 255, 0.34);
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.34),
+    0 0 0 1px rgba(255, 255, 255, 0.055);
+}
+
+.project-filter-btn.is-active {
+  background: #f2f2f2;
+  border-color: #f2f2f2;
+  color: #090909;
+}
+
+.project-preview-badge {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(8, 9, 11, 0.68);
+  color: #f2f2f2;
+}
+
+.project-showcase-card:hover .project-preview-badge {
+  background: #f2f2f2;
+  color: #090909;
+}
+
+.project-modal-primary {
+  background: #f2f2f2;
+  border-color: #f2f2f2;
+  color: #090909;
+}
+
+.project-modal-text-preview {
+  min-height: clamp(280px, 40vw, 420px);
+  padding: 72px 48px 48px;
+  overflow: hidden;
+}
+
+.project-modal-text-preview::after {
+  width: 48%;
+}
+
+.project-modal-preview-index {
+  top: 28px;
+  left: 32px;
+}
+
+.animated-text--modal {
+  position: relative;
+  z-index: 2;
+  max-width: 92%;
+  text-align: center;
+}
+
+@media (max-width: 720px) {
+  .project-text-preview::after {
+    width: 64%;
+  }
+
+  .project-modal-text-preview {
+    min-height: 235px;
+    height: 235px;
+    padding: 62px 22px 34px;
+  }
+
+  .project-modal-preview-index {
+    top: 20px;
+    left: 20px;
+  }
+
+  .animated-text--modal {
+    white-space: normal;
+    flex-wrap: wrap;
+    line-height: 0.9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-text__char {
+    animation: none !important;
+    opacity: 1;
+    font-variation-settings: "wght" var(--animated-max-weight, 650);
+  }
 }
