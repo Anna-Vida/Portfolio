@@ -5318,3 +5318,19 @@ html[data-theme="accent"] .work-section.work-section-v2 {
     ),
     #08090b;
 }
+
+
+/* Selected Work: all cards use the same idle border.
+   The brighter edge appears only on hover/focus. */
+.project-showcase-card:first-child {
+  border-color: rgba(255, 255, 255, 0.085);
+}
+
+.project-showcase-card:hover,
+.project-showcase-card:focus-visible {
+  border-color: color-mix(
+    in srgb,
+    var(--work-accent) 58%,
+    rgba(255, 255, 255, 0.16)
+  );
+}
