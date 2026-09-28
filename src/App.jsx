@@ -183,14 +183,7 @@ function App() {
     document.body.classList.toggle("compact-mode", compactView);
     localStorage.setItem("portfolio-compact-view", String(compactView));
 
-    const visibleProjects =
-    projectFilter === "All Projects"
-      ? PROJECTS
-      : PROJECTS.filter((project) =>
-          project.categories.includes(projectFilter)
-        );
-
-  return () => {
+    return () => {
       document.body.classList.remove("compact-mode");
     };
   }, [compactView]);
@@ -320,6 +313,13 @@ function App() {
     localStorage.removeItem("portfolio-show-cursor");
     localStorage.removeItem("portfolio-accent-color");
   };
+
+  const visibleProjects =
+    projectFilter === "All Projects"
+      ? PROJECTS
+      : PROJECTS.filter((project) =>
+          project.categories.includes(projectFilter)
+        );
 
   return (
     <>
