@@ -4967,3 +4967,321 @@ html[data-theme="accent"] .work-section.work-section-v2 {
     font-variation-settings: "wght" var(--animated-max-weight, 650);
   }
 }
+
+
+/* =========================================================
+   SETTINGS SYNC + TIGHTER PAGE SPACING
+========================================================= */
+
+/* Keep Original neutral, but let the Settings accent theme
+   control the interactive highlights in Selected Work. */
+.work-section-v2,
+.project-modal-card,
+html[data-theme="original"] .work-section-v2,
+html[data-theme="original"] .project-modal-card {
+  --work-accent: #f2f2f2;
+}
+
+html[data-theme="accent"] .work-section-v2,
+html[data-theme="accent"] .project-modal-card {
+  --work-accent: var(--accent);
+}
+
+html[data-theme="accent"] .work-section.work-section-v2 {
+  background:
+    radial-gradient(
+      circle at 0% 0%,
+      color-mix(in srgb, var(--accent) 11%, transparent),
+      transparent 30%
+    ),
+    #08090b;
+}
+
+.project-filter-btn.is-active {
+  background: var(--work-accent);
+  border-color: var(--work-accent);
+  color: #090909;
+}
+
+.project-showcase-card:first-child {
+  border-color: color-mix(
+    in srgb,
+    var(--work-accent) 36%,
+    rgba(255, 255, 255, 0.1)
+  );
+}
+
+.project-showcase-card:hover {
+  border-color: color-mix(
+    in srgb,
+    var(--work-accent) 58%,
+    rgba(255, 255, 255, 0.16)
+  );
+  box-shadow:
+    0 24px 58px rgba(0, 0, 0, 0.3),
+    0 0 0 1px color-mix(in srgb, var(--work-accent) 8%, transparent);
+}
+
+.project-showcase-card:hover .project-preview-badge,
+.project-modal-primary {
+  background: var(--work-accent);
+  border-color: var(--work-accent);
+  color: #090909;
+}
+
+.work-all-projects a:hover {
+  border-color: var(--work-accent);
+  background: color-mix(in srgb, var(--work-accent) 8%, transparent);
+}
+
+/* Slightly tighter shared content width so sections feel less stretched. */
+.nav-container,
+.hero-inner,
+.work-container,
+.work-container-v2,
+.about-container,
+.experience-container,
+.skills-container,
+.certifications-container,
+.contact-container,
+.footer-container {
+  width: min(90%, 1320px);
+}
+
+/* Reduce the large vertical gaps between sections. */
+.work-section-v2 {
+  padding-top: 92px;
+  padding-bottom: 88px;
+}
+
+.work-v2-top {
+  gap: 42px;
+  margin-bottom: 44px;
+}
+
+.work-v2-intro {
+  margin-top: 20px;
+}
+
+.project-showcase-grid {
+  gap: 20px;
+}
+
+.project-showcase-card {
+  padding: 12px 12px 25px;
+}
+
+.project-showcase-content {
+  min-height: 220px;
+  padding-top: 20px;
+}
+
+.project-showcase-tags {
+  padding-top: 20px;
+}
+
+.work-all-projects {
+  margin-top: 32px;
+}
+
+.about-section {
+  padding-top: 82px;
+  padding-bottom: 76px;
+}
+
+.about-container {
+  gap: 48px;
+}
+
+.about-label {
+  margin-bottom: 30px;
+}
+
+.experience-section {
+  padding-top: 82px;
+  padding-bottom: 88px;
+}
+
+.experience-heading {
+  margin-bottom: 54px;
+}
+
+.experience-item {
+  gap: 42px;
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+.skills-section {
+  padding-top: 96px;
+  padding-bottom: 96px;
+}
+
+.skills-heading {
+  margin-bottom: 62px;
+}
+
+.skill-group {
+  padding: 42px;
+  min-height: 260px;
+}
+
+.certifications-section {
+  padding-top: 96px;
+  padding-bottom: 96px;
+}
+
+.certifications-heading {
+  margin-bottom: 62px;
+}
+
+.certification-item {
+  gap: 28px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.contact-section {
+  padding-top: 100px;
+  padding-bottom: 72px;
+}
+
+.contact-description {
+  margin-top: 34px;
+}
+
+.contact-actions {
+  margin-top: 32px;
+}
+
+.footer {
+  padding-top: 76px;
+  padding-bottom: 30px;
+}
+
+.footer-links {
+  margin-top: 52px;
+}
+
+.footer-bottom {
+  margin-top: 64px;
+}
+
+/* Compact View now also makes the redesigned Selected Work
+   and the rest of the page noticeably tighter. */
+body.compact-mode .work-section-v2,
+body.compact-mode .about-section,
+body.compact-mode .experience-section,
+body.compact-mode .skills-section,
+body.compact-mode .certifications-section,
+body.compact-mode .contact-section {
+  padding-top: 66px;
+  padding-bottom: 66px;
+}
+
+body.compact-mode .work-v2-top,
+body.compact-mode .experience-heading,
+body.compact-mode .skills-heading,
+body.compact-mode .certifications-heading {
+  margin-bottom: 40px;
+}
+
+body.compact-mode .project-showcase-grid {
+  gap: 15px;
+}
+
+body.compact-mode .project-showcase-card {
+  padding: 10px 10px 20px;
+}
+
+body.compact-mode .project-showcase-content {
+  min-height: 198px;
+  padding-top: 17px;
+}
+
+body.compact-mode .project-showcase-tags {
+  padding-top: 16px;
+}
+
+body.compact-mode .experience-item {
+  padding-top: 36px;
+  padding-bottom: 36px;
+}
+
+body.compact-mode .skill-group {
+  min-height: 220px;
+  padding: 34px;
+}
+
+body.compact-mode .certification-item {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+body.compact-mode .footer {
+  padding-top: 58px;
+}
+
+body.compact-mode .footer-links {
+  margin-top: 40px;
+}
+
+body.compact-mode .footer-bottom {
+  margin-top: 48px;
+}
+
+@media (max-width: 900px) {
+  .nav-container,
+  .hero-inner,
+  .work-container,
+  .work-container-v2,
+  .about-container,
+  .experience-container,
+  .skills-container,
+  .certifications-container,
+  .contact-container,
+  .footer-container {
+    width: min(92%, 1320px);
+  }
+
+  .work-section-v2,
+  .about-section,
+  .experience-section,
+  .skills-section,
+  .certifications-section,
+  .contact-section {
+    padding-top: 76px;
+    padding-bottom: 76px;
+  }
+
+  .work-v2-top,
+  .experience-heading,
+  .skills-heading,
+  .certifications-heading {
+    margin-bottom: 42px;
+  }
+}
+
+@media (max-width: 600px) {
+  .work-section-v2,
+  .about-section,
+  .experience-section,
+  .skills-section,
+  .certifications-section,
+  .contact-section {
+    padding-top: 62px;
+    padding-bottom: 62px;
+  }
+
+  .project-showcase-grid {
+    gap: 16px;
+  }
+
+  .project-showcase-content {
+    min-height: 205px;
+  }
+
+  .footer {
+    padding-top: 58px;
+  }
+}
