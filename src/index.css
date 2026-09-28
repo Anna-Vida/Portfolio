@@ -4742,3 +4742,17 @@ body.compact-mode .work-v2-top {
     transition: none !important;
   }
 }
+
+
+/* Keep redesigned Selected Work dark in every portfolio theme. */
+html[data-theme="original"] .work-section.work-section-v2,
+html[data-theme="accent"] .work-section.work-section-v2 {
+  background:
+    radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--work-accent) 12%, transparent), transparent 28%),
+    #08090b;
+  color: #f5f5f5;
+}
+
+html[data-theme="original"] .work-section.work-section-v2 {
+  --work-accent: #d99418;
+}
