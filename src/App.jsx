@@ -150,7 +150,9 @@ const ACCENT_OPTIONS = [
 ];
 
 function App() {
-  const [settingsOpen, setSettingsOpen] = useState(false);\n  const [projectFilter, setProjectFilter] = useState("All Projects");\n  const [selectedProject, setSelectedProject] = useState(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [projectFilter, setProjectFilter] = useState("All Projects");
+  const [selectedProject, setSelectedProject] = useState(null);
   const [flippedSkill, setFlippedSkill] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [compactView, setCompactView] = useState(() => {
