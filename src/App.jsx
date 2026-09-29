@@ -743,7 +743,7 @@ function App() {
               </div>
 
               <div className="about-copy-column">
-                <h2 className="about-premium-heading">
+                <h2 className="about-premium-heading about-scanner-heading">
                   <span className="about-premium-heading-light">
                     I build digital products that
                   </span>
@@ -753,6 +753,11 @@ function App() {
                     intelligent systems, and
                     <br />
                     connected technology.
+                  </span>
+
+                  <span className="about-text-scanner" aria-hidden="true">
+                    <span className="about-text-scanner-line" />
+                    <span className="about-text-scanner-glow" />
                   </span>
                 </h2>
 
