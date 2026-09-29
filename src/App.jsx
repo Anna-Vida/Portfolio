@@ -6,6 +6,7 @@ import { AnimatedText } from "./components/ui/animated-text";
 import { ParticleTextEffect } from "./components/ui/interactive-text-particle";
 import CinematicFooter from "./components/ui/motion-footer";
 import annaAboutPortrait from "./assets/anna-about-portrait.png.png";
+import IDCardLanyard from "./components/ui/id-card-lanyard";
 
 import {
   FaReact,
@@ -732,14 +733,13 @@ function App() {
 
             <div className="about-premium-grid">
               <div className="about-visual-column">
-                <div className="about-portrait-wrap">
-                  <div className="about-portrait-glow" aria-hidden="true" />
-                  <img
-                    src={annaAboutPortrait}
-                    alt="Anna Patricia Vida in graduation attire"
-                    className="about-portrait"
-                  />
-                </div>
+                <IDCardLanyard
+                  photoSrc={annaAboutPortrait}
+                  name="Anna Patricia Vida"
+                  role="Software Programmer"
+                  facebookUrl="https://www.facebook.com/share/1LrEqQPThi/"
+                  instagramUrl="https://www.instagram.com/xx.ap_bv/"
+                />
               </div>
 
               <div className="about-copy-column">
