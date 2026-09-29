@@ -36,8 +36,8 @@ export default function IDCardLanyard({
 
     const animate = () => {
       // Deliberately soft motion: low spring force + strong damping.
-      const spring = 0.035;
-      const damping = 0.72;
+      const spring = 0.11;
+      const damping = 0.7;
 
       motion.vx += (motion.targetX - motion.x) * spring;
       motion.vy += (motion.targetY - motion.y) * spring;
@@ -48,7 +48,7 @@ export default function IDCardLanyard({
       motion.x += motion.vx;
       motion.y += motion.vy;
 
-      const rotateZ = motion.x * 0.035;
+      const rotateZ = motion.x * 0.045;
       const rotateY = flipped ? 180 : 0;
 
       card.style.transform =
@@ -83,8 +83,8 @@ export default function IDCardLanyard({
     drag.moved = Math.max(drag.moved, Math.hypot(dx, dy));
 
     // Keep the badge close to center. It can move, but never fly around.
-    motionRef.current.targetX = Math.max(-18, Math.min(18, dx * 0.16));
-    motionRef.current.targetY = Math.max(-8, Math.min(10, dy * 0.08));
+    motionRef.current.targetX = Math.max(-42, Math.min(42, dx * 0.42));
+    motionRef.current.targetY = Math.max(-20, Math.min(24, dy * 0.22));
   };
 
   const finishPointer = (event) => {
@@ -117,8 +117,8 @@ export default function IDCardLanyard({
           --id-card-ink: #111;
           --id-card-muted: #707070;
           position: relative;
-          width: min(100%, 420px);
-          height: 565px;
+          width: min(100%, 500px);
+          height: 625px;
           margin: 0 auto;
           display: flex;
           justify-content: center;
@@ -174,8 +174,8 @@ export default function IDCardLanyard({
           position: absolute;
           top: 56px;
           left: 50%;
-          width: min(78vw, 300px);
-          height: 430px;
+          width: min(82vw, 355px);
+          height: 505px;
           margin-left: 0;
           transform-style: preserve-3d;
           transform-origin: 50% 8px;
@@ -229,7 +229,7 @@ export default function IDCardLanyard({
         }
 
         .about-id-photo {
-          height: 51%;
+          height: 52%;
           width: 100%;
           overflow: hidden;
           background:
@@ -248,7 +248,7 @@ export default function IDCardLanyard({
         }
 
         .about-id-front-body {
-          height: 49%;
+          height: 48%;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -260,7 +260,7 @@ export default function IDCardLanyard({
         .about-id-name {
           margin: 0;
           font-family: "Manrope", sans-serif;
-          font-size: 1.55rem;
+          font-size: 1.72rem;
           line-height: 1.05;
           font-weight: 650;
           letter-spacing: -.045em;
@@ -268,7 +268,7 @@ export default function IDCardLanyard({
 
         .about-id-role {
           margin: 9px 0 0;
-          font-size: .72rem;
+          font-size: .76rem;
           font-weight: 650;
           letter-spacing: .17em;
           text-transform: uppercase;
@@ -357,19 +357,19 @@ export default function IDCardLanyard({
 
         @media (max-width: 900px) {
           .about-id-lanyard {
-            height: 520px;
+            height: 570px;
           }
 
           .about-id-card {
-            width: min(76vw, 280px);
-            height: 405px;
+            width: min(80vw, 325px);
+            height: 465px;
             margin-left: 0;
           }
         }
 
         @media (max-width: 520px) {
           .about-id-lanyard {
-            height: 490px;
+            height: 520px;
           }
 
           .about-id-rope {
@@ -382,8 +382,8 @@ export default function IDCardLanyard({
 
           .about-id-card {
             top: 52px;
-            width: min(78vw, 260px);
-            height: 380px;
+            width: min(84vw, 290px);
+            height: 420px;
             margin-left: 0;
           }
 
@@ -467,7 +467,7 @@ export default function IDCardLanyard({
           </div>
 
           <p className="about-id-back-note">
-            Drag gently to move · click to return
+            Drag to move · click to return
           </p>
         </div>
       </div>
