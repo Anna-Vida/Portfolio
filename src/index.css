@@ -6056,7 +6056,7 @@ html[data-theme="accent"] .work-section.work-section-v2 {
 
 /* About lanyard layout */
 .about-section-premium .about-visual-column {
-  min-height: 625px;
+  min-height: 650px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6064,12 +6064,12 @@ html[data-theme="accent"] .work-section.work-section-v2 {
 
 @media (max-width: 900px) {
   .about-section-premium .about-visual-column {
-    min-height: 570px;
+    min-height: 600px;
   }
 }
 
 @media (max-width: 520px) {
   .about-section-premium .about-visual-column {
-    min-height: 520px;
+    min-height: 545px;
   }
 }
