@@ -6052,24 +6052,3 @@ html[data-theme="accent"] .work-section.work-section-v2 {
   width: min(100%, 440px);
   max-height: 520px;
 }
-
-
-/* About lanyard layout */
-.about-section-premium .about-visual-column {
-  min-height: 650px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@media (max-width: 900px) {
-  .about-section-premium .about-visual-column {
-    min-height: 600px;
-  }
-}
-
-@media (max-width: 520px) {
-  .about-section-premium .about-visual-column {
-    min-height: 545px;
-  }
-}
