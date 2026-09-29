@@ -6055,13 +6055,14 @@ html[data-theme="accent"] .work-section.work-section-v2 {
 
 /* =========================================================
    ABOUT HEADING SCANNER
-   Black text at rest. Letters turn white only as the scanner passes.
+   Smooth black-to-white scan without expensive animated masks.
 ========================================================= */
 
 .about-scanner-heading {
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  contain: paint;
 }
 
 .about-scanner-base {
@@ -6070,45 +6071,23 @@ html[data-theme="accent"] .work-section.work-section-v2 {
   z-index: 1;
 }
 
-/* Resting state: letters stay almost black against the dark background. */
+/* Dark at rest. */
 .about-scanner-base .about-premium-heading-light,
 .about-scanner-base .about-premium-heading-muted {
-  color: #151515;
+  color: #171717;
 }
 
-/* Exact duplicate of the heading, revealed only inside the moving scanner band. */
+/* White duplicate shown only inside a narrow moving band. */
 .about-scanner-reveal {
   position: absolute;
   inset: 0;
   display: block;
   z-index: 2;
   pointer-events: none;
-
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    transparent 0%,
-    transparent 42%,
-    #000 47%,
-    #000 53%,
-    transparent 58%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    90deg,
-    transparent 0%,
-    transparent 42%,
-    #000 47%,
-    #000 53%,
-    transparent 58%,
-    transparent 100%
-  );
-
-  -webkit-mask-size: 300% 100%;
-  mask-size: 300% 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-
-  animation: aboutScannerReveal 3.5s ease-in-out infinite alternate;
+  clip-path: inset(0 94% 0 0);
+  -webkit-clip-path: inset(0 94% 0 0);
+  will-change: clip-path;
+  animation: aboutScannerReveal 3.2s cubic-bezier(.45, 0, .55, 1) infinite alternate;
 }
 
 .about-scanner-reveal .about-premium-heading-light,
@@ -6116,41 +6095,42 @@ html[data-theme="accent"] .work-section.work-section-v2 {
   color: #f2f2f2;
 }
 
-/* Thin scanner line that travels with the white reveal. */
+/* Scanner line moves using left across the whole heading width. */
 .about-scanner-beam {
   position: absolute;
   top: -3%;
   bottom: -3%;
   left: 0;
-  width: 1px;
+  width: 2px;
   z-index: 3;
   pointer-events: none;
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.96);
   box-shadow:
-    0 0 8px rgba(255, 255, 255, 0.45),
-    0 0 18px rgba(255, 255, 255, 0.2);
-  animation: aboutScannerBeam 3.5s ease-in-out infinite alternate;
+    0 0 7px rgba(255, 255, 255, 0.46),
+    0 0 16px rgba(255, 255, 255, 0.18);
+  will-change: left;
+  animation: aboutScannerBeam 3.2s cubic-bezier(.45, 0, .55, 1) infinite alternate;
 }
 
 @keyframes aboutScannerReveal {
   from {
-    -webkit-mask-position: 100% 0;
-    mask-position: 100% 0;
+    clip-path: inset(0 94% 0 0);
+    -webkit-clip-path: inset(0 94% 0 0);
   }
 
   to {
-    -webkit-mask-position: 0% 0;
-    mask-position: 0% 0;
+    clip-path: inset(0 0 0 94%);
+    -webkit-clip-path: inset(0 0 0 94%);
   }
 }
 
 @keyframes aboutScannerBeam {
   from {
-    transform: translateX(0);
+    left: 0;
   }
 
   to {
-    transform: translateX(calc(100% - 1px));
+    left: calc(100% - 2px);
   }
 }
 
