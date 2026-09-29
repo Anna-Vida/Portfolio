@@ -6053,11 +6053,9 @@ html[data-theme="accent"] .work-section.work-section-v2 {
   max-height: 520px;
 }
 
-
 /* =========================================================
    ABOUT HEADING SCANNER
-   Keeps the original white + gray text colors unchanged.
-   Only a soft scanner line/glow moves across the heading.
+   Black text at rest. Letters turn white only as the scanner passes.
 ========================================================= */
 
 .about-scanner-heading {
@@ -6066,74 +6064,107 @@ html[data-theme="accent"] .work-section.work-section-v2 {
   overflow: hidden;
 }
 
-.about-text-scanner {
-  position: absolute;
-  inset: -4% 0 -4%;
-  pointer-events: none;
-  z-index: 3;
-  opacity: 0.78;
-  animation: aboutScannerTravel 3.4s ease-in-out infinite alternate;
+.about-scanner-base {
+  position: relative;
+  display: block;
+  z-index: 1;
 }
 
-.about-text-scanner-line {
+/* Resting state: letters stay almost black against the dark background. */
+.about-scanner-base .about-premium-heading-light,
+.about-scanner-base .about-premium-heading-muted {
+  color: #151515;
+}
+
+/* Exact duplicate of the heading, revealed only inside the moving scanner band. */
+.about-scanner-reveal {
   position: absolute;
-  top: 0;
-  bottom: 0;
+  inset: 0;
+  display: block;
+  z-index: 2;
+  pointer-events: none;
+
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 42%,
+    #000 47%,
+    #000 53%,
+    transparent 58%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 42%,
+    #000 47%,
+    #000 53%,
+    transparent 58%,
+    transparent 100%
+  );
+
+  -webkit-mask-size: 300% 100%;
+  mask-size: 300% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  animation: aboutScannerReveal 3.5s ease-in-out infinite alternate;
+}
+
+.about-scanner-reveal .about-premium-heading-light,
+.about-scanner-reveal .about-premium-heading-muted {
+  color: #f2f2f2;
+}
+
+/* Thin scanner line that travels with the white reveal. */
+.about-scanner-beam {
+  position: absolute;
+  top: -3%;
+  bottom: -3%;
   left: 0;
   width: 1px;
-  background: rgba(242, 242, 242, 0.92);
+  z-index: 3;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.92);
   box-shadow:
-    0 0 8px rgba(242, 242, 242, 0.42),
-    0 0 18px rgba(242, 242, 242, 0.18);
+    0 0 8px rgba(255, 255, 255, 0.45),
+    0 0 18px rgba(255, 255, 255, 0.2);
+  animation: aboutScannerBeam 3.5s ease-in-out infinite alternate;
 }
 
-.about-text-scanner-glow {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -34px;
-  width: 68px;
-  background: linear-gradient(
-    90deg,
-    rgba(242, 242, 242, 0) 0%,
-    rgba(242, 242, 242, 0.018) 32%,
-    rgba(242, 242, 242, 0.055) 50%,
-    rgba(242, 242, 242, 0.018) 68%,
-    rgba(242, 242, 242, 0) 100%
-  );
-  filter: blur(1px);
-}
-
-@keyframes aboutScannerTravel {
+@keyframes aboutScannerReveal {
   from {
-    transform: translateX(0%);
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
   }
 
   to {
-    transform: translateX(100%);
+    -webkit-mask-position: 0% 0;
+    mask-position: 0% 0;
   }
 }
 
-html[data-theme="accent"] .about-text-scanner-line {
-  background: var(--accent);
-  box-shadow:
-    0 0 8px color-mix(in srgb, var(--accent) 42%, transparent),
-    0 0 18px color-mix(in srgb, var(--accent) 18%, transparent);
-}
+@keyframes aboutScannerBeam {
+  from {
+    transform: translateX(0);
+  }
 
-html[data-theme="accent"] .about-text-scanner-glow {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    color-mix(in srgb, var(--accent) 2%, transparent) 32%,
-    color-mix(in srgb, var(--accent) 6%, transparent) 50%,
-    color-mix(in srgb, var(--accent) 2%, transparent) 68%,
-    transparent 100%
-  );
+  to {
+    transform: translateX(calc(100% - 1px));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .about-text-scanner {
+  .about-scanner-base .about-premium-heading-light {
+    color: #f2f2f2;
+  }
+
+  .about-scanner-base .about-premium-heading-muted {
+    color: #6a6a6a;
+  }
+
+  .about-scanner-reveal,
+  .about-scanner-beam {
     display: none;
   }
 }
