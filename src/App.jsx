@@ -780,10 +780,13 @@ function App() {
     {/* RIGHT SIDE */}
     <div className="about-content">
       <h2>
-        I build digital products that combine
-        <span>
-          {" "}
-          software, intelligent systems, and connected technology.
+        <span className="about-headline-primary">
+          I build digital products that combine
+        </span>
+        <span className="about-headline-muted">
+          software, intelligent systems,
+          <br />
+          and connected technology.
         </span>
       </h2>
 
