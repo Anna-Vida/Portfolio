@@ -41,12 +41,12 @@ export default function InteractiveAboutPortrait({ src, alt }) {
     const px = (event.clientX - rect.left) / rect.width - 0.5;
     const py = (event.clientY - rect.top) / rect.height - 0.5;
 
-    wrap.style.setProperty("--portrait-x", \`\${px * 12}px\`);
-    wrap.style.setProperty("--portrait-y", \`\${py * 8}px\`);
-    wrap.style.setProperty("--portrait-ry", \`\${px * 2.2}deg\`);
-    wrap.style.setProperty("--portrait-rx", \`\${py * -1.6}deg\`);
-    wrap.style.setProperty("--glow-x", \`\${px * 10}px\`);
-    wrap.style.setProperty("--glow-y", \`\${py * 6}px\`);
+    wrap.style.setProperty("--portrait-x", `${px * 12}px`);
+    wrap.style.setProperty("--portrait-y", `${py * 8}px`);
+    wrap.style.setProperty("--portrait-ry", `${px * 2.2}deg`);
+    wrap.style.setProperty("--portrait-rx", `${py * -1.6}deg`);
+    wrap.style.setProperty("--glow-x", `${px * 10}px`);
+    wrap.style.setProperty("--glow-y", `${py * 6}px`);
   };
 
   const resetPointer = () => {
