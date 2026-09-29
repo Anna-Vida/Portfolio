@@ -722,95 +722,89 @@ function App() {
         {/* =========================
             ABOUT
         ========================== */}
-        <section className="about-section" id="about">
-  <div className="about-container">
+        <section className="about-section about-section-premium" id="about">
+          <div className="about-shell">
+            <div className="about-topline">
+              <p>ABOUT</p>
+              <span>01</span>
+            </div>
 
-    {/* LEFT SIDE */}
-    <div className="about-side">
-      <p className="about-label">ABOUT</p>
+            <div className="about-premium-grid">
+              <div className="about-visual-column">
+                <div className="about-orbit-wrap">
+                  <div className="tech-orbit about-orbit">
+                    <div className="orbit-center">
+                      <span>TECH</span>
+                    </div>
 
-      <div className="about-orbit-wrap">
-        <div className="tech-orbit about-orbit">
-          <div className="orbit-center">
-            <span>TECH</span>
+                    <div className="orbit-ring orbit-ring-one">
+                      <div className="orbit-icon orbit-1"><FaReact /></div>
+                      <div className="orbit-icon orbit-2"><SiJavascript /></div>
+                      <div className="orbit-icon orbit-3"><SiTypescript /></div>
+                      <div className="orbit-icon orbit-4"><SiFirebase /></div>
+                    </div>
+
+                    <div className="orbit-ring orbit-ring-two">
+                      <div className="orbit-icon orbit-5"><FaAndroid /></div>
+                      <div className="orbit-icon orbit-6"><FaNodeJs /></div>
+                      <div className="orbit-icon orbit-7"><SiTailwindcss /></div>
+                      <div className="orbit-icon orbit-8"><FaGithub /></div>
+                      <div className="orbit-icon orbit-9"><SiVite /></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="about-copy-column">
+                <h2 className="about-premium-heading">
+                  <span className="about-premium-heading-light">
+                    I build digital products that
+                  </span>
+                  <span className="about-premium-heading-muted">
+                    combine software,
+                    <br />
+                    intelligent systems, and
+                    <br />
+                    connected technology.
+                  </span>
+                </h2>
+
+                <div className="about-info-grid">
+                  <article className="about-info-card">
+                    <div className="about-info-heading">
+                      <span className="about-info-number">01</span>
+                      <span className="about-info-label">PROFILE</span>
+                      <span className="about-info-line" />
+                    </div>
+
+                    <p>
+                      I'm Anna Patricia Vida, an Information Technology graduate
+                      and software developer with experience in mobile
+                      development, full-stack systems, AI, IoT, and offline-first
+                      applications.
+                    </p>
+                  </article>
+
+                  <article className="about-info-card">
+                    <div className="about-info-heading">
+                      <span className="about-info-number">02</span>
+                      <span className="about-info-label">FOCUS</span>
+                      <span className="about-info-line" />
+                    </div>
+
+                    <p>
+                      My work spans healthcare, agriculture, finance, computer
+                      vision, embedded systems, and wearable technology. I enjoy
+                      turning complex technical ideas into practical applications
+                      that people can actually use.
+                    </p>
+                  </article>
+                </div>
+              </div>
+            </div>
           </div>
+        </section>
 
-          <div className="orbit-ring orbit-ring-one">
-            <div className="orbit-icon orbit-1">
-              <FaReact />
-            </div>
-
-            <div className="orbit-icon orbit-2">
-              <SiJavascript />
-            </div>
-
-            <div className="orbit-icon orbit-3">
-              <SiTypescript />
-            </div>
-
-            <div className="orbit-icon orbit-4">
-              <SiFirebase />
-            </div>
-          </div>
-
-          <div className="orbit-ring orbit-ring-two">
-            <div className="orbit-icon orbit-5">
-              <FaAndroid />
-            </div>
-
-            <div className="orbit-icon orbit-6">
-              <FaNodeJs />
-            </div>
-
-            <div className="orbit-icon orbit-7">
-              <SiTailwindcss />
-            </div>
-
-            <div className="orbit-icon orbit-8">
-              <FaGithub />
-            </div>
-
-            <div className="orbit-icon orbit-9">
-              <SiVite />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {/* RIGHT SIDE */}
-    <div className="about-content">
-      <div className="about-particle-heading">
-        <ParticleTextEffect
-          text={"I build digital products that\ncombine software,\nintelligent systems, and\nconnected technology."}
-          colors={["#f2f2f2", "#d8d8d8", "#949494", "#5d5d5d"]}
-          animationForce={34}
-          particleDensity={4}
-        />
-        <h2 className="about-heading-fallback">
-          I build digital products that combine software, intelligent systems,
-          and connected technology.
-        </h2>
-      </div>
-
-      <div className="about-grid">
-        <p>
-          I'm Anna Patricia Vida, an Information Technology graduate and
-          software developer with experience in mobile development,
-          full-stack systems, AI, IoT, and offline-first applications.
-        </p>
-
-        <p>
-          My work spans healthcare, agriculture, finance, computer vision,
-          embedded systems, and wearable technology. I enjoy turning complex
-          technical ideas into practical applications that people can
-          actually use.
-        </p>
-      </div>
-    </div>
-
-  </div>
-</section>
         {/* =========================
             EXPERIENCE
         ========================== */}
