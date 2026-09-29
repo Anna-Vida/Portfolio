@@ -5,6 +5,7 @@ import HeroHexBackground from "./components/ui/hero-hex-background";
 import { AnimatedText } from "./components/ui/animated-text";
 import { ParticleTextEffect } from "./components/ui/interactive-text-particle";
 import CinematicFooter from "./components/ui/motion-footer";
+import annaAboutPortrait from "./assets/anna-about-portrait.png.png";
 
 import {
   FaReact,
@@ -734,7 +735,7 @@ function App() {
                 <div className="about-portrait-wrap">
                   <div className="about-portrait-glow" aria-hidden="true" />
                   <img
-                    src="/anna-about-portrait.webp"
+                    src={annaAboutPortrait}
                     alt="Anna Patricia Vida in graduation attire"
                     className="about-portrait"
                   />
