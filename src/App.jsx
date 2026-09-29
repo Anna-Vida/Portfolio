@@ -21,8 +21,6 @@ import {
   FaMousePointer,
   FaSlidersH,
   FaTimes,
-  FaFacebookF,
-  FaInstagram,
 } from "react-icons/fa";
 
 import {
@@ -734,58 +732,14 @@ function App() {
 
             <div className="about-premium-grid">
               <div className="about-visual-column">
-                <article className="about-profile-card">
-                  <div className="about-profile-image-wrap">
-                    <img
-                      src={annaAboutPortrait}
-                      alt="Anna Patricia Vida"
-                      className="about-profile-image"
-                    />
-                  </div>
-
-                  <div className="about-profile-body">
-                    <p className="about-profile-name">Anna Patricia Vida</p>
-
-                    <a
-                      className="about-profile-email"
-                      href="mailto:annapatriciavida12@gmail.com"
-                    >
-                      annapatriciavida12@gmail.com
-                    </a>
-
-                    <a
-                      href="https://www.facebook.com/share/1LrEqQPThi/"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="about-message-button"
-                    >
-                      <FaFacebookF aria-hidden="true" />
-                      <span>Message me</span>
-                    </a>
-
-                    <div className="about-social-buttons" aria-label="Social links">
-                      <a
-                        href="https://www.facebook.com/share/1LrEqQPThi/"
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label="Facebook"
-                        title="Facebook"
-                      >
-                        <FaFacebookF />
-                      </a>
-
-                      <a
-                        href="https://www.instagram.com/xx.ap_bv/"
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label="Instagram"
-                        title="Instagram"
-                      >
-                        <FaInstagram />
-                      </a>
-                    </div>
-                  </div>
-                </article>
+                <div className="about-portrait-wrap">
+                  <div className="about-portrait-glow" aria-hidden="true" />
+                  <img
+                    src={annaAboutPortrait}
+                    alt="Anna Patricia Vida in graduation attire"
+                    className="about-portrait"
+                  />
+                </div>
               </div>
 
               <div className="about-copy-column">
