@@ -21,6 +21,8 @@ import {
   FaMousePointer,
   FaSlidersH,
   FaTimes,
+  FaFacebookF,
+  FaInstagram,
 } from "react-icons/fa";
 
 import {
@@ -1414,76 +1416,87 @@ function App() {
         ========================== */}
         <section className="contact-section" id="contact">
           <div className="contact-container">
-            <p className="section-kicker">
-              CONTACT
-            </p>
+            <p className="section-kicker">CONTACT</p>
 
-            <div className="contact-content">
-              <h2>
-                Have a project, opportunity,
-                <span> or idea worth building?</span>
-              </h2>
+            <div className="contact-profile-layout">
+              <div className="contact-profile-copy">
+                <h2>
+                  Have a project, opportunity,
+                  <span> or idea worth building?</span>
+                </h2>
 
-              <p className="contact-description">
-                I'm open to software development opportunities,
-                collaborations, internships, freelance projects, and
-                conversations around mobile, AI, IoT, and full-stack
-                development.
-              </p>
-
-              <div className="contact-actions">
-                <a
-                  href="mailto:annapatriciavida12@gmail.com"
-                  className="contact-button contact-button-primary"
-                >
-                  Send me an email ↗
-                </a>
-
-                <a
-                  href="https://www.linkedin.com/in/annavida12/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="contact-button"
-                >
-                  LinkedIn ↗
-                </a>
-              </div>
-            </div>
-
-            <div className="contact-details">
-              <div>
-                <p className="contact-label">
-                  EMAIL
+                <p className="contact-description">
+                  I'm open to software development opportunities,
+                  collaborations, freelance projects, and conversations around
+                  mobile, AI, IoT, and full-stack development.
                 </p>
 
-                <a href="mailto:annapatriciavida12@gmail.com">
-                  annapatriciavida12@gmail.com
-                </a>
+                <div className="contact-mini-details">
+                  <div>
+                    <p className="contact-label">EMAIL</p>
+                    <a href="mailto:annapatriciavida12@gmail.com">
+                      annapatriciavida12@gmail.com
+                    </a>
+                  </div>
+
+                  <div>
+                    <p className="contact-label">LOCATION</p>
+                    <p>Quezon City, Philippines</p>
+                  </div>
+                </div>
               </div>
 
-              <div>
-                <p className="contact-label">
-                  LOCATION
-                </p>
+              <article className="contact-profile-card">
+                <div className="contact-profile-image-wrap">
+                  <img
+                    src={annaAboutPortrait}
+                    alt="Anna Patricia Vida"
+                    className="contact-profile-image"
+                  />
+                </div>
 
-                <p>
-                  Quezon City, Philippines
-                </p>
-              </div>
+                <div className="contact-profile-body">
+                  <p className="contact-profile-name">Anna Patricia Vida</p>
+                  <a
+                    className="contact-profile-email"
+                    href="mailto:annapatriciavida12@gmail.com"
+                  >
+                    annapatriciavida12@gmail.com
+                  </a>
 
-              <div>
-                <p className="contact-label">
-                  GITHUB
-                </p>
+                  <a
+                    href="https://www.facebook.com/share/1LrEqQPThi/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="contact-message-button"
+                  >
+                    <FaFacebookF aria-hidden="true" />
+                    <span>Message me</span>
+                  </a>
 
-                <a
-                  href="https://github.com/Anna-Vida"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  github.com/Anna-Vida ↗
-                </a>
-              </div>
+                  <div className="contact-social-buttons" aria-label="Social links">
+                    <a
+                      href="https://www.facebook.com/share/1LrEqQPThi/"
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Facebook"
+                      title="Facebook"
+                    >
+                      <FaFacebookF />
+                    </a>
+
+                    <a
+                      href="https://www.instagram.com/xx.ap_bv/"
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label="Instagram"
+                      title="Instagram"
+                    >
+                      <FaInstagram />
+                    </a>
+                  </div>
+                </div>
+              </article>
             </div>
           </div>
         </section>
