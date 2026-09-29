@@ -6218,3 +6218,374 @@ html[data-theme="accent"] .work-section.work-section-v2 {
     transition: none;
   }
 }
+
+
+/* =========================================================
+   LIMELIGHT NAVIGATION
+   Rounded glass dock + subtle active spotlight inspired by
+   the provided reference, while keeping the portfolio labels.
+========================================================= */
+
+.nav-right {
+  gap: 18px;
+}
+
+.limelight-nav {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 3px;
+  min-height: 48px;
+  padding: 4px 6px;
+  overflow: visible;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.028);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 14px 35px rgba(0, 0, 0, 0.14);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.limelight-nav a {
+  position: relative;
+  min-width: 72px;
+  height: 40px;
+  padding: 0 12px;
+  display: grid;
+  place-items: center;
+  overflow: visible;
+  border-radius: 13px;
+  color: #8f8f8f;
+  transition:
+    color 0.24s ease,
+    transform 0.24s ease,
+    background 0.24s ease;
+}
+
+.limelight-nav .nav-label {
+  position: relative;
+  z-index: 3;
+  font-size: 0.76rem;
+  white-space: nowrap;
+}
+
+.limelight-nav a:hover {
+  color: #e8e8e8;
+  transform: translateY(-1px);
+}
+
+.limelight-nav a.is-active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.nav-limelight {
+  position: absolute;
+  left: 50%;
+  top: -5px;
+  width: 74px;
+  height: 58px;
+  transform: translateX(-50%);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s ease;
+}
+
+.nav-limelight::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 38px;
+  height: 4px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--accent) 34%, transparent),
+    0 0 22px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+.nav-limelight::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  width: 76px;
+  height: 56px;
+  transform: translateX(-50%);
+  clip-path: polygon(34% 0, 66% 0, 100% 100%, 0 100%);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--accent) 16%, transparent),
+    color-mix(in srgb, var(--accent) 4%, transparent) 54%,
+    transparent 100%
+  );
+  filter: blur(2px);
+}
+
+.limelight-nav a.is-active .nav-limelight,
+.limelight-nav a:hover .nav-limelight {
+  opacity: 1;
+}
+
+.limelight-nav a:hover .nav-limelight {
+  transform: translateX(-50%) scaleX(0.88);
+}
+
+@media (max-width: 1180px) {
+  .limelight-nav a {
+    min-width: auto;
+    padding-inline: 9px;
+  }
+
+  .limelight-nav .nav-label {
+    font-size: 0.7rem;
+  }
+
+  .nav-right {
+    gap: 12px;
+  }
+}
+
+/* =========================================================
+   EXPERIENCE — INTERACTIVE EDITORIAL TIMELINE
+========================================================= */
+
+.experience-heading .section-kicker,
+.experience-heading h2 {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.experience-section.is-visible .experience-heading .section-kicker {
+  animation: experienceReveal 0.65s ease forwards;
+}
+
+.experience-section.is-visible .experience-heading h2 {
+  animation: experienceReveal 0.8s 0.08s cubic-bezier(.2,.72,.2,1) forwards;
+}
+
+.experience-list {
+  position: relative;
+  border-top: 0;
+}
+
+.experience-list::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.experience-progress-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  z-index: 2;
+  background: linear-gradient(
+    90deg,
+    var(--accent),
+    rgba(255, 255, 255, 0.18)
+  );
+  box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.experience-section.is-visible .experience-progress-line {
+  animation: experienceLineDraw 1.15s 0.18s cubic-bezier(.2,.72,.2,1) forwards;
+}
+
+.experience-item {
+  position: relative;
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.65s ease,
+    transform 0.65s cubic-bezier(.2,.72,.2,1),
+    background 0.28s ease,
+    padding-left 0.28s ease,
+    padding-right 0.28s ease;
+}
+
+.experience-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.experience-year {
+  position: relative;
+  padding-left: 23px;
+}
+
+.experience-year::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #595959;
+  border: 1px solid #7b7b7b;
+  box-shadow: 0 0 0 5px rgba(255,255,255,0.018);
+  transition:
+    transform 0.26s ease,
+    background 0.26s ease,
+    box-shadow 0.26s ease;
+}
+
+.experience-year::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 29px;
+  width: 1px;
+  height: 42px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.18),
+    transparent
+  );
+  transform-origin: top;
+  transition:
+    height 0.28s ease,
+    background 0.28s ease;
+}
+
+.experience-role h3,
+.experience-company,
+.experience-description p {
+  transition:
+    color 0.28s ease,
+    transform 0.28s ease,
+    opacity 0.28s ease;
+}
+
+.experience-item.is-visible .experience-description p {
+  animation: experienceParagraphIn 0.58s ease both;
+}
+
+.experience-item.is-visible .experience-description p:nth-child(1) {
+  animation-delay: 0.13s;
+}
+
+.experience-item.is-visible .experience-description p:nth-child(2) {
+  animation-delay: 0.23s;
+}
+
+.experience-item.is-visible .experience-description p:nth-child(3) {
+  animation-delay: 0.33s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .experience-item:hover {
+    transform: translateY(-4px);
+    background: rgba(255,255,255,0.018);
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .experience-item:hover .experience-year::before {
+    transform: scale(1.45);
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow:
+      0 0 0 7px color-mix(in srgb, var(--accent) 6%, transparent),
+      0 0 20px color-mix(in srgb, var(--accent) 18%, transparent);
+  }
+
+  .experience-item:hover .experience-year::after {
+    height: 62px;
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--accent) 42%, transparent),
+      transparent
+    );
+  }
+
+  .experience-item:hover .experience-role h3 {
+    color: #fff;
+    transform: translateX(4px);
+  }
+
+  .experience-item:hover .experience-company {
+    color: #a9a9a9;
+  }
+
+  .experience-item:hover .experience-description p {
+    color: #c3c3c3;
+    transform: translateX(5px);
+  }
+}
+
+@keyframes experienceReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes experienceLineDraw {
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes experienceParagraphIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .experience-item {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .experience-year {
+    padding-left: 22px;
+  }
+
+  .experience-year::after {
+    height: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .limelight-nav {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience-heading .section-kicker,
+  .experience-heading h2,
+  .experience-item,
+  .experience-description p {
+    opacity: 1;
+    transform: none;
+    animation: none !important;
+    transition: none;
+  }
+
+  .experience-progress-line {
+    width: 100%;
+    animation: none !important;
+  }
+}

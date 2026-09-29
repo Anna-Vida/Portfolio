@@ -143,6 +143,7 @@ const ACCENT_OPTIONS = [
 
 function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [activeNav, setActiveNav] = useState("");
   const [projectFilter, setProjectFilter] = useState("All Projects");
   const [selectedProject, setSelectedProject] = useState(null);
   const [flippedSkill, setFlippedSkill] = useState(null);
@@ -160,6 +161,92 @@ function App() {
 
   const settingsRef = useRef(null);
   const cursorRef = useRef(null);
+
+  useEffect(() => {
+    const navSectionIds = [
+      "about",
+      "work",
+      "experience",
+      "skills",
+      "certifications",
+      "contact",
+    ];
+
+    const navSections = navSectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    if (!navSections.length) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visible[0]) {
+          setActiveNav(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-24% 0px -58% 0px",
+        threshold: [0.08, 0.2, 0.4, 0.6],
+      }
+    );
+
+    navSections.forEach((section) => observer.observe(section));
+
+    const handleTop = () => {
+      if (window.scrollY < window.innerHeight * 0.45) {
+        setActiveNav("");
+      }
+    };
+
+    window.addEventListener("scroll", handleTop, { passive: true });
+    handleTop();
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleTop);
+    };
+  }, []);
+
+  useEffect(() => {
+    const section = document.querySelector(".experience-section");
+    const items = document.querySelectorAll(".experience-item");
+
+    if (!section || !items.length) return undefined;
+
+    const sectionObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          section.classList.add("is-visible");
+          sectionObserver.disconnect();
+        }
+      },
+      { threshold: 0.14 }
+    );
+
+    const itemObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            itemObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    sectionObserver.observe(section);
+    items.forEach((item) => itemObserver.observe(item));
+
+    return () => {
+      sectionObserver.disconnect();
+      itemObserver.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     if (accentColor === "original") {
@@ -333,13 +420,25 @@ function App() {
           </a>
 
           <div className="nav-right">
-            <nav>
-              <a href="#about">About</a>
-              <a href="#work">Work</a>
-              <a href="#experience">Experience</a>
-              <a href="#skills">Skills</a>
-              <a href="#certifications">Certifications</a>
-              <a href="#contact">Contact</a>
+            <nav className="limelight-nav" aria-label="Primary navigation">
+              {[
+                ["about", "About"],
+                ["work", "Work"],
+                ["experience", "Experience"],
+                ["skills", "Skills"],
+                ["certifications", "Certifications"],
+                ["contact", "Contact"],
+              ].map(([id, label]) => (
+                <a
+                  key={id}
+                  href={`#${id}`}
+                  className={activeNav === id ? "is-active" : ""}
+                  aria-current={activeNav === id ? "page" : undefined}
+                >
+                  <span className="nav-limelight" aria-hidden="true" />
+                  <span className="nav-label">{label}</span>
+                </a>
+              ))}
             </nav>
 
             <div className="portfolio-settings" ref={settingsRef}>
@@ -804,6 +903,7 @@ function App() {
             </div>
 
             <div className="experience-list">
+              <span className="experience-progress-line" aria-hidden="true" />
               <article className="experience-item">
                 <div className="experience-year">
                   JAN 2026 — APR 2026
