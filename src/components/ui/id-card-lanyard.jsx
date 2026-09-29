@@ -8,8 +8,11 @@ export default function IDCardLanyard({
   facebookUrl,
   instagramUrl,
 }) {
+  const sceneRef = useRef(null);
   const cardRef = useRef(null);
+  const ropePathRef = useRef(null);
   const rafRef = useRef(null);
+
   const dragRef = useRef({
     active: false,
     pointerId: null,
@@ -17,6 +20,7 @@ export default function IDCardLanyard({
     startY: 0,
     moved: 0,
   });
+
   const motionRef = useRef({
     x: 0,
     y: 0,
@@ -30,14 +34,19 @@ export default function IDCardLanyard({
 
   useEffect(() => {
     const card = cardRef.current;
-    if (!card) return;
+    const ropePath = ropePathRef.current;
+    const scene = sceneRef.current;
+    if (!card || !ropePath || !scene) return;
 
     const motion = motionRef.current;
 
     const animate = () => {
-      // Deliberately soft motion: low spring force + strong damping.
-      const spring = 0.11;
-      const damping = 0.7;
+      const dragging = dragRef.current.active;
+
+      // While dragging, the card follows quickly.
+      // After release, a damped spring gives one gentle swing and returns home.
+      const spring = dragging ? 0.28 : 0.065;
+      const damping = dragging ? 0.7 : 0.84;
 
       motion.vx += (motion.targetX - motion.x) * spring;
       motion.vy += (motion.targetY - motion.y) * spring;
@@ -48,18 +57,33 @@ export default function IDCardLanyard({
       motion.x += motion.vx;
       motion.y += motion.vy;
 
-      const rotateZ = motion.x * 0.045;
-      const rotateY = flipped ? 180 : 0;
+      const rotate = Math.max(-7, Math.min(7, motion.x * 0.045));
 
       card.style.transform =
-        `translateX(-50%) translate3d(${motion.x}px, ${motion.y}px, 0) rotateZ(${rotateZ}deg) rotateY(${rotateY}deg)`;
+        `translateX(-50%) translate3d(${motion.x}px, ${motion.y}px, 0) rotate(${rotate}deg)`;
+
+      const sceneRect = scene.getBoundingClientRect();
+      const anchorX = sceneRect.width / 2;
+      const anchorY = 10;
+      const cardTop = 72 + motion.y;
+      const cardX = anchorX + motion.x;
+      const attachY = cardTop + 4;
+
+      const bendX = anchorX + motion.x * 0.24;
+      const bendY = Math.max(30, (anchorY + attachY) * 0.5);
+
+      const ropeD =
+        `M ${anchorX} ${anchorY} Q ${bendX} ${bendY}, ${cardX} ${attachY}`;
+
+      ropeLayers.forEach((layer) => layer.setAttribute("d", ropeD));
 
       rafRef.current = requestAnimationFrame(animate);
     };
 
     rafRef.current = requestAnimationFrame(animate);
+
     return () => cancelAnimationFrame(rafRef.current);
-  }, [flipped]);
+  }, []);
 
   const onPointerDown = (event) => {
     if (event.target.closest("a")) return;
@@ -80,11 +104,24 @@ export default function IDCardLanyard({
 
     const dx = event.clientX - drag.startX;
     const dy = event.clientY - drag.startY;
+
     drag.moved = Math.max(drag.moved, Math.hypot(dx, dy));
 
-    // Keep the badge close to center. It can move, but never fly around.
-    motionRef.current.targetX = Math.max(-42, Math.min(42, dx * 0.42));
-    motionRef.current.targetY = Math.max(-20, Math.min(24, dy * 0.22));
+    // Let the visitor visibly stretch/swing the badge,
+    // but keep it inside the About composition.
+    const maxX = 118;
+    const maxUp = -34;
+    const maxDown = 92;
+
+    motionRef.current.targetX = Math.max(
+      -maxX,
+      Math.min(maxX, dx * 0.82)
+    );
+
+    motionRef.current.targetY = Math.max(
+      maxUp,
+      Math.min(maxDown, dy * 0.62)
+    );
   };
 
   const finishPointer = (event) => {
@@ -93,116 +130,141 @@ export default function IDCardLanyard({
 
     drag.active = false;
 
-    // Always spring gently back to the center.
+    // A small release impulse creates a brief swing.
+    motionRef.current.vx *= 1.12;
+    motionRef.current.vy *= 0.9;
+
     motionRef.current.targetX = 0;
     motionRef.current.targetY = 0;
 
-    if (drag.moved < 8 && !event.target.closest("a")) {
+    if (drag.moved < 7 && !event.target.closest("a")) {
       setFlipped((current) => !current);
     }
 
-    if (
-      cardRef.current?.hasPointerCapture?.(event.pointerId)
-    ) {
+    if (cardRef.current?.hasPointerCapture?.(event.pointerId)) {
       cardRef.current.releasePointerCapture(event.pointerId);
     }
   };
 
   return (
-    <div className="about-id-lanyard">
+    <div ref={sceneRef} className="about-id-lanyard">
       <style>{`
         .about-id-lanyard {
-          --id-card-bg: #f2f2ef;
+          --id-card-bg: #f3f3f0;
           --id-card-bg-2: #e8e8e4;
-          --id-card-ink: #111;
-          --id-card-muted: #707070;
+          --id-card-ink: #101010;
+          --id-card-muted: #747474;
           position: relative;
-          width: min(100%, 500px);
-          height: 625px;
+          width: min(100%, 560px);
+          height: 650px;
           margin: 0 auto;
-          display: flex;
-          justify-content: center;
           overflow: visible;
-          perspective: 1300px;
+          perspective: 1400px;
         }
 
-        .about-id-anchor {
+        .about-id-rail {
           position: absolute;
           top: 0;
           left: 50%;
-          width: 56px;
+          width: 68px;
           height: 7px;
           transform: translateX(-50%);
           border-radius: 0 0 5px 5px;
-          background: linear-gradient(180deg, #383838, #151515);
-          box-shadow: 0 3px 9px rgba(0,0,0,.35);
+          background: linear-gradient(180deg, #3d3d3d, #151515);
+          box-shadow: 0 3px 10px rgba(0,0,0,.38);
+          z-index: 4;
         }
 
-        .about-id-rope {
+        .about-id-rope-svg {
           position: absolute;
-          top: 6px;
-          left: 50%;
-          width: 12px;
-          height: 44px;
-          transform: translateX(-50%);
-          border-radius: 999px;
-          background:
-            linear-gradient(90deg,
-              #121212 0%,
-              #353535 36%,
-              #0e0e0e 58%,
-              #262626 100%);
-          box-shadow:
-            inset 1px 0 rgba(255,255,255,.08),
-            0 6px 12px rgba(0,0,0,.28);
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          overflow: visible;
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        .about-id-rope-shadow {
+          fill: none;
+          stroke: rgba(0,0,0,.34);
+          stroke-width: 17px;
+          stroke-linecap: round;
+          transform: translate(2px, 4px);
+        }
+
+        .about-id-rope-main {
+          fill: none;
+          stroke: #202020;
+          stroke-width: 13px;
+          stroke-linecap: round;
+        }
+
+        .about-id-rope-highlight {
+          fill: none;
+          stroke: rgba(255,255,255,.08);
+          stroke-width: 3px;
+          stroke-linecap: round;
         }
 
         .about-id-clip {
           position: absolute;
-          top: 42px;
+          top: 54px;
           left: 50%;
-          width: 30px;
-          height: 20px;
+          width: 34px;
+          height: 23px;
           transform: translateX(-50%);
-          border-radius: 7px;
-          background: linear-gradient(145deg, #d8d8d8, #747474 58%, #3d3d3d);
-          box-shadow: 0 4px 10px rgba(0,0,0,.28);
-          z-index: 3;
+          border-radius: 8px;
+          background: linear-gradient(145deg, #e2e2e2, #8a8a8a 58%, #414141);
+          box-shadow: 0 5px 12px rgba(0,0,0,.32);
+          z-index: 5;
+          pointer-events: none;
         }
 
         .about-id-card {
           position: absolute;
-          top: 56px;
+          top: 72px;
           left: 50%;
-          width: min(82vw, 355px);
-          height: 505px;
-          margin-left: 0;
-          transform-style: preserve-3d;
-          transform-origin: 50% 8px;
+          width: min(84vw, 390px);
+          height: 530px;
+          transform: translateX(-50%);
+          transform-origin: 50% 6px;
           cursor: grab;
           touch-action: none;
           user-select: none;
           will-change: transform;
+          z-index: 3;
         }
 
         .about-id-card:active {
           cursor: grabbing;
         }
 
+        .about-id-card-inner {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          transform-style: preserve-3d;
+          transition: transform .58s cubic-bezier(.2,.72,.2,1);
+        }
+
+        .about-id-card.is-flipped .about-id-card-inner {
+          transform: rotateY(180deg);
+        }
+
         .about-id-face {
           position: absolute;
           inset: 0;
           overflow: hidden;
-          border-radius: 24px;
+          border-radius: 26px;
           backface-visibility: hidden;
-          background:
-            linear-gradient(160deg, var(--id-card-bg), var(--id-card-bg-2));
+          background: linear-gradient(160deg, var(--id-card-bg), var(--id-card-bg-2));
           color: var(--id-card-ink);
-          border: 1px solid rgba(255,255,255,.5);
+          border: 1px solid rgba(255,255,255,.55);
           box-shadow:
-            0 28px 55px -24px rgba(0,0,0,.72),
-            0 12px 22px -12px rgba(0,0,0,.5),
-            inset 0 1px rgba(255,255,255,.85);
+            0 32px 72px -26px rgba(0,0,0,.72),
+            0 14px 28px -14px rgba(0,0,0,.5),
+            inset 0 1px rgba(255,255,255,.9);
         }
 
         .about-id-back {
@@ -211,29 +273,29 @@ export default function IDCardLanyard({
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          padding: 32px 26px;
+          padding: 36px 30px;
           text-align: center;
         }
 
         .about-id-hole {
           position: absolute;
-          top: 12px;
+          top: 13px;
           left: 50%;
-          width: 42px;
-          height: 9px;
+          width: 44px;
+          height: 10px;
           transform: translateX(-50%);
           border-radius: 999px;
-          background: #242424;
-          z-index: 4;
+          background: #232323;
           opacity: .9;
+          z-index: 4;
         }
 
         .about-id-photo {
-          height: 52%;
           width: 100%;
+          height: 53%;
           overflow: hidden;
           background:
-            radial-gradient(circle at 50% 28%, #fff, #dededb 78%);
+            radial-gradient(circle at 50% 30%, #fff 0%, #ecece8 58%, #d9d9d4 100%);
           border-bottom: 1px solid rgba(0,0,0,.09);
         }
 
@@ -241,91 +303,91 @@ export default function IDCardLanyard({
           width: 100%;
           height: 100%;
           display: block;
-          object-fit: contain;
-          object-position: center bottom;
+          object-fit: cover;
+          object-position: 50% 18%;
           filter: grayscale(1) contrast(1.03);
-          transform: scale(1.025);
+          transform: scale(1.09);
         }
 
         .about-id-front-body {
-          height: 48%;
+          height: 47%;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          padding: 24px 22px 22px;
+          padding: 24px 26px 22px;
           text-align: center;
         }
 
         .about-id-name {
           margin: 0;
           font-family: "Manrope", sans-serif;
-          font-size: 1.72rem;
-          line-height: 1.05;
+          font-size: 1.9rem;
+          line-height: 1.03;
           font-weight: 650;
-          letter-spacing: -.045em;
+          letter-spacing: -.05em;
         }
 
         .about-id-role {
-          margin: 9px 0 0;
-          font-size: .76rem;
+          margin: 10px 0 0;
+          font-size: .78rem;
           font-weight: 650;
-          letter-spacing: .17em;
+          letter-spacing: .18em;
           text-transform: uppercase;
           color: var(--id-card-muted);
         }
 
         .about-id-tap {
-          margin-top: 23px;
+          margin-top: 24px;
           font-size: .62rem;
-          letter-spacing: .14em;
+          letter-spacing: .15em;
           text-transform: uppercase;
-          color: #989898;
+          color: #9c9c9c;
         }
 
         .about-id-back-mark {
-          width: 46px;
+          width: 52px;
           height: 7px;
-          margin-bottom: 30px;
+          margin-bottom: 34px;
           border-radius: 999px;
           background: #222;
         }
 
         .about-id-back-name {
           margin: 0;
-          max-width: 220px;
+          max-width: 260px;
           font-family: "Manrope", sans-serif;
-          font-size: 2rem;
+          font-size: 2.2rem;
           line-height: .98;
           letter-spacing: -.055em;
           font-weight: 650;
         }
 
         .about-id-back-role {
-          margin: 12px 0 34px;
+          margin: 14px 0 38px;
           color: var(--id-card-muted);
-          font-size: .72rem;
+          font-size: .76rem;
           font-weight: 650;
-          letter-spacing: .15em;
+          letter-spacing: .16em;
           text-transform: uppercase;
         }
 
         .about-id-socials {
           display: flex;
-          gap: 13px;
+          gap: 14px;
         }
 
         .about-id-socials a {
-          width: 48px;
-          height: 48px;
+          width: 50px;
+          height: 50px;
           border-radius: 50%;
           display: inline-flex;
           align-items: center;
           justify-content: center;
           border: 1px solid rgba(17,17,17,.18);
-          color: #323232;
-          background: rgba(255,255,255,.24);
-          font-size: 1.08rem;
+          color: #333;
+          background: rgba(255,255,255,.28);
+          font-size: 1.12rem;
           transition:
             transform .2s ease,
             color .2s ease,
@@ -347,7 +409,7 @@ export default function IDCardLanyard({
         }
 
         .about-id-back-note {
-          margin: 30px 0 0;
+          margin: 32px 0 0;
           font-size: .62rem;
           line-height: 1.6;
           letter-spacing: .12em;
@@ -355,65 +417,69 @@ export default function IDCardLanyard({
           color: #969696;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 1100px) {
           .about-id-lanyard {
-            height: 570px;
+            height: 600px;
           }
 
           .about-id-card {
-            width: min(80vw, 325px);
-            height: 465px;
-            margin-left: 0;
+            width: min(82vw, 350px);
+            height: 485px;
           }
         }
 
-        @media (max-width: 520px) {
+        @media (max-width: 600px) {
           .about-id-lanyard {
-            height: 520px;
-          }
-
-          .about-id-rope {
-            height: 40px;
-          }
-
-          .about-id-clip {
-            top: 38px;
+            height: 545px;
           }
 
           .about-id-card {
-            top: 52px;
-            width: min(84vw, 290px);
-            height: 420px;
-            margin-left: 0;
+            top: 68px;
+            width: min(86vw, 310px);
+            height: 430px;
+          }
+
+          .about-id-photo {
+            height: 52%;
+          }
+
+          .about-id-front-body {
+            height: 48%;
           }
 
           .about-id-name {
-            font-size: 1.35rem;
+            font-size: 1.55rem;
           }
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .about-id-card,
+          .about-id-card-inner,
           .about-id-socials a {
             transition: none;
           }
         }
       `}</style>
 
-      <div className="about-id-anchor" aria-hidden="true" />
-      <div className="about-id-rope" aria-hidden="true" />
+      <div className="about-id-rail" aria-hidden="true" />
+
+      <svg className="about-id-rope-svg" aria-hidden="true">
+        <path className="about-id-rope-layer about-id-rope-shadow" />
+        <path ref={ropePathRef} className="about-id-rope-layer about-id-rope-main" />
+        <path className="about-id-rope-layer about-id-rope-highlight" />
+      </svg>
+
       <div className="about-id-clip" aria-hidden="true" />
 
       <div
         ref={cardRef}
-        className="about-id-card"
+        className={`about-id-card ${flipped ? "is-flipped" : ""}`}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={finishPointer}
         onPointerCancel={finishPointer}
         role="button"
         tabIndex={0}
-        aria-label="Anna Patricia Vida profile card. Click to flip."
+        aria-label="Anna Patricia Vida profile card. Drag to swing or click to flip."
         onKeyDown={(event) => {
           if (event.key === "Enter" || event.key === " ") {
             event.preventDefault();
@@ -421,54 +487,58 @@ export default function IDCardLanyard({
           }
         }}
       >
-        <div className="about-id-face about-id-front">
-          <div className="about-id-hole" />
-          <div className="about-id-photo">
-            <img src={photoSrc} alt={name} />
+        <div className="about-id-card-inner">
+          <div className="about-id-face about-id-front">
+            <div className="about-id-hole" />
+
+            <div className="about-id-photo">
+              <img src={photoSrc} alt={name} />
+            </div>
+
+            <div className="about-id-front-body">
+              <h3 className="about-id-name">{name}</h3>
+              <p className="about-id-role">{role}</p>
+              <p className="about-id-tap">Drag to swing · click to flip</p>
+            </div>
           </div>
 
-          <div className="about-id-front-body">
-            <h3 className="about-id-name">{name}</h3>
-            <p className="about-id-role">{role}</p>
-            <p className="about-id-tap">Click to flip</p>
+          <div className="about-id-face about-id-back">
+            <div className="about-id-hole" />
+            <div className="about-id-back-mark" />
+
+            <h3 className="about-id-back-name">{name}</h3>
+            <p className="about-id-back-role">{role}</p>
+
+            <div className="about-id-socials" aria-label="Social links">
+              {facebookUrl && (
+                <a
+                  href={facebookUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Facebook"
+                  title="Facebook"
+                >
+                  <FaFacebookF />
+                </a>
+              )}
+
+              {instagramUrl && (
+                <a
+                  href={instagramUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Instagram"
+                  title="Instagram"
+                >
+                  <FaInstagram />
+                </a>
+              )}
+            </div>
+
+            <p className="about-id-back-note">
+              Drag to swing · click to return
+            </p>
           </div>
-        </div>
-
-        <div className="about-id-face about-id-back">
-          <div className="about-id-hole" />
-          <div className="about-id-back-mark" />
-          <h3 className="about-id-back-name">{name}</h3>
-          <p className="about-id-back-role">{role}</p>
-
-          <div className="about-id-socials" aria-label="Social links">
-            {facebookUrl && (
-              <a
-                href={facebookUrl}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Facebook"
-                title="Facebook"
-              >
-                <FaFacebookF />
-              </a>
-            )}
-
-            {instagramUrl && (
-              <a
-                href={instagramUrl}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Instagram"
-                title="Instagram"
-              >
-                <FaInstagram />
-              </a>
-            )}
-          </div>
-
-          <p className="about-id-back-note">
-            Drag to move · click to return
-          </p>
         </div>
       </div>
     </div>
