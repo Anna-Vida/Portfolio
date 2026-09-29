@@ -6052,3 +6052,88 @@ html[data-theme="accent"] .work-section.work-section-v2 {
   width: min(100%, 440px);
   max-height: 520px;
 }
+
+
+/* =========================================================
+   ABOUT HEADING SCANNER
+   Keeps the original white + gray text colors unchanged.
+   Only a soft scanner line/glow moves across the heading.
+========================================================= */
+
+.about-scanner-heading {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.about-text-scanner {
+  position: absolute;
+  inset: -4% 0 -4%;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0.78;
+  animation: aboutScannerTravel 3.4s ease-in-out infinite alternate;
+}
+
+.about-text-scanner-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: rgba(242, 242, 242, 0.92);
+  box-shadow:
+    0 0 8px rgba(242, 242, 242, 0.42),
+    0 0 18px rgba(242, 242, 242, 0.18);
+}
+
+.about-text-scanner-glow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -34px;
+  width: 68px;
+  background: linear-gradient(
+    90deg,
+    rgba(242, 242, 242, 0) 0%,
+    rgba(242, 242, 242, 0.018) 32%,
+    rgba(242, 242, 242, 0.055) 50%,
+    rgba(242, 242, 242, 0.018) 68%,
+    rgba(242, 242, 242, 0) 100%
+  );
+  filter: blur(1px);
+}
+
+@keyframes aboutScannerTravel {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+html[data-theme="accent"] .about-text-scanner-line {
+  background: var(--accent);
+  box-shadow:
+    0 0 8px color-mix(in srgb, var(--accent) 42%, transparent),
+    0 0 18px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+html[data-theme="accent"] .about-text-scanner-glow {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--accent) 2%, transparent) 32%,
+    color-mix(in srgb, var(--accent) 6%, transparent) 50%,
+    color-mix(in srgb, var(--accent) 2%, transparent) 68%,
+    transparent 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-text-scanner {
+    display: none;
+  }
+}
