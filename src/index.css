@@ -5922,3 +5922,114 @@ html[data-theme="accent"] .work-section.work-section-v2 {
     line-height: 1.68;
   }
 }
+
+
+/* =========================================================
+   ABOUT PORTRAIT
+   Replaces the rotating tech orbit with Anna's transparent portrait.
+========================================================= */
+
+.about-section-premium .about-visual-column {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 500px;
+  overflow: visible;
+}
+
+.about-portrait-wrap {
+  position: relative;
+  width: min(100%, 470px);
+  min-height: 500px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  isolation: isolate;
+}
+
+.about-portrait-glow {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  width: 78%;
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.11) 0%,
+      rgba(255, 255, 255, 0.05) 38%,
+      transparent 72%
+    );
+  filter: blur(24px);
+  opacity: 0.65;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.about-portrait {
+  display: block;
+  width: min(100%, 430px);
+  height: auto;
+  object-fit: contain;
+  object-position: center bottom;
+  filter:
+    grayscale(1)
+    contrast(1.03)
+    drop-shadow(0 24px 30px rgba(0, 0, 0, 0.36));
+  user-select: none;
+  pointer-events: none;
+  transform: translateY(1px);
+}
+
+/* Remove the old decorative cross because the portrait becomes the focus. */
+.about-section-premium .about-visual-column::before,
+.about-section-premium .about-visual-column::after {
+  display: none;
+}
+
+@media (max-width: 1200px) {
+  .about-section-premium .about-visual-column,
+  .about-portrait-wrap {
+    min-height: 430px;
+  }
+
+  .about-portrait-wrap {
+    width: min(100%, 410px);
+  }
+
+  .about-portrait {
+    width: min(100%, 390px);
+  }
+}
+
+@media (max-width: 900px) {
+  .about-section-premium .about-visual-column,
+  .about-portrait-wrap {
+    min-height: 390px;
+  }
+
+  .about-portrait-wrap {
+    width: min(100%, 390px);
+  }
+
+  .about-portrait {
+    width: min(100%, 360px);
+  }
+}
+
+@media (max-width: 600px) {
+  .about-section-premium .about-visual-column,
+  .about-portrait-wrap {
+    min-height: 315px;
+  }
+
+  .about-portrait-wrap {
+    width: min(100%, 320px);
+  }
+
+  .about-portrait {
+    width: min(100%, 300px);
+  }
+}
