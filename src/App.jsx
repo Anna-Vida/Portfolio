@@ -5,7 +5,8 @@ import HeroHexBackground from "./components/ui/hero-hex-background";
 import { AnimatedText } from "./components/ui/animated-text";
 import { ParticleTextEffect } from "./components/ui/interactive-text-particle";
 import CinematicFooter from "./components/ui/motion-footer";
-import annaAboutPortrait from "./assets/anna-about-portrait.png.png";\nimport IDCardLanyard from "./components/ui/id-card-lanyard";
+import annaAboutPortrait from "./assets/anna-about-portrait.png.png";
+import IDCardLanyard from "./components/ui/id-card-lanyard";
 
 import {
   FaReact,
