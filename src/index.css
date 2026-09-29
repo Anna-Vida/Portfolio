@@ -5334,3 +5334,126 @@ html[data-theme="accent"] .work-section.work-section-v2 {
     rgba(255, 255, 255, 0.16)
   );
 }
+
+
+/* =========================================================
+   ABOUT TEXT FORMAT REFINEMENT
+   Keeps the same typeface and palette while improving balance,
+   wrapping, and paragraph readability.
+========================================================= */
+
+.about-container {
+  grid-template-columns: minmax(460px, 0.92fr) minmax(0, 1.42fr);
+  gap: 64px;
+  align-items: center;
+}
+
+.about-content {
+  min-width: 0;
+  max-width: 920px;
+}
+
+.about-content h2 {
+  max-width: 900px;
+  font-size: clamp(2.75rem, 3.95vw, 4.35rem);
+  line-height: 0.98;
+  letter-spacing: -0.052em;
+  text-wrap: balance;
+}
+
+.about-headline-primary,
+.about-headline-muted {
+  display: block;
+}
+
+.about-headline-primary {
+  color: #f2f2f2;
+}
+
+.about-headline-muted {
+  color: #5d5d5d;
+}
+
+.about-grid {
+  margin-top: 48px;
+  margin-left: 0;
+  max-width: 900px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 42px;
+  align-items: start;
+}
+
+.about-grid p {
+  margin: 0;
+  color: #aaa;
+  font-size: 0.96rem;
+  line-height: 1.75;
+  text-align: justify;
+  text-justify: inter-word;
+  text-wrap: pretty;
+  hyphens: auto;
+}
+
+@media (max-width: 1200px) {
+  .about-container {
+    grid-template-columns: 410px minmax(0, 1fr);
+    gap: 46px;
+  }
+
+  .about-content h2 {
+    font-size: clamp(2.65rem, 4.7vw, 4rem);
+  }
+
+  .about-grid {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 900px) {
+  .about-container {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .about-content {
+    max-width: none;
+  }
+
+  .about-content h2 {
+    max-width: 760px;
+    font-size: clamp(2.55rem, 7vw, 4rem);
+  }
+
+  .about-grid {
+    margin-top: 40px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+  }
+}
+
+@media (max-width: 700px) {
+  .about-headline-muted br {
+    display: none;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .about-grid p {
+    text-align: left;
+    max-width: 640px;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-content h2 {
+    font-size: clamp(2.25rem, 10vw, 3.2rem);
+    line-height: 1;
+  }
+
+  .about-grid {
+    margin-top: 32px;
+  }
+}
