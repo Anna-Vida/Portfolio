@@ -36,8 +36,8 @@ export default function IDCardLanyard({
 
     const animate = () => {
       // Deliberately soft motion: low spring force + strong damping.
-      const spring = 0.045;
-      const damping = 0.78;
+      const spring = 0.035;
+      const damping = 0.72;
 
       motion.vx += (motion.targetX - motion.x) * spring;
       motion.vy += (motion.targetY - motion.y) * spring;
@@ -52,7 +52,7 @@ export default function IDCardLanyard({
       const rotateY = flipped ? 180 : 0;
 
       card.style.transform =
-        `translate3d(${motion.x}px, ${motion.y}px, 0) rotateZ(${rotateZ}deg) rotateY(${rotateY}deg)`;
+        `translateX(-50%) translate3d(${motion.x}px, ${motion.y}px, 0) rotateZ(${rotateZ}deg) rotateY(${rotateY}deg)`;
 
       rafRef.current = requestAnimationFrame(animate);
     };
@@ -83,8 +83,8 @@ export default function IDCardLanyard({
     drag.moved = Math.max(drag.moved, Math.hypot(dx, dy));
 
     // Keep the badge close to center. It can move, but never fly around.
-    motionRef.current.targetX = Math.max(-44, Math.min(44, dx * 0.32));
-    motionRef.current.targetY = Math.max(-16, Math.min(20, dy * 0.18));
+    motionRef.current.targetX = Math.max(-18, Math.min(18, dx * 0.16));
+    motionRef.current.targetY = Math.max(-8, Math.min(10, dy * 0.08));
   };
 
   const finishPointer = (event) => {
@@ -143,7 +143,7 @@ export default function IDCardLanyard({
           top: 6px;
           left: 50%;
           width: 12px;
-          height: 58px;
+          height: 44px;
           transform: translateX(-50%);
           border-radius: 999px;
           background:
@@ -159,7 +159,7 @@ export default function IDCardLanyard({
 
         .about-id-clip {
           position: absolute;
-          top: 56px;
+          top: 42px;
           left: 50%;
           width: 30px;
           height: 20px;
@@ -172,11 +172,11 @@ export default function IDCardLanyard({
 
         .about-id-card {
           position: absolute;
-          top: 70px;
+          top: 56px;
           left: 50%;
           width: min(78vw, 300px);
           height: 430px;
-          margin-left: min(-39vw, -150px);
+          margin-left: 0;
           transform-style: preserve-3d;
           transform-origin: 50% 8px;
           cursor: grab;
@@ -363,7 +363,7 @@ export default function IDCardLanyard({
           .about-id-card {
             width: min(76vw, 280px);
             height: 405px;
-            margin-left: min(-38vw, -140px);
+            margin-left: 0;
           }
         }
 
@@ -373,18 +373,18 @@ export default function IDCardLanyard({
           }
 
           .about-id-rope {
-            height: 50px;
+            height: 40px;
           }
 
           .about-id-clip {
-            top: 48px;
+            top: 38px;
           }
 
           .about-id-card {
-            top: 62px;
+            top: 52px;
             width: min(78vw, 260px);
             height: 380px;
-            margin-left: min(-39vw, -130px);
+            margin-left: 0;
           }
 
           .about-id-name {
