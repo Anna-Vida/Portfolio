@@ -6033,3 +6033,22 @@ html[data-theme="accent"] .work-section.work-section-v2 {
     width: min(100%, 300px);
   }
 }
+
+
+/* Ensure the About portrait always renders above the decorative glow. */
+.about-portrait-wrap {
+  z-index: 1;
+}
+
+.about-portrait-glow {
+  z-index: 0;
+}
+
+.about-portrait {
+  position: relative;
+  z-index: 2;
+  opacity: 1;
+  visibility: visible;
+  width: min(100%, 440px);
+  max-height: 520px;
+}
