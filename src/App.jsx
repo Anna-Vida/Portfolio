@@ -744,21 +744,33 @@ function App() {
 
               <div className="about-copy-column">
                 <h2 className="about-premium-heading about-scanner-heading">
-                  <span className="about-premium-heading-light">
-                    I build digital products that
-                  </span>
-                  <span className="about-premium-heading-muted">
-                    combine software,
-                    <br />
-                    intelligent systems, and
-                    <br />
-                    connected technology.
+                  <span className="about-scanner-base">
+                    <span className="about-premium-heading-light">
+                      I build digital products that
+                    </span>
+                    <span className="about-premium-heading-muted">
+                      combine software,
+                      <br />
+                      intelligent systems, and
+                      <br />
+                      connected technology.
+                    </span>
                   </span>
 
-                  <span className="about-text-scanner" aria-hidden="true">
-                    <span className="about-text-scanner-line" />
-                    <span className="about-text-scanner-glow" />
+                  <span className="about-scanner-reveal" aria-hidden="true">
+                    <span className="about-premium-heading-light">
+                      I build digital products that
+                    </span>
+                    <span className="about-premium-heading-muted">
+                      combine software,
+                      <br />
+                      intelligent systems, and
+                      <br />
+                      connected technology.
+                    </span>
                   </span>
+
+                  <span className="about-scanner-beam" aria-hidden="true" />
                 </h2>
 
                 <div className="about-info-grid">
