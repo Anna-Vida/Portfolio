@@ -6071,10 +6071,10 @@ html[data-theme="accent"] .work-section.work-section-v2 {
   z-index: 1;
 }
 
-/* Dark at rest. */
+/* Dark at rest, but still readable against the black background. */
 .about-scanner-base .about-premium-heading-light,
 .about-scanner-base .about-premium-heading-muted {
-  color: #171717;
+  color: #353535;
 }
 
 /* White duplicate shown only inside a narrow moving band. */
@@ -6084,8 +6084,8 @@ html[data-theme="accent"] .work-section.work-section-v2 {
   display: block;
   z-index: 2;
   pointer-events: none;
-  clip-path: inset(0 94% 0 0);
-  -webkit-clip-path: inset(0 94% 0 0);
+  clip-path: inset(0 72% 0 0);
+  -webkit-clip-path: inset(0 72% 0 0);
   will-change: clip-path;
   animation: aboutScannerReveal 3.2s cubic-bezier(.45, 0, .55, 1) infinite alternate;
 }
@@ -6114,23 +6114,23 @@ html[data-theme="accent"] .work-section.work-section-v2 {
 
 @keyframes aboutScannerReveal {
   from {
-    clip-path: inset(0 94% 0 0);
-    -webkit-clip-path: inset(0 94% 0 0);
+    clip-path: inset(0 72% 0 0);
+    -webkit-clip-path: inset(0 72% 0 0);
   }
 
   to {
-    clip-path: inset(0 0 0 94%);
-    -webkit-clip-path: inset(0 0 0 94%);
+    clip-path: inset(0 0 0 72%);
+    -webkit-clip-path: inset(0 0 0 72%);
   }
 }
 
 @keyframes aboutScannerBeam {
   from {
-    left: 0;
+    left: 14%;
   }
 
   to {
-    left: calc(100% - 2px);
+    left: calc(86% - 2px);
   }
 }
 
