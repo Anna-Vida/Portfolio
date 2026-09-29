@@ -6052,3 +6052,169 @@ html[data-theme="accent"] .work-section.work-section-v2 {
   width: min(100%, 440px);
   max-height: 520px;
 }
+
+
+/* =========================================================
+   ABOUT RESPONSIVE INTERACTION
+   Keeps the existing design, but adds subtle depth and motion.
+========================================================= */
+
+.about-premium-grid {
+  gap: clamp(34px, 5vw, 70px);
+}
+
+.about-portrait-interactive {
+  --portrait-x: 0px;
+  --portrait-y: 0px;
+  --portrait-rx: 0deg;
+  --portrait-ry: 0deg;
+  --glow-x: 0px;
+  --glow-y: 0px;
+  perspective: 900px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(.2,.72,.2,1);
+}
+
+.about-portrait-interactive.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-portrait-interactive .about-portrait {
+  transform:
+    translate3d(
+      var(--portrait-x),
+      calc(var(--portrait-y) + 1px),
+      0
+    )
+    rotateX(var(--portrait-rx))
+    rotateY(var(--portrait-ry));
+  transform-origin: center 62%;
+  transition:
+    transform 0.18s ease-out,
+    filter 0.28s ease;
+}
+
+.about-portrait-interactive:hover .about-portrait {
+  filter:
+    grayscale(1)
+    contrast(1.05)
+    drop-shadow(0 30px 36px rgba(0,0,0,0.42));
+}
+
+.about-portrait-interactive .about-portrait-glow {
+  transform:
+    translateX(calc(-50% + var(--glow-x)))
+    translateY(var(--glow-y))
+    scale(1);
+  transition:
+    transform 0.22s ease-out,
+    opacity 0.3s ease;
+}
+
+.about-portrait-interactive:hover .about-portrait-glow {
+  opacity: 0.9;
+  transform:
+    translateX(calc(-50% + var(--glow-x)))
+    translateY(var(--glow-y))
+    scale(1.07);
+}
+
+.about-info-card {
+  transition:
+    transform 0.24s ease,
+    opacity 0.24s ease;
+}
+
+.about-info-card p,
+.about-info-line,
+.about-info-number {
+  transition:
+    color 0.24s ease,
+    background 0.24s ease,
+    border-color 0.24s ease,
+    transform 0.24s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .about-info-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .about-info-card:hover p {
+    color: #d0d0d0;
+  }
+
+  .about-info-card:hover .about-info-number {
+    border-color: rgba(255,255,255,0.42);
+    background: #171717;
+  }
+
+  .about-info-card:hover .about-info-line {
+    transform: scaleX(1.025);
+    transform-origin: left center;
+    background: rgba(255,255,255,0.32);
+  }
+}
+
+@media (max-width: 900px) {
+  .about-premium-grid {
+    gap: 12px;
+  }
+
+  .about-section-premium .about-visual-column {
+    order: 1;
+  }
+
+  .about-copy-column {
+    order: 2;
+  }
+
+  .about-portrait-wrap {
+    margin-inline: auto;
+  }
+
+  .about-premium-heading {
+    max-width: 820px;
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-portrait-wrap {
+    width: min(88vw, 320px);
+  }
+
+  .about-portrait {
+    width: min(86vw, 300px);
+  }
+
+  .about-premium-heading {
+    font-size: clamp(2.2rem, 10vw, 3.25rem);
+    line-height: 0.99;
+  }
+
+  .about-info-grid {
+    gap: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-portrait-interactive {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .about-portrait-interactive .about-portrait,
+  .about-portrait-interactive .about-portrait-glow,
+  .about-info-card,
+  .about-info-card p,
+  .about-info-line,
+  .about-info-number {
+    transition: none;
+  }
+}
