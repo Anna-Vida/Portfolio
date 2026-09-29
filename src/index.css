@@ -5606,3 +5606,319 @@ html[data-theme="accent"] .work-section.work-section-v2 {
     gap: 18px;
   }
 }
+
+
+/* =========================================================
+   ABOUT — PREMIUM MONOCHROME REDESIGN
+========================================================= */
+
+.about-section-premium {
+  position: relative;
+  overflow: hidden;
+  padding: 58px 0 76px;
+  background:
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px),
+    radial-gradient(circle at 18% 42%, rgba(255,255,255,0.055), transparent 28%),
+    linear-gradient(135deg, #111111 0%, #0b0b0b 46%, #080808 100%);
+  background-size:
+    64px 64px,
+    64px 64px,
+    auto,
+    auto;
+}
+
+.about-section-premium::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(255,255,255,0.025), transparent 18%),
+    radial-gradient(circle at 82% 90%, rgba(255,255,255,0.035), transparent 24%);
+}
+
+.about-shell {
+  position: relative;
+  z-index: 1;
+  width: min(90%, 1380px);
+  margin: 0 auto;
+}
+
+.about-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0 18px;
+  border-top: 1px solid rgba(255,255,255,0.18);
+}
+
+.about-topline p,
+.about-topline span {
+  margin-top: 14px;
+  color: #8a8a8a;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+}
+
+.about-premium-grid {
+  display: grid;
+  grid-template-columns: minmax(440px, 0.95fr) minmax(0, 1.45fr);
+  gap: 70px;
+  align-items: center;
+}
+
+.about-visual-column {
+  position: relative;
+  min-width: 0;
+}
+
+.about-visual-column::before,
+.about-visual-column::after {
+  content: "";
+  position: absolute;
+  background: rgba(255,255,255,0.12);
+  pointer-events: none;
+}
+
+.about-visual-column::before {
+  width: 22px;
+  height: 1px;
+  top: 24px;
+  left: 0;
+}
+
+.about-visual-column::after {
+  width: 1px;
+  height: 22px;
+  top: 13px;
+  left: 10px;
+}
+
+.about-section-premium .about-orbit-wrap {
+  min-height: 500px;
+  justify-content: flex-start;
+}
+
+.about-section-premium .about-orbit {
+  --orbit-size: 500px;
+  --outer-ring: 400px;
+  --inner-ring: 255px;
+}
+
+.about-copy-column {
+  min-width: 0;
+  padding: 34px 0 0;
+}
+
+.about-premium-heading {
+  margin: 0;
+  max-width: 850px;
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(3rem, 4.55vw, 5.2rem);
+  line-height: 0.96;
+  letter-spacing: -0.058em;
+  font-weight: 500;
+  text-wrap: balance;
+}
+
+.about-premium-heading-light,
+.about-premium-heading-muted {
+  display: block;
+}
+
+.about-premium-heading-light {
+  color: #f2f2f2;
+}
+
+.about-premium-heading-muted {
+  color: #6a6a6a;
+}
+
+.about-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 62px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.about-info-card {
+  padding: 0 34px 0 0;
+  min-width: 0;
+}
+
+.about-info-card + .about-info-card {
+  padding: 0 0 0 34px;
+  border-left: 1px solid rgba(255,255,255,0.09);
+}
+
+.about-info-heading {
+  display: grid;
+  grid-template-columns: auto auto minmax(34px, 1fr);
+  align-items: center;
+  gap: 14px;
+  transform: translateY(-50%);
+}
+
+.about-info-number {
+  min-width: 44px;
+  height: 32px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.24);
+  border-radius: 9px;
+  background: #111;
+  color: #f0f0f0;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.about-info-label {
+  color: #8d8d8d;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+}
+
+.about-info-line {
+  height: 1px;
+  background: rgba(255,255,255,0.18);
+}
+
+.about-info-card p {
+  margin: 4px 0 0;
+  color: #b0b0b0;
+  font-size: 0.95rem;
+  line-height: 1.72;
+  text-align: left;
+  text-wrap: pretty;
+  hyphens: none;
+}
+
+@media (max-width: 1200px) {
+  .about-premium-grid {
+    grid-template-columns: 400px minmax(0, 1fr);
+    gap: 46px;
+  }
+
+  .about-section-premium .about-orbit-wrap {
+    min-height: 430px;
+  }
+
+  .about-section-premium .about-orbit {
+    --orbit-size: 420px;
+    --outer-ring: 335px;
+    --inner-ring: 210px;
+  }
+
+  .about-premium-heading {
+    font-size: clamp(2.8rem, 4.8vw, 4.35rem);
+  }
+
+  .about-info-grid {
+    margin-top: 52px;
+  }
+
+  .about-info-card {
+    padding-right: 24px;
+  }
+
+  .about-info-card + .about-info-card {
+    padding-left: 24px;
+  }
+}
+
+@media (max-width: 900px) {
+  .about-section-premium {
+    padding: 52px 0 66px;
+  }
+
+  .about-shell {
+    width: min(92%, 1380px);
+  }
+
+  .about-premium-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .about-section-premium .about-orbit-wrap {
+    min-height: 360px;
+    justify-content: center;
+  }
+
+  .about-section-premium .about-orbit {
+    --orbit-size: 350px;
+    --outer-ring: 275px;
+    --inner-ring: 175px;
+  }
+
+  .about-copy-column {
+    padding-top: 0;
+  }
+
+  .about-premium-heading {
+    max-width: 760px;
+    font-size: clamp(2.7rem, 7vw, 4.2rem);
+  }
+
+  .about-info-grid {
+    margin-top: 48px;
+  }
+}
+
+@media (max-width: 700px) {
+  .about-info-grid {
+    grid-template-columns: 1fr;
+    border-top: 0;
+    gap: 34px;
+  }
+
+  .about-info-card,
+  .about-info-card + .about-info-card {
+    padding: 0;
+    border-left: 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .about-info-heading {
+    transform: translateY(-50%);
+  }
+}
+
+@media (max-width: 600px) {
+  .about-section-premium {
+    padding: 46px 0 56px;
+  }
+
+  .about-section-premium .about-orbit-wrap {
+    min-height: 290px;
+  }
+
+  .about-section-premium .about-orbit {
+    --orbit-size: 280px;
+    --outer-ring: 220px;
+    --inner-ring: 138px;
+  }
+
+  .about-premium-heading {
+    font-size: clamp(2.3rem, 10.8vw, 3.35rem);
+  }
+
+  .about-premium-heading-muted br {
+    display: none;
+  }
+
+  .about-info-grid {
+    margin-top: 42px;
+  }
+
+  .about-info-card p {
+    font-size: 0.92rem;
+    line-height: 1.68;
+  }
+}
