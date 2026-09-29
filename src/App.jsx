@@ -3,6 +3,7 @@ import "./index.css";
 import GradientBlobCard from "./components/ui/gradient-bold-card";
 import HeroHexBackground from "./components/ui/hero-hex-background";
 import { AnimatedText } from "./components/ui/animated-text";
+import { ParticleTextEffect } from "./components/ui/interactive-text-particle";
 import CinematicFooter from "./components/ui/motion-footer";
 
 import {
@@ -779,16 +780,18 @@ function App() {
 
     {/* RIGHT SIDE */}
     <div className="about-content">
-      <h2>
-        <span className="about-headline-primary">
-          I build digital products that combine
-        </span>
-        <span className="about-headline-muted">
-          software, intelligent systems,
-          <br />
+      <div className="about-particle-heading">
+        <ParticleTextEffect
+          text={"I build digital products that\ncombine software,\nintelligent systems, and\nconnected technology."}
+          colors={["#f2f2f2", "#d8d8d8", "#949494", "#5d5d5d"]}
+          animationForce={34}
+          particleDensity={4}
+        />
+        <h2 className="about-heading-fallback">
+          I build digital products that combine software, intelligent systems,
           and connected technology.
-        </span>
-      </h2>
+        </h2>
+      </div>
 
       <div className="about-grid">
         <p>
