@@ -731,27 +731,13 @@ function App() {
 
             <div className="about-premium-grid">
               <div className="about-visual-column">
-                <div className="about-orbit-wrap">
-                  <div className="tech-orbit about-orbit">
-                    <div className="orbit-center">
-                      <span>TECH</span>
-                    </div>
-
-                    <div className="orbit-ring orbit-ring-one">
-                      <div className="orbit-icon orbit-1"><FaReact /></div>
-                      <div className="orbit-icon orbit-2"><SiJavascript /></div>
-                      <div className="orbit-icon orbit-3"><SiTypescript /></div>
-                      <div className="orbit-icon orbit-4"><SiFirebase /></div>
-                    </div>
-
-                    <div className="orbit-ring orbit-ring-two">
-                      <div className="orbit-icon orbit-5"><FaAndroid /></div>
-                      <div className="orbit-icon orbit-6"><FaNodeJs /></div>
-                      <div className="orbit-icon orbit-7"><SiTailwindcss /></div>
-                      <div className="orbit-icon orbit-8"><FaGithub /></div>
-                      <div className="orbit-icon orbit-9"><SiVite /></div>
-                    </div>
-                  </div>
+                <div className="about-portrait-wrap">
+                  <div className="about-portrait-glow" aria-hidden="true" />
+                  <img
+                    src="/anna-about-portrait.webp"
+                    alt="Anna Patricia Vida in graduation attire"
+                    className="about-portrait"
+                  />
                 </div>
               </div>
 
