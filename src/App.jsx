@@ -411,6 +411,10 @@ function App() {
         aria-hidden="true"
       />
 
+      <div className="site-hex-background" aria-hidden="true">
+        <HeroHexBackground />
+      </div>
+
       {/* =========================
           NAVBAR
       ========================== */}
@@ -561,7 +565,6 @@ function App() {
             HERO
         ========================== */}
         <section className="hero" id="home">
-          <HeroHexBackground />
           <div className="hero-inner">
             <p className="eyebrow">
               SOFTWARE DEVELOPER — QUEZON CITY, PHILIPPINES
