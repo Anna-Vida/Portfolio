@@ -7442,3 +7442,133 @@ html[data-theme="accent"] .tech-marquee {
     opacity: 0.55;
   }
 }
+
+
+/* =========================================================
+   TIGHTER SECTION TRANSITIONS
+   Reduce the empty vertical bands between major sections while
+   keeping enough breathing room for the editorial layout.
+========================================================= */
+
+/* About -> Work */
+.about-section-premium {
+  padding-bottom: 46px;
+}
+
+.work-section-v2 {
+  padding-top: 52px;
+  padding-bottom: 34px;
+}
+
+/* Work -> Experience */
+.experience-section {
+  padding-top: 42px;
+  padding-bottom: 34px;
+}
+
+/* Experience -> Skills */
+.skills-section,
+html[data-theme="original"] .skills-section,
+html[data-theme="accent"] .skills-section {
+  padding-top: 42px;
+  padding-bottom: 54px;
+}
+
+/* Skills -> Certifications */
+.certifications-section {
+  padding-top: 54px;
+  padding-bottom: 60px;
+}
+
+/* Keep the final content inside each section from adding another
+   large visual gap before the next section starts. */
+.work-all-projects {
+  margin-top: 26px;
+  margin-bottom: 0;
+}
+
+.experience-list,
+.skills-flip-grid,
+.certification-list {
+  margin-bottom: 0;
+}
+
+/* Labels should sit close to the content that follows them. */
+.experience-heading,
+.skills-heading,
+.certifications-heading {
+  margin-bottom: 38px;
+}
+
+/* Anchor scrolling should stop below the fixed navbar, without
+   needing extra top padding inside each section. */
+#about,
+#work,
+#experience,
+#skills,
+#certifications,
+#contact {
+  scroll-margin-top: 92px;
+}
+
+@media (max-width: 1100px) {
+  .about-section-premium {
+    padding-bottom: 40px;
+  }
+
+  .work-section-v2 {
+    padding-top: 46px;
+    padding-bottom: 30px;
+  }
+
+  .experience-section {
+    padding-top: 38px;
+    padding-bottom: 30px;
+  }
+
+  .skills-section,
+  html[data-theme="original"] .skills-section,
+  html[data-theme="accent"] .skills-section {
+    padding-top: 38px;
+    padding-bottom: 48px;
+  }
+
+  .certifications-section {
+    padding-top: 48px;
+    padding-bottom: 54px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-section-premium {
+    padding-bottom: 34px;
+  }
+
+  .work-section-v2 {
+    padding-top: 38px;
+    padding-bottom: 26px;
+  }
+
+  .experience-section {
+    padding-top: 34px;
+    padding-bottom: 26px;
+  }
+
+  .skills-section,
+  html[data-theme="original"] .skills-section,
+  html[data-theme="accent"] .skills-section {
+    padding-top: 34px;
+    padding-bottom: 42px;
+  }
+
+  .certifications-section {
+    padding-top: 42px;
+    padding-bottom: 48px;
+  }
+
+  .experience-heading,
+  .skills-heading,
+  .certifications-heading {
+    margin-bottom: 30px;
+  }
+}
