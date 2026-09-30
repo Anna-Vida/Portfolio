@@ -8,6 +8,7 @@ import CinematicFooter from "./components/ui/motion-footer";
 import annaAboutPortrait from "./assets/anna-about-portrait.png.png";
 import InteractiveAboutPortrait from "./components/ui/interactive-about-portrait";
 import TextShimmer from "./components/ui/text-shimmer";
+import FolderCard from "./components/ui/folder-card";
 
 import {
   FaReact,
@@ -1061,10 +1062,13 @@ function App() {
                 aria-label="Flip Mobile skill card"
               >
                 <span className="skill-card-inner">
-                  <span className="skill-card-face skill-card-front">
-                    <span className="skill-number">01</span>
-                    <span className="skill-card-title">Mobile</span>
-                    <span className="skill-card-hint">Click to flip ↻</span>
+                  <span className="skill-card-face skill-card-front skill-folder-front">
+                    <FolderCard
+                      number="01"
+                      title="Mobile"
+                      count="6 technologies"
+                      open={flippedSkill === 0}
+                    />
                   </span>
 
                   <span className="skill-card-face skill-card-back">
@@ -1077,7 +1081,7 @@ function App() {
                       <span>Dart</span>
                       <span>Android Studio</span>
                     </span>
-                    <span className="skill-card-hint">Click to return ↺</span>
+                    <span className="skill-card-hint">Close folder ↺</span>
                   </span>
                 </span>
               </button>
@@ -1092,10 +1096,13 @@ function App() {
                 aria-label="Flip Frontend skill card"
               >
                 <span className="skill-card-inner">
-                  <span className="skill-card-face skill-card-front">
-                    <span className="skill-number">02</span>
-                    <span className="skill-card-title">Frontend</span>
-                    <span className="skill-card-hint">Click to flip ↻</span>
+                  <span className="skill-card-face skill-card-front skill-folder-front">
+                    <FolderCard
+                      number="02"
+                      title="Frontend"
+                      count="9 technologies"
+                      open={flippedSkill === 1}
+                    />
                   </span>
 
                   <span className="skill-card-face skill-card-back">
@@ -1111,7 +1118,7 @@ function App() {
                       <span>MUI</span>
                       <span>Redux</span>
                     </span>
-                    <span className="skill-card-hint">Click to return ↺</span>
+                    <span className="skill-card-hint">Close folder ↺</span>
                   </span>
                 </span>
               </button>
@@ -1126,10 +1133,13 @@ function App() {
                 aria-label="Flip Backend & APIs skill card"
               >
                 <span className="skill-card-inner">
-                  <span className="skill-card-face skill-card-front">
-                    <span className="skill-number">03</span>
-                    <span className="skill-card-title">Backend & APIs</span>
-                    <span className="skill-card-hint">Click to flip ↻</span>
+                  <span className="skill-card-face skill-card-front skill-folder-front">
+                    <FolderCard
+                      number="03"
+                      title="Backend & APIs"
+                      count="8 technologies"
+                      open={flippedSkill === 2}
+                    />
                   </span>
 
                   <span className="skill-card-face skill-card-back">
@@ -1144,7 +1154,7 @@ function App() {
                       <span>Kotlin</span>
                       <span>C/C++</span>
                     </span>
-                    <span className="skill-card-hint">Click to return ↺</span>
+                    <span className="skill-card-hint">Close folder ↺</span>
                   </span>
                 </span>
               </button>
@@ -1159,10 +1169,13 @@ function App() {
                 aria-label="Flip Databases skill card"
               >
                 <span className="skill-card-inner">
-                  <span className="skill-card-face skill-card-front">
-                    <span className="skill-number">04</span>
-                    <span className="skill-card-title">Databases</span>
-                    <span className="skill-card-hint">Click to flip ↻</span>
+                  <span className="skill-card-face skill-card-front skill-folder-front">
+                    <FolderCard
+                      number="04"
+                      title="Databases"
+                      count="5 technologies"
+                      open={flippedSkill === 3}
+                    />
                   </span>
 
                   <span className="skill-card-face skill-card-back">
@@ -1174,7 +1187,7 @@ function App() {
                       <span>MySQL</span>
                       <span>SQLite</span>
                     </span>
-                    <span className="skill-card-hint">Click to return ↺</span>
+                    <span className="skill-card-hint">Close folder ↺</span>
                   </span>
                 </span>
               </button>
@@ -1189,10 +1202,13 @@ function App() {
                 aria-label="Flip Cloud & Tools skill card"
               >
                 <span className="skill-card-inner">
-                  <span className="skill-card-face skill-card-front">
-                    <span className="skill-number">05</span>
-                    <span className="skill-card-title">Cloud & Tools</span>
-                    <span className="skill-card-hint">Click to flip ↻</span>
+                  <span className="skill-card-face skill-card-front skill-folder-front">
+                    <FolderCard
+                      number="05"
+                      title="Cloud & Tools"
+                      count="11 technologies"
+                      open={flippedSkill === 4}
+                    />
                   </span>
 
                   <span className="skill-card-face skill-card-back">
@@ -1210,7 +1226,7 @@ function App() {
                       <span>GitHub Copilot</span>
                       <span>Cursor</span>
                     </span>
-                    <span className="skill-card-hint">Click to return ↺</span>
+                    <span className="skill-card-hint">Close folder ↺</span>
                   </span>
                 </span>
               </button>
@@ -1225,10 +1241,13 @@ function App() {
                 aria-label="Flip AI, IoT & Security skill card"
               >
                 <span className="skill-card-inner">
-                  <span className="skill-card-face skill-card-front">
-                    <span className="skill-number">06</span>
-                    <span className="skill-card-title">AI, IoT & Security</span>
-                    <span className="skill-card-hint">Click to flip ↻</span>
+                  <span className="skill-card-face skill-card-front skill-folder-front">
+                    <FolderCard
+                      number="06"
+                      title="AI, IoT & Security"
+                      count="7 technologies"
+                      open={flippedSkill === 5}
+                    />
                   </span>
 
                   <span className="skill-card-face skill-card-back">
@@ -1242,7 +1261,7 @@ function App() {
                       <span>Raspberry Pi</span>
                       <span>Wearable Tech</span>
                     </span>
-                    <span className="skill-card-hint">Click to return ↺</span>
+                    <span className="skill-card-hint">Close folder ↺</span>
                   </span>
                 </span>
               </button>
