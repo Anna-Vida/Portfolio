@@ -7968,3 +7968,50 @@ html[data-theme="accent"] body::-webkit-scrollbar-thumb:hover {
     0 0 10px color-mix(in srgb, var(--accent) 18%, rgba(255,255,255,0.12)),
     0 0 24px color-mix(in srgb, var(--accent) 8%, transparent);
 }
+
+
+/* =========================================================
+   TECH MARQUEE — COMPACT SPACING
+   Reduce the broad empty space above, below, and between both rows.
+========================================================= */
+
+.skills-grid.skills-flip-grid + .tech-marquee,
+body.compact-mode .skills-grid.skills-flip-grid + .tech-marquee {
+  margin-top: 22px;
+  margin-bottom: 0;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  gap: 12px;
+}
+
+.skills-grid.skills-flip-grid + .tech-marquee .tech-marquee-row + .tech-marquee-row {
+  margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+  .skills-grid.skills-flip-grid + .tech-marquee,
+  body.compact-mode .skills-grid.skills-flip-grid + .tech-marquee {
+    margin-top: 18px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    gap: 10px;
+  }
+
+  .skills-grid.skills-flip-grid + .tech-marquee .tech-marquee-row + .tech-marquee-row {
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .skills-grid.skills-flip-grid + .tech-marquee,
+  body.compact-mode .skills-grid.skills-flip-grid + .tech-marquee {
+    margin-top: 16px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    gap: 8px;
+  }
+
+  .skills-grid.skills-flip-grid + .tech-marquee .tech-marquee-row + .tech-marquee-row {
+    margin-top: 6px;
+  }
+}
