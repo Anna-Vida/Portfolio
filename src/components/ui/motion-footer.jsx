@@ -132,9 +132,19 @@ const footerStyles = `
     white-space: nowrap;
   }
 
+  .cinematic-footer__eyebrow {
+    position: relative;
+    margin-bottom: 20px;
+    color: var(--footer-muted);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
   .cinematic-footer__heading {
     position: relative;
-    margin-bottom: 42px;
+    margin-bottom: 24px;
     background: linear-gradient(180deg, #fff, rgba(255,255,255,0.42));
     background-clip: text;
     color: transparent;
@@ -144,6 +154,15 @@ const footerStyles = `
     line-height: 0.95;
     filter: drop-shadow(0 0 22px rgba(255,255,255,0.12));
     -webkit-background-clip: text;
+  }
+
+  .cinematic-footer__subtext {
+    position: relative;
+    max-width: 620px;
+    margin: 0 auto 34px;
+    color: var(--footer-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
   }
 
   .cinematic-footer__links {
@@ -236,6 +255,8 @@ const footerStyles = `
   @media (max-width: 700px) {
     .cinematic-footer__marquee { margin-top: 35px; }
     .cinematic-footer__content { padding-top: 40px; }
+    .cinematic-footer__eyebrow { margin-bottom: 16px; }
+    .cinematic-footer__subtext { max-width: 90%; margin-bottom: 28px; font-size: 0.86rem; }
     .cinematic-footer__links { flex-direction: column; width: min(100%, 320px); }
     .cinematic-footer__pill { width: 100%; }
     .cinematic-footer__bottom { grid-template-columns: 1fr; justify-items: center; gap: 16px; padding-bottom: 22px; text-align: center; }
@@ -302,6 +323,7 @@ function CinematicFooter() {
   const wrapperRef = useRef(null);
   const giantTextRef = useRef(null);
   const headingRef = useRef(null);
+  const subtextRef = useRef(null);
   const linksRef = useRef(null);
 
   useEffect(() => {
@@ -322,7 +344,7 @@ function CinematicFooter() {
       );
 
       gsap.fromTo(
-        [headingRef.current, linksRef.current],
+        [headingRef.current, subtextRef.current, linksRef.current],
         { y: 48, opacity: 0 },
         {
           y: 0,
@@ -340,7 +362,7 @@ function CinematicFooter() {
   return (
     <>
       <style>{footerStyles}</style>
-      <div ref={wrapperRef} className="cinematic-footer-shell">
+      <div id="contact" ref={wrapperRef} className="cinematic-footer-shell">
         <footer className="cinematic-footer">
           <div className="cinematic-footer__marquee" aria-hidden="true">
             <div className="cinematic-footer__marquee-track">
@@ -353,9 +375,16 @@ function CinematicFooter() {
             <div ref={giantTextRef} className="cinematic-footer__giant-text" aria-hidden="true">
               APV
             </div>
+
+            <p className="cinematic-footer__eyebrow">Contact</p>
+
             <h2 ref={headingRef} className="cinematic-footer__heading">
-              Let&apos;s build something useful.
+              Have a project or idea worth building?
             </h2>
+
+            <p ref={subtextRef} className="cinematic-footer__subtext">
+              I&apos;m open to software development opportunities, collaborations, and freelance work.
+            </p>
 
             <div ref={linksRef} className="cinematic-footer__links">
               <MagneticLink href="mailto:annapatriciavida12@gmail.com">
