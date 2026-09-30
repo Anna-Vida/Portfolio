@@ -7086,3 +7086,268 @@ html[data-theme="accent"] .skill-flip-card::after {
     opacity: 0.3;
   }
 }
+
+
+/* =========================================================
+   FINAL POLISH PASS
+   Tighter rhythm, fewer decorative rules, smoother animation.
+========================================================= */
+
+/* ---------- section rhythm ---------- */
+
+.about-section-premium {
+  padding: 50px 0 62px;
+}
+
+.work-section-v2 {
+  padding: 90px 0 84px;
+}
+
+.experience-section {
+  padding: 78px 0 82px;
+}
+
+.skills-section,
+html[data-theme="original"] .skills-section,
+html[data-theme="accent"] .skills-section {
+  padding: 88px 0 92px;
+}
+
+.certifications-section {
+  padding: 90px 0 84px;
+}
+
+.section-kicker {
+  margin-bottom: 22px;
+}
+
+.work-v2-top {
+  gap: 42px;
+  margin-bottom: 46px;
+}
+
+.work-v2-intro {
+  margin-top: 18px;
+}
+
+.work-all-projects {
+  margin-top: 34px;
+}
+
+.experience-heading {
+  margin-bottom: 50px;
+}
+
+.experience-item {
+  gap: 44px;
+  padding: 46px 0;
+}
+
+.skills-heading {
+  margin-bottom: 58px;
+}
+
+.tech-marquee {
+  margin: 46px 0 66px;
+  padding: 22px 0;
+}
+
+.certifications-heading {
+  margin-bottom: 58px;
+}
+
+.certification-item {
+  padding: 26px 0;
+}
+
+/* ---------- remove decorative lines that do not add hierarchy ---------- */
+
+.about-topline {
+  border-top: 0;
+}
+
+.about-visual-column::before,
+.about-visual-column::after {
+  display: none;
+}
+
+.about-info-grid {
+  border-top: 0;
+  margin-top: 48px;
+  gap: 34px;
+}
+
+.about-info-card + .about-info-card {
+  border-left: 0;
+}
+
+.about-info-heading {
+  transform: none;
+  margin-bottom: 16px;
+}
+
+.about-info-line {
+  display: none;
+}
+
+.experience-list::before {
+  display: none;
+}
+
+.experience-item:last-child {
+  border-bottom: 0;
+}
+
+.certification-list {
+  border-top: 0;
+}
+
+.certification-item:last-child {
+  border-bottom: 0;
+}
+
+/* Keep useful card boundaries, but make them quieter. */
+.project-showcase-card,
+.skill-flip-card::before {
+  border-color: rgba(255, 255, 255, 0.075);
+}
+
+.tech-marquee {
+  border-top-color: rgba(255, 255, 255, 0.045);
+  border-bottom-color: rgba(255, 255, 255, 0.045);
+}
+
+/* ---------- smoother motion ---------- */
+
+.project-showcase-card,
+.about-info-card,
+.certification-item,
+.tech-pill {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.project-showcase-card {
+  transition:
+    transform 0.28s cubic-bezier(.2,.72,.2,1),
+    border-color 0.24s ease,
+    box-shadow 0.24s ease;
+}
+
+.tech-marquee-track {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Moving glow only runs when the user is interacting with a skill card.
+   This avoids six continuous layout animations while the section is idle. */
+.skill-flip-card::after {
+  animation-play-state: paused;
+  will-change: auto;
+}
+
+.skill-flip-card:hover::after,
+.skill-flip-card:focus-visible::after,
+.skill-flip-card.is-flipped::after {
+  animation-play-state: running;
+  will-change: top, left;
+}
+
+/* Prevent expensive effects from spilling outside their component. */
+.project-showcase-card,
+.skill-flip-card,
+.certification-item {
+  contain: layout paint style;
+}
+
+/* ---------- responsive spacing ---------- */
+
+@media (max-width: 1100px) {
+  .about-section-premium {
+    padding: 46px 0 56px;
+  }
+
+  .work-section-v2,
+  .experience-section,
+  .skills-section,
+  html[data-theme="original"] .skills-section,
+  html[data-theme="accent"] .skills-section,
+  .certifications-section {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
+  .work-v2-top {
+    gap: 28px;
+    margin-bottom: 38px;
+  }
+
+  .experience-heading,
+  .skills-heading,
+  .certifications-heading {
+    margin-bottom: 44px;
+  }
+
+  .tech-marquee {
+    margin: 38px 0 52px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-section-premium {
+    padding: 40px 0 48px;
+  }
+
+  .work-section-v2,
+  .experience-section,
+  .skills-section,
+  html[data-theme="original"] .skills-section,
+  html[data-theme="accent"] .skills-section,
+  .certifications-section {
+    padding-top: 58px;
+    padding-bottom: 58px;
+  }
+
+  .section-kicker {
+    margin-bottom: 16px;
+  }
+
+  .work-v2-top {
+    margin-bottom: 30px;
+  }
+
+  .experience-heading,
+  .skills-heading,
+  .certifications-heading {
+    margin-bottom: 34px;
+  }
+
+  .experience-item {
+    gap: 18px;
+    padding: 34px 0;
+  }
+
+  .tech-marquee {
+    margin: 30px 0 42px;
+    padding: 18px 0;
+  }
+
+  .about-info-grid {
+    margin-top: 36px;
+    gap: 24px;
+  }
+
+  .certification-item {
+    padding: 22px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-showcase-card,
+  .about-info-card,
+  .certification-item,
+  .tech-pill,
+  .skill-card-inner {
+    transition-duration: 0.01ms !important;
+  }
+}

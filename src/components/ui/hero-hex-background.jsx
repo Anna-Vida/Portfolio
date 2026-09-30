@@ -12,8 +12,13 @@ const HeroHexBackground = () => {
 
     if (!hero || !ctx) return;
 
-    let animationFrameId;
+    let animationFrameId = null;
     let resizeObserver;
+    let intersectionObserver;
+
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let reduceMotion = motionQuery.matches;
+    let isVisible = true;
 
     let width = 0;
     let height = 0;
@@ -73,6 +78,10 @@ const HeroHexBackground = () => {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       createHexagons();
+
+      if (reduceMotion) {
+        drawStatic();
+      }
     };
 
     const drawHexagon = (x, y, size, opacity) => {
@@ -110,12 +119,21 @@ const HeroHexBackground = () => {
       pointer.y = -9999;
     };
 
-    const animate = (time) => {
+    const drawStatic = () => {
       ctx.clearRect(0, 0, width, height);
 
-      const reduceMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches;
+      for (const hexagon of hexagons) {
+        drawHexagon(hexagon.baseX, hexagon.baseY, radius - 2, 0.045);
+      }
+    };
+
+    const animate = (time) => {
+      if (!isVisible || reduceMotion) {
+        animationFrameId = null;
+        return;
+      }
+
+      ctx.clearRect(0, 0, width, height);
 
       for (const hexagon of hexagons) {
         let targetX = hexagon.baseX;
@@ -165,26 +183,75 @@ const HeroHexBackground = () => {
       animationFrameId = requestAnimationFrame(animate);
     };
 
+    const startAnimation = () => {
+      if (!animationFrameId && isVisible && !reduceMotion) {
+        animationFrameId = requestAnimationFrame(animate);
+      }
+    };
+
+    const stopAnimation = () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+    };
+
+    const handleMotionChange = (event) => {
+      reduceMotion = event.matches;
+
+      if (reduceMotion) {
+        stopAnimation();
+        drawStatic();
+      } else {
+        startAnimation();
+      }
+    };
+
     if (typeof ResizeObserver !== "undefined") {
       resizeObserver = new ResizeObserver(resizeCanvas);
       resizeObserver.observe(hero);
     }
 
+    if (typeof IntersectionObserver !== "undefined") {
+      intersectionObserver = new IntersectionObserver(
+        ([entry]) => {
+          isVisible = entry.isIntersecting;
+
+          if (isVisible) {
+            startAnimation();
+          } else {
+            stopAnimation();
+          }
+        },
+        { threshold: 0.01 }
+      );
+
+      intersectionObserver.observe(hero);
+    }
+
     window.addEventListener("resize", resizeCanvas);
     canvas.addEventListener("pointermove", handlePointerMove);
     canvas.addEventListener("pointerleave", handlePointerLeave);
+    motionQuery.addEventListener?.("change", handleMotionChange);
 
     resizeCanvas();
-    animationFrameId = requestAnimationFrame(animate);
+
+    if (reduceMotion) {
+      drawStatic();
+    } else {
+      startAnimation();
+    }
 
     return () => {
       resizeObserver?.disconnect();
+      intersectionObserver?.disconnect();
 
       window.removeEventListener("resize", resizeCanvas);
       canvas.removeEventListener("pointermove", handlePointerMove);
       canvas.removeEventListener("pointerleave", handlePointerLeave);
+      motionQuery.removeEventListener?.("change", handleMotionChange);
 
-      cancelAnimationFrame(animationFrameId);
+      stopAnimation();
     };
   }, []);
 
