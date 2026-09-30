@@ -9,6 +9,7 @@ import annaAboutPortrait from "./assets/anna-about-portrait.png.png";
 import InteractiveAboutPortrait from "./components/ui/interactive-about-portrait";
 import TextShimmer from "./components/ui/text-shimmer";
 import FolderCard from "./components/ui/folder-card";
+import TechStackPager from "./components/ui/tech-stack-pager";
 
 import {
   FaReact,
@@ -1216,57 +1217,9 @@ function App() {
 
 
             {/* =========================
-                MOVING TECH WALL
+                PAGED TECH LIBRARY
             ========================== */}
-            <div className="tech-marquee">
-              <div className="tech-marquee-row tech-marquee-row-one">
-                <div className="tech-marquee-track">
-                  <div className="tech-pill"><FaReact /><span>React.js</span></div>
-                  <div className="tech-pill"><FaNodeJs /><span>Node.js</span></div>
-                  <div className="tech-pill"><SiTypescript /><span>TypeScript</span></div>
-                  <div className="tech-pill"><SiJavascript /><span>JavaScript</span></div>
-                  <div className="tech-pill"><SiTailwindcss /><span>Tailwind CSS</span></div>
-                  <div className="tech-pill"><SiFirebase /><span>Firebase</span></div>
-                  <div className="tech-pill"><SiSupabase /><span>Supabase</span></div>
-                  <div className="tech-pill"><SiMysql /><span>MySQL</span></div>
-                  <div className="tech-pill"><SiFlutter /><span>Flutter</span></div>
-
-                  <div className="tech-pill"><FaReact /><span>React.js</span></div>
-                  <div className="tech-pill"><FaNodeJs /><span>Node.js</span></div>
-                  <div className="tech-pill"><SiTypescript /><span>TypeScript</span></div>
-                  <div className="tech-pill"><SiJavascript /><span>JavaScript</span></div>
-                  <div className="tech-pill"><SiTailwindcss /><span>Tailwind CSS</span></div>
-                  <div className="tech-pill"><SiFirebase /><span>Firebase</span></div>
-                  <div className="tech-pill"><SiSupabase /><span>Supabase</span></div>
-                  <div className="tech-pill"><SiMysql /><span>MySQL</span></div>
-                  <div className="tech-pill"><SiFlutter /><span>Flutter</span></div>
-                </div>
-              </div>
-
-              <div className="tech-marquee-row tech-marquee-row-two">
-                <div className="tech-marquee-track">
-                  <div className="tech-pill"><FaAndroid /><span>Android</span></div>
-                  <div className="tech-pill"><SiTensorflow /><span>TensorFlow</span></div>
-                  <div className="tech-pill"><SiArduino /><span>Arduino</span></div>
-                  <div className="tech-pill"><FaPython /><span>Python</span></div>
-                  <div className="tech-pill"><FaJava /><span>Java</span></div>
-                  <div className="tech-pill"><SiKotlin /><span>Kotlin</span></div>
-                  <div className="tech-pill"><FaDocker /><span>Docker</span></div>
-                  <div className="tech-pill"><SiRedux /><span>Redux Toolkit</span></div>
-                  <div className="tech-pill"><SiVite /><span>Vite</span></div>
-
-                  <div className="tech-pill"><FaAndroid /><span>Android</span></div>
-                  <div className="tech-pill"><SiTensorflow /><span>TensorFlow</span></div>
-                  <div className="tech-pill"><SiArduino /><span>Arduino</span></div>
-                  <div className="tech-pill"><FaPython /><span>Python</span></div>
-                  <div className="tech-pill"><FaJava /><span>Java</span></div>
-                  <div className="tech-pill"><SiKotlin /><span>Kotlin</span></div>
-                  <div className="tech-pill"><FaDocker /><span>Docker</span></div>
-                  <div className="tech-pill"><SiRedux /><span>Redux Toolkit</span></div>
-                  <div className="tech-pill"><SiVite /><span>Vite</span></div>
-                </div>
-              </div>
-            </div>
+            <TechStackPager />
 
           </div>
         </section>

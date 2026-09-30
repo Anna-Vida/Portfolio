@@ -8064,3 +8064,208 @@ body.compact-mode .skills-grid.skills-flip-grid + .tech-marquee {
     padding-right: 20px;
   }
 }
+
+
+/* =========================================================
+   TECH STACK — PAGED GRID
+   Full cards always start at the container edge; no clipped marquee items.
+========================================================= */
+
+#skills .tech-stack-pager {
+  width: 100%;
+  margin-top: 24px;
+  padding: 18px 0 4px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.tech-stack-pager-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 14px;
+}
+
+.tech-stack-pager-label {
+  color: #747474;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.tech-stack-pager-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tech-stack-page-arrow {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 999px;
+  background: rgba(14,14,14,0.88);
+  color: #bdbdbd;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.tech-stack-page-arrow:hover {
+  color: #fff;
+  border-color: rgba(255,255,255,0.24);
+  background: #171717;
+  transform: translateY(-1px);
+}
+
+.tech-stack-page-count {
+  min-width: 50px;
+  color: #686868;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-align: center;
+}
+
+.tech-stack-page-window {
+  width: 100%;
+  overflow: hidden;
+}
+
+.tech-stack-page-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.42s cubic-bezier(.22,.72,.18,1);
+  will-change: transform;
+}
+
+.tech-stack-page {
+  flex: 0 0 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tech-stack-page-card {
+  min-width: 0;
+  min-height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 15px 14px;
+  border: 1px solid rgba(255,255,255,0.095);
+  border-radius: 16px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.025), transparent 48%),
+    rgba(15,15,15,0.90);
+  color: #a8a8a8;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.018),
+    0 12px 26px rgba(0,0,0,0.12);
+  transition:
+    transform 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease;
+}
+
+.tech-stack-page-card svg {
+  flex: 0 0 auto;
+  font-size: 1.35rem;
+  color: #d5d5d5;
+}
+
+.tech-stack-page-card span {
+  min-width: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tech-stack-page-card:hover {
+  transform: translateY(-2px);
+  color: #f2f2f2;
+  border-color: rgba(255,255,255,0.20);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.045), transparent 48%),
+    rgba(19,19,19,0.96);
+}
+
+.tech-stack-page-dots {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.tech-stack-page-dot {
+  width: 22px;
+  height: 3px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #343434;
+  cursor: pointer;
+  transition:
+    width 0.2s ease,
+    background 0.2s ease;
+}
+
+.tech-stack-page-dot.is-active {
+  width: 36px;
+  background: #d8d8d8;
+}
+
+html[data-theme="accent"] .tech-stack-page-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 38%, rgba(255,255,255,0.16));
+}
+
+html[data-theme="accent"] .tech-stack-page-dot.is-active {
+  background: color-mix(in srgb, var(--accent) 55%, #d8d8d8);
+}
+
+@media (max-width: 1200px) {
+  .tech-stack-page {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  #skills .tech-stack-pager {
+    margin-top: 18px;
+    padding-top: 14px;
+  }
+
+  .tech-stack-pager-head {
+    margin-bottom: 12px;
+  }
+
+  .tech-stack-page {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .tech-stack-page-card {
+    min-height: 64px;
+    padding: 12px 10px;
+    gap: 9px;
+  }
+
+  .tech-stack-page-card svg {
+    font-size: 1.15rem;
+  }
+
+  .tech-stack-page-card span {
+    font-size: 0.68rem;
+  }
+}
