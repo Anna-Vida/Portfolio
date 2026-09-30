@@ -8015,3 +8015,52 @@ body.compact-mode .skills-grid.skills-flip-grid + .tech-marquee {
     margin-top: 6px;
   }
 }
+
+
+/* =========================================================
+   TECH STACK — COMPACT HORIZONTAL LAYOUT
+   Reduce the large left/right gutters and tighten folder spacing.
+========================================================= */
+
+#skills .skills-container {
+  width: min(calc(100% - 64px), 1760px);
+  max-width: none;
+}
+
+#skills .skills-grid.skills-flip-grid {
+  gap: 14px;
+}
+
+#skills .skill-folder-surface {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+#skills .skill-folder-tab {
+  left: 20px;
+}
+
+@media (max-width: 1100px) {
+  #skills .skills-container {
+    width: min(calc(100% - 40px), 1100px);
+  }
+
+  #skills .skills-grid.skills-flip-grid {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 680px) {
+  #skills .skills-container {
+    width: calc(100% - 24px);
+  }
+
+  #skills .skills-grid.skills-flip-grid {
+    gap: 10px;
+  }
+
+  #skills .skill-folder-surface {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
