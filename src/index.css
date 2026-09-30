@@ -8269,3 +8269,159 @@ html[data-theme="accent"] .tech-stack-page-dot.is-active {
     font-size: 0.68rem;
   }
 }
+
+
+/* =========================================================
+   TECH LIBRARY — CONTINUOUS ONE-LAYER MARQUEE
+   One horizontal row, auto-moving continuously, no pager controls.
+========================================================= */
+
+#skills .tech-library-marquee {
+  width: 100%;
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.tech-library-head {
+  margin-bottom: 10px;
+}
+
+.tech-library-head span {
+  color: #747474;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.tech-library-window {
+  width: 100%;
+  overflow: hidden;
+}
+
+.tech-library-track {
+  display: flex;
+  width: max-content;
+  gap: 10px;
+  animation: techLibraryMarquee 42s linear infinite;
+  will-change: transform;
+  transform: translate3d(0,0,0);
+}
+
+.tech-library-group {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 10px;
+}
+
+.tech-library-card {
+  flex: 0 0 auto;
+  width: 245px;
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid rgba(255,255,255,0.095);
+  border-radius: 16px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.025), transparent 48%),
+    rgba(15,15,15,0.90);
+  color: #a8a8a8;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.018),
+    0 12px 26px rgba(0,0,0,0.12);
+  transition:
+    transform 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease;
+}
+
+.tech-library-card svg {
+  flex: 0 0 auto;
+  font-size: 1.32rem;
+  color: #d5d5d5;
+}
+
+.tech-library-card span {
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tech-library-card:hover {
+  transform: translateY(-2px);
+  color: #f2f2f2;
+  border-color: rgba(255,255,255,0.20);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,0.045), transparent 48%),
+    rgba(19,19,19,0.96);
+}
+
+.tech-library-marquee:hover .tech-library-track {
+  animation-play-state: paused;
+}
+
+html[data-theme="accent"] .tech-library-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 38%, rgba(255,255,255,0.16));
+}
+
+@keyframes techLibraryMarquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(calc(-50% - 5px), 0, 0);
+  }
+}
+
+@media (max-width: 900px) {
+  .tech-library-card {
+    width: 210px;
+    min-height: 68px;
+  }
+
+  .tech-library-track {
+    animation-duration: 38s;
+  }
+}
+
+@media (max-width: 600px) {
+  #skills .tech-library-marquee {
+    margin-top: 14px;
+    padding-top: 10px;
+  }
+
+  .tech-library-card {
+    width: 178px;
+    min-height: 62px;
+    padding: 12px 14px;
+    gap: 9px;
+  }
+
+  .tech-library-card svg {
+    font-size: 1.12rem;
+  }
+
+  .tech-library-card span {
+    font-size: 0.70rem;
+  }
+
+  .tech-library-track,
+  .tech-library-group {
+    gap: 8px;
+  }
+
+  .tech-library-track {
+    animation-duration: 34s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-library-track {
+    animation: none;
+  }
+}
