@@ -7868,3 +7868,16 @@ html[data-theme="accent"] .skill-folder-icon {
     padding: 26px 24px;
   }
 }
+
+
+/* Tech marquee now sits underneath the folder grid. */
+.skills-grid.skills-flip-grid + .tech-marquee {
+  margin-top: 42px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .skills-grid.skills-flip-grid + .tech-marquee {
+    margin-top: 30px;
+  }
+}
