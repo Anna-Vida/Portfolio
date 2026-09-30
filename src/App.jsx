@@ -618,6 +618,74 @@ function App() {
         </section>
 
         {/* =========================
+            ABOUT
+        ========================== */}
+        <section className="about-section about-section-premium" id="about">
+          <div className="about-shell">
+            <div className="about-topline">
+              <p>ABOUT</p>
+              <span>01</span>
+            </div>
+
+            <div className="about-premium-grid">
+              <div className="about-visual-column">
+                <InteractiveAboutPortrait
+                  src={annaAboutPortrait}
+                  alt="Anna Patricia Vida in graduation attire"
+                />
+              </div>
+
+              <div className="about-copy-column">
+                <h2 className="about-premium-heading">
+                  <span className="about-premium-heading-light">
+                    I build digital products that
+                  </span>
+                  <span className="about-premium-heading-muted">
+                    combine software,
+                    <br />
+                    intelligent systems, and
+                    <br />
+                    connected technology.
+                  </span>
+                </h2>
+
+                <div className="about-info-grid">
+                  <article className="about-info-card">
+                    <div className="about-info-heading">
+                      <span className="about-info-number">01</span>
+                      <span className="about-info-label">PROFILE</span>
+                      <span className="about-info-line" />
+                    </div>
+
+                    <p>
+                      I'm Anna Patricia Vida, an Information Technology graduate
+                      and software developer with experience in mobile
+                      development, full-stack systems, AI, IoT, and offline-first
+                      applications.
+                    </p>
+                  </article>
+
+                  <article className="about-info-card">
+                    <div className="about-info-heading">
+                      <span className="about-info-number">02</span>
+                      <span className="about-info-label">FOCUS</span>
+                      <span className="about-info-line" />
+                    </div>
+
+                    <p>
+                      My work spans healthcare, agriculture, finance, computer
+                      vision, embedded systems, and wearable technology. I enjoy
+                      turning complex technical ideas into practical applications
+                      that people can actually use.
+                    </p>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* =========================
             SELECTED WORK
         ========================== */}
         <section className="work-section work-section-v2" id="work">
@@ -820,74 +888,6 @@ function App() {
             </div>
           </div>
         )}
-
-        {/* =========================
-            ABOUT
-        ========================== */}
-        <section className="about-section about-section-premium" id="about">
-          <div className="about-shell">
-            <div className="about-topline">
-              <p>ABOUT</p>
-              <span>01</span>
-            </div>
-
-            <div className="about-premium-grid">
-              <div className="about-visual-column">
-                <InteractiveAboutPortrait
-                  src={annaAboutPortrait}
-                  alt="Anna Patricia Vida in graduation attire"
-                />
-              </div>
-
-              <div className="about-copy-column">
-                <h2 className="about-premium-heading">
-                  <span className="about-premium-heading-light">
-                    I build digital products that
-                  </span>
-                  <span className="about-premium-heading-muted">
-                    combine software,
-                    <br />
-                    intelligent systems, and
-                    <br />
-                    connected technology.
-                  </span>
-                </h2>
-
-                <div className="about-info-grid">
-                  <article className="about-info-card">
-                    <div className="about-info-heading">
-                      <span className="about-info-number">01</span>
-                      <span className="about-info-label">PROFILE</span>
-                      <span className="about-info-line" />
-                    </div>
-
-                    <p>
-                      I'm Anna Patricia Vida, an Information Technology graduate
-                      and software developer with experience in mobile
-                      development, full-stack systems, AI, IoT, and offline-first
-                      applications.
-                    </p>
-                  </article>
-
-                  <article className="about-info-card">
-                    <div className="about-info-heading">
-                      <span className="about-info-number">02</span>
-                      <span className="about-info-label">FOCUS</span>
-                      <span className="about-info-line" />
-                    </div>
-
-                    <p>
-                      My work spans healthcare, agriculture, finance, computer
-                      vision, embedded systems, and wearable technology. I enjoy
-                      turning complex technical ideas into practical applications
-                      that people can actually use.
-                    </p>
-                  </article>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* =========================
             EXPERIENCE
