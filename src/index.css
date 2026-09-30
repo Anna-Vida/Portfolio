@@ -6816,3 +6816,71 @@ html[data-theme="accent"] .skill-card-hint {
       #111;
   }
 }
+
+
+/* =========================================================
+   SKILLS HEADING — TEXT SHIMMER
+   Keeps the existing white + gray treatment and only adds a
+   soft moving highlight band.
+========================================================= */
+
+.portfolio-text-shimmer {
+  display: inline;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  background-image:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      transparent 36%,
+      var(--shimmer-highlight) 50%,
+      transparent 64%,
+      transparent 100%
+    ),
+    linear-gradient(
+      var(--shimmer-base),
+      var(--shimmer-base)
+    );
+  background-size: 250% 100%, auto;
+  background-repeat: no-repeat, no-repeat;
+  background-position: 105% center, 0 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  animation: portfolioTextShimmer var(--shimmer-duration, 3.4s) linear infinite;
+  will-change: background-position;
+}
+
+.portfolio-text-shimmer[data-shimmer-paused="true"] {
+  animation-play-state: paused;
+}
+
+.skills-shimmer-primary {
+  --shimmer-base: #f2f2f2;
+  --shimmer-highlight: #ffffff;
+}
+
+.skills-shimmer-muted {
+  --shimmer-base: #666666;
+  --shimmer-highlight: #f2f2f2;
+}
+
+@keyframes portfolioTextShimmer {
+  0% {
+    background-position: 105% center, 0 0;
+  }
+
+  100% {
+    background-position: -5% center, 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-text-shimmer {
+    animation: none;
+    background-image: none;
+    -webkit-text-fill-color: var(--shimmer-base);
+    color: var(--shimmer-base);
+  }
+}

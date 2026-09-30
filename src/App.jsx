@@ -7,6 +7,7 @@ import { ParticleTextEffect } from "./components/ui/interactive-text-particle";
 import CinematicFooter from "./components/ui/motion-footer";
 import annaAboutPortrait from "./assets/anna-about-portrait.png.png";
 import InteractiveAboutPortrait from "./components/ui/interactive-about-portrait";
+import TextShimmer from "./components/ui/text-shimmer";
 
 import {
   FaReact,
@@ -973,8 +974,20 @@ function App() {
               <p className="section-kicker">TECH STACK</p>
 
               <h2>
-                Tools I use to build
-                <span> practical, scalable software.</span>
+                <TextShimmer
+                  text="Tools I use to build"
+                  className="skills-shimmer-primary"
+                  baseColor="#f2f2f2"
+                  shimmerColor="#ffffff"
+                  duration={3.4}
+                />
+                <TextShimmer
+                  text=" practical, scalable software."
+                  className="skills-shimmer-muted"
+                  baseColor="#666666"
+                  shimmerColor="#f2f2f2"
+                  duration={3.4}
+                />
               </h2>
             </div>
 
