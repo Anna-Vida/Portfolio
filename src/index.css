@@ -2839,6 +2839,7 @@ body,
 .hero,
 .about-section,
 .experience-section,
+.skills-section,
 .certifications-section,
 .footer {
   background-color: var(--theme-dark);
@@ -2866,7 +2867,6 @@ body,
 
 /* Light sections remain off-white rather than turning into bright theme colors. */
 .work-section,
-.skills-section,
 .contact-section {
   background-color: var(--theme-light);
 }
@@ -3054,7 +3054,6 @@ a.certification-item:hover {
 /* Keep readable contrast in all dark palettes. */
 @supports not (color: color-mix(in srgb, black, white)) {
   .work-section,
-  .skills-section,
   .contact-section {
     background: #efefeb;
   }
@@ -3063,6 +3062,7 @@ a.certification-item:hover {
   .hero,
   .about-section,
   .experience-section,
+  .skills-section,
   .certifications-section,
   .footer {
     background: #0b0b0b;
@@ -3088,6 +3088,7 @@ html[data-theme="original"] body,
 html[data-theme="original"] .hero,
 html[data-theme="original"] .about-section,
 html[data-theme="original"] .experience-section,
+html[data-theme="original"] .skills-section,
 html[data-theme="original"] .certifications-section,
 html[data-theme="original"] .footer {
   background: #0b0b0b;
@@ -3099,7 +3100,6 @@ html[data-theme="original"] .navbar {
 }
 
 html[data-theme="original"] .work-section,
-html[data-theme="original"] .skills-section,
 html[data-theme="original"] .contact-section {
   background: #efefeb;
 }
@@ -3226,7 +3226,6 @@ html[data-theme="accent"] .certifications-section {
 }
 
 html[data-theme="accent"] .work-section,
-html[data-theme="accent"] .skills-section,
 html[data-theme="accent"] .contact-section {
   background-color: var(--theme-light);
 }
@@ -6683,4 +6682,29 @@ html[data-theme="accent"] .skill-card-front {
       transparent 44%
     ),
     #0b0b0b;
+}
+
+
+/* FINAL SKILLS THEME SAFEGUARD
+   Tech Stack is intentionally one continuous dark section. */
+html[data-theme="original"] .skills-section,
+html[data-theme="accent"] .skills-section {
+  background-color: #0b0b0b;
+  color: #f2f2f2;
+}
+
+html[data-theme="original"] .skills-section {
+  background-image: none;
+}
+
+.skills-section .skills-heading h2 {
+  color: #f2f2f2;
+}
+
+.skills-section .skills-heading h2 span {
+  color: #666;
+}
+
+.skills-section .section-kicker {
+  color: #777;
 }
