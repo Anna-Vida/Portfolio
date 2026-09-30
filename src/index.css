@@ -6708,3 +6708,111 @@ html[data-theme="original"] .skills-section {
 .skills-section .section-kicker {
   color: #777;
 }
+
+
+/* =========================================================
+   SKILLS — FINAL DARK THEME OVERRIDE
+   Higher-specificity rules ensure the old light-theme selectors
+   cannot turn the Tech Stack header white again.
+========================================================= */
+
+html[data-theme="original"] .skills-section,
+html[data-theme="accent"] .skills-section {
+  background: #0b0b0b !important;
+  background-image: none !important;
+  color: #f2f2f2;
+}
+
+html[data-theme="accent"] .skills-section {
+  background:
+    radial-gradient(
+      circle at 82% 8%,
+      color-mix(in srgb, var(--accent) 4%, transparent),
+      transparent 34%
+    ),
+    #0b0b0b !important;
+}
+
+html[data-theme="original"] .skills-heading .section-kicker,
+html[data-theme="accent"] .skills-heading .section-kicker {
+  color: #777;
+}
+
+html[data-theme="original"] .skills-heading h2,
+html[data-theme="accent"] .skills-heading h2 {
+  color: #f2f2f2;
+}
+
+html[data-theme="original"] .skills-heading h2 span,
+html[data-theme="accent"] .skills-heading h2 span {
+  color: #666;
+}
+
+html[data-theme="original"] .tech-marquee,
+html[data-theme="accent"] .tech-marquee {
+  background: #0b0b0b;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+html[data-theme="original"] .tech-marquee::before,
+html[data-theme="accent"] .tech-marquee::before {
+  background: linear-gradient(to right, #0b0b0b 10%, transparent);
+}
+
+html[data-theme="original"] .tech-marquee::after,
+html[data-theme="accent"] .tech-marquee::after {
+  background: linear-gradient(to left, #0b0b0b 10%, transparent);
+}
+
+html[data-theme="original"] .skills-grid,
+html[data-theme="accent"] .skills-grid {
+  border-top-color: rgba(255, 255, 255, 0.1);
+  border-left-color: rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme="original"] .skill-flip-card,
+html[data-theme="accent"] .skill-flip-card {
+  border-right-color: rgba(255, 255, 255, 0.1);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme="original"] .skill-card-front,
+html[data-theme="accent"] .skill-card-front {
+  background: #0d0d0d;
+  color: #f2f2f2;
+}
+
+html[data-theme="original"] .skill-card-back,
+html[data-theme="accent"] .skill-card-back {
+  background: #121212;
+  color: #f2f2f2;
+}
+
+html[data-theme="original"] .skill-card-title,
+html[data-theme="accent"] .skill-card-title {
+  color: #f2f2f2;
+}
+
+html[data-theme="original"] .skill-card-front .skill-number,
+html[data-theme="accent"] .skill-card-front .skill-number,
+html[data-theme="original"] .skill-card-hint,
+html[data-theme="accent"] .skill-card-hint {
+  color: #747474;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="original"] .skill-flip-card:hover .skill-card-front {
+    background: #131313;
+  }
+
+  html[data-theme="accent"] .skill-flip-card:hover .skill-card-front {
+    background:
+      radial-gradient(
+        circle at 88% 10%,
+        color-mix(in srgb, var(--accent) 6%, transparent),
+        transparent 48%
+      ),
+      #111;
+  }
+}
