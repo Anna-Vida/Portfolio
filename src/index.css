@@ -7390,10 +7390,18 @@ html[data-theme="accent"] .skills-section {
     );
 }
 
-.navbar,
 main {
   position: relative;
   z-index: 1;
+}
+
+/* Keep the navbar pinned while the page scrolls. */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
 .cinematic-footer-shell {
