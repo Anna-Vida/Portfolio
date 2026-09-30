@@ -230,8 +230,9 @@ const HeroHexBackground = () => {
     }
 
     window.addEventListener("resize", resizeCanvas);
-    canvas.addEventListener("pointermove", handlePointerMove);
-    canvas.addEventListener("pointerleave", handlePointerLeave);
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    document.addEventListener("mouseleave", handlePointerLeave);
+    window.addEventListener("blur", handlePointerLeave);
     motionQuery.addEventListener?.("change", handleMotionChange);
 
     resizeCanvas();
@@ -247,8 +248,9 @@ const HeroHexBackground = () => {
       intersectionObserver?.disconnect();
 
       window.removeEventListener("resize", resizeCanvas);
-      canvas.removeEventListener("pointermove", handlePointerMove);
-      canvas.removeEventListener("pointerleave", handlePointerLeave);
+      window.removeEventListener("pointermove", handlePointerMove);
+      document.removeEventListener("mouseleave", handlePointerLeave);
+      window.removeEventListener("blur", handlePointerLeave);
       motionQuery.removeEventListener?.("change", handleMotionChange);
 
       stopAnimation();
