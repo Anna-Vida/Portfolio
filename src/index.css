@@ -7351,3 +7351,94 @@ html[data-theme="accent"] .skills-section {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* =========================================================
+   ONE HERO-STYLE BACKGROUND FOR THE WHOLE SITE
+   Footer intentionally keeps its own cinematic background.
+========================================================= */
+
+.site-hex-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: #0b0b0b;
+}
+
+.site-hex-background .hero-hex-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.site-hex-background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 50% 42%,
+      transparent 0%,
+      rgba(11, 11, 11, 0.05) 50%,
+      rgba(11, 11, 11, 0.46) 100%
+    );
+}
+
+.navbar,
+main {
+  position: relative;
+  z-index: 1;
+}
+
+.cinematic-footer-shell {
+  position: relative;
+  z-index: 2;
+}
+
+/* Use the same background continuously from Hero through Certifications. */
+.hero,
+main > .about-section-premium,
+main > .work-section-v2,
+main > .experience-section,
+main > .skills-section,
+main > .certifications-section,
+html[data-theme="original"] main > .work-section.work-section-v2,
+html[data-theme="accent"] main > .work-section.work-section-v2,
+html[data-theme="original"] main > .skills-section,
+html[data-theme="accent"] main > .skills-section {
+  background: transparent !important;
+  background-image: none !important;
+}
+
+/* Remove section-specific decorative background layers that would interrupt it. */
+.hero::after,
+main > .about-section-premium::before,
+main > .work-section-v2::before {
+  display: none !important;
+}
+
+/* Keep content readable while still letting the shared hex field show through. */
+.tech-marquee,
+html[data-theme="original"] .tech-marquee,
+html[data-theme="accent"] .tech-marquee {
+  background: rgba(11, 11, 11, 0.80);
+  backdrop-filter: blur(2px);
+}
+
+@media (max-width: 768px) {
+  .site-hex-background .hero-hex-background {
+    opacity: 0.72;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-hex-background .hero-hex-background {
+    opacity: 0.55;
+  }
+}
