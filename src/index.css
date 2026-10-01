@@ -8849,3 +8849,126 @@ html[data-theme="accent"] .tech-library-card:hover {
     display: none;
   }
 }
+
+
+/* =========================================================
+   ABOUT PORTRAIT — COMET CARD INTERACTION
+   Adapted from the supplied CometCard reference for the current
+   JSX + CSS portfolio without adding Tailwind/TypeScript dependencies.
+========================================================= */
+
+.about-portrait-wrap {
+  --comet-glare-x: 50%;
+  --comet-glare-y: 50%;
+  perspective: 1100px;
+}
+
+.about-polaroid-stack {
+  transform-style: preserve-3d;
+  transition:
+    transform 180ms cubic-bezier(.2,.72,.2,1),
+    filter 220ms ease;
+  will-change: transform;
+}
+
+.about-polaroid-card {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transition:
+    transform 220ms cubic-bezier(.2,.72,.2,1),
+    box-shadow 220ms ease;
+}
+
+.about-comet-glare {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: overlay;
+  background:
+    radial-gradient(
+      circle at var(--comet-glare-x) var(--comet-glare-y),
+      rgba(255,255,255,0.72) 0%,
+      rgba(255,255,255,0.28) 17%,
+      rgba(255,255,255,0.08) 34%,
+      rgba(255,255,255,0) 68%
+    );
+  transition: opacity 180ms ease;
+}
+
+.about-polaroid-photo,
+.about-polaroid-meta {
+  position: relative;
+  z-index: 2;
+  transform: translateZ(18px);
+}
+
+.about-polaroid-stack::before {
+  transform:
+    translate(20px, 16px)
+    translateZ(-24px)
+    rotate(4deg);
+}
+
+.about-polaroid-stack::after {
+  transform:
+    translate(10px, 8px)
+    translateZ(-12px)
+    rotate(1.8deg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .about-portrait-interactive:hover .about-polaroid-stack {
+    scale: 1.035;
+    filter:
+      drop-shadow(0 26px 36px rgba(0,0,0,0.24))
+      drop-shadow(0 0 18px rgba(255,255,255,0.035));
+  }
+
+  .about-portrait-interactive:hover .about-polaroid-card {
+    box-shadow:
+      0 34px 58px rgba(0,0,0,0.30),
+      0 10px 20px rgba(0,0,0,0.15),
+      inset 0 1px 0 rgba(255,255,255,0.38);
+  }
+
+  .about-portrait-interactive:hover .about-comet-glare {
+    opacity: 0.46;
+  }
+
+  .about-portrait-interactive:hover .about-polaroid-photo .about-portrait {
+    scale: 1.015;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-polaroid-stack::before {
+    transform:
+      translate(14px, 12px)
+      translateZ(-20px)
+      rotate(4deg);
+  }
+
+  .about-polaroid-stack::after {
+    transform:
+      translate(7px, 6px)
+      translateZ(-10px)
+      rotate(1.8deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-polaroid-stack,
+  .about-polaroid-card,
+  .about-polaroid-photo,
+  .about-polaroid-meta {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .about-comet-glare {
+    display: none;
+  }
+}
