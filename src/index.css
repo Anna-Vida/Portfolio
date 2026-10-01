@@ -8671,3 +8671,181 @@ html[data-theme="accent"] .tech-library-card:hover {
     transition: none !important;
   }
 }
+
+
+/* =========================================================
+   HERO TITLE — AUTOMATIC SHUTTER
+   Replays whenever the hero re-enters view. No manual replay control.
+========================================================= */
+
+.hero-shutter-title {
+  display: block;
+}
+
+.hero-shutter-line {
+  display: flex;
+  width: max-content;
+  max-width: 100%;
+}
+
+.hero-shutter-line-primary {
+  color: #f2f2f2;
+}
+
+.hero-shutter-line-secondary {
+  margin-left: 10vw;
+  margin-top: 18px;
+  color: #555;
+}
+
+.hero-shutter-char {
+  --shutter-delay: 0ms;
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-shutter-base {
+  display: inline-block;
+  color: inherit;
+  opacity: 0;
+  filter: blur(10px);
+  animation:
+    heroShutterReveal 720ms cubic-bezier(.18,.78,.2,1)
+    calc(var(--shutter-delay) + 230ms)
+    forwards;
+}
+
+.hero-shutter-slice {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  color: inherit;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.hero-shutter-slice-top {
+  clip-path: polygon(0 0, 100% 0, 100% 34%, 0 34%);
+  animation:
+    heroShutterSweepRight 620ms cubic-bezier(.22,.7,.2,1)
+    var(--shutter-delay)
+    both;
+}
+
+.hero-shutter-slice-middle {
+  clip-path: polygon(0 33%, 100% 33%, 100% 68%, 0 68%);
+  filter: brightness(1.22);
+  animation:
+    heroShutterSweepLeft 620ms cubic-bezier(.22,.7,.2,1)
+    calc(var(--shutter-delay) + 70ms)
+    both;
+}
+
+.hero-shutter-slice-bottom {
+  clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+  filter: brightness(0.86);
+  animation:
+    heroShutterSweepRight 620ms cubic-bezier(.22,.7,.2,1)
+    calc(var(--shutter-delay) + 140ms)
+    both;
+}
+
+@keyframes heroShutterReveal {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(8px);
+  }
+
+  55% {
+    opacity: 1;
+    filter: blur(2px);
+  }
+
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroShutterSweepRight {
+  0% {
+    opacity: 0;
+    transform: translateX(-120%);
+  }
+
+  16% {
+    opacity: 0.95;
+  }
+
+  68% {
+    opacity: 0.88;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(120%);
+  }
+}
+
+@keyframes heroShutterSweepLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(120%);
+  }
+
+  16% {
+    opacity: 0.82;
+  }
+
+  68% {
+    opacity: 0.72;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-120%);
+  }
+}
+
+/* Keep the existing ANNA / PATRICIA VIDA composition exactly aligned. */
+.hero-title.hero-shutter-title > span {
+  display: flex;
+}
+
+.hero-title.hero-shutter-title > span.hero-shutter-line-secondary {
+  margin-left: 10vw;
+  margin-top: 18px;
+}
+
+/* Override the old generic .hero-title span styling so nested shutter
+   spans do not inherit block/margin styles intended for PATRICIA VIDA. */
+.hero-title.hero-shutter-title .hero-shutter-char,
+.hero-title.hero-shutter-title .hero-shutter-base,
+.hero-title.hero-shutter-title .hero-shutter-slice {
+  margin-left: 0;
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  .hero-shutter-line-secondary,
+  .hero-title.hero-shutter-title > span.hero-shutter-line-secondary {
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-shutter-base {
+    opacity: 1;
+    filter: none;
+    animation: none;
+  }
+
+  .hero-shutter-slice {
+    display: none;
+  }
+}
