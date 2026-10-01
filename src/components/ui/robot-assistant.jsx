@@ -453,6 +453,10 @@ export default function RobotAssistant() {
   const sectionTimerRef = useRef(null);
   const speechQueueRef = useRef([]);
   const activeUtteranceRef = useRef(null);
+  const speechStartTimerRef = useRef(null);
+  const speechRetryRef = useRef(false);
+  const speechConfirmedRef = useRef(false);
+  const voicesRef = useRef([]);
   const lastSpokenRef = useRef("");
   const lastSectionSpokenRef = useRef("");
   const soundEnabledRef = useRef(false);
@@ -469,51 +473,149 @@ export default function RobotAssistant() {
   const getPreferredVoice = () => {
     if (!("speechSynthesis" in window)) return null;
 
-    const voices = window.speechSynthesis.getVoices();
+    const synth = window.speechSynthesis;
+    const available = synth.getVoices();
+
+    if (available.length) {
+      voicesRef.current = available;
+    }
+
+    const voices = voicesRef.current;
 
     return (
-      voices.find((voice) => /aria|zira|samantha|female/i.test(voice.name)) ||
-      voices.find((voice) => /^en-PH/i.test(voice.lang)) ||
+      voices.find(
+        (voice) =>
+          voice.localService &&
+          /^en-PH/i.test(voice.lang),
+      ) ||
+      voices.find(
+        (voice) =>
+          voice.localService &&
+          /^en-(US|GB|AU|CA)/i.test(voice.lang),
+      ) ||
+      voices.find(
+        (voice) =>
+          voice.localService &&
+          /^en/i.test(voice.lang),
+      ) ||
+      voices.find((voice) => voice.default && /^en/i.test(voice.lang)) ||
       voices.find((voice) => /^en/i.test(voice.lang)) ||
+      voices.find((voice) => voice.localService) ||
       voices[0] ||
       null
     );
   };
 
-  const speakNextChunk = () => {
+  const clearSpeechStartTimer = () => {
+    if (speechStartTimerRef.current) {
+      window.clearTimeout(speechStartTimerRef.current);
+      speechStartTimerRef.current = null;
+    }
+  };
+
+  const speakNextChunk = ({ useDefaultVoice = false } = {}) => {
     if (!("speechSynthesis" in window)) return;
     if (!soundEnabledRef.current) return;
 
     const nextChunk = speechQueueRef.current.shift();
+
     if (!nextChunk) {
       activeUtteranceRef.current = null;
+      clearSpeechStartTimer();
       return;
     }
 
     const synth = window.speechSynthesis;
     const utterance = new SpeechSynthesisUtterance(nextChunk);
+    const preferred = useDefaultVoice ? null : getPreferredVoice();
 
     utterance.rate = 0.94;
-    utterance.pitch = 1.06;
+    utterance.pitch = 1.04;
     utterance.volume = 1;
-    utterance.lang = "en-US";
+    utterance.lang = preferred?.lang || "en-US";
 
-    const preferred = getPreferredVoice();
-    if (preferred) utterance.voice = preferred;
+    if (preferred) {
+      utterance.voice = preferred;
+    }
 
-    utterance.onend = () => {
-      activeUtteranceRef.current = null;
-      if (soundEnabledRef.current) speakNextChunk();
+    utterance.onstart = () => {
+      clearSpeechStartTimer();
+      speechRetryRef.current = false;
+
+      if (!speechConfirmedRef.current) {
+        speechConfirmedRef.current = true;
+        setMessage(
+          "Sound is working. I'll read each section as you move through the portfolio.",
+        );
+      }
     };
 
-    utterance.onerror = () => {
+    utterance.onend = () => {
+      clearSpeechStartTimer();
       activeUtteranceRef.current = null;
-      if (soundEnabledRef.current) speakNextChunk();
+
+      if (soundEnabledRef.current) {
+        window.setTimeout(() => speakNextChunk(), 35);
+      }
+    };
+
+    utterance.onerror = (event) => {
+      clearSpeechStartTimer();
+      activeUtteranceRef.current = null;
+
+      const harmless =
+        event.error === "interrupted" ||
+        event.error === "canceled";
+
+      if (harmless) return;
+
+      // Some Chromium/Windows installations expose an online voice that
+      // appears valid but produces no sound. Retry once with the browser's
+      // default local voice before giving up.
+      if (!speechRetryRef.current && soundEnabledRef.current) {
+        speechRetryRef.current = true;
+        speechQueueRef.current.unshift(nextChunk);
+        window.setTimeout(
+          () => speakNextChunk({ useDefaultVoice: true }),
+          90,
+        );
+        return;
+      }
+
+      speechRetryRef.current = false;
+      setMessage(
+        "Voice could not start. Please make sure this tab/site is not muted, then tap the speaker once more.",
+      );
     };
 
     activeUtteranceRef.current = utterance;
+
     synth.resume();
     synth.speak(utterance);
+
+    // If onstart never fires, Chrome can be stuck after a cancel() or can
+    // choose an unavailable cloud voice. Retry this chunk once with the
+    // browser default voice.
+    clearSpeechStartTimer();
+    speechStartTimerRef.current = window.setTimeout(() => {
+      if (
+        activeUtteranceRef.current === utterance &&
+        !speechConfirmedRef.current &&
+        !synth.speaking
+      ) {
+        synth.cancel();
+        activeUtteranceRef.current = null;
+
+        if (!speechRetryRef.current && soundEnabledRef.current) {
+          speechRetryRef.current = true;
+          speechQueueRef.current.unshift(nextChunk);
+          window.setTimeout(
+            () => speakNextChunk({ useDefaultVoice: true }),
+            120,
+          );
+        }
+      }
+    }, 1400);
   };
 
   const speak = (text, { force = false } = {}) => {
@@ -530,24 +632,44 @@ export default function RobotAssistant() {
     if (!chunks.length) return;
 
     const synth = window.speechSynthesis;
-    synth.cancel();
 
     speechQueueRef.current = chunks;
     activeUtteranceRef.current = null;
+    speechRetryRef.current = false;
+    clearSpeechStartTimer();
 
-    // Run immediately from the user's sound-button gesture when force=true.
-    speakNextChunk();
+    const startSpeech = () => {
+      if (!soundEnabledRef.current) return;
+      synth.resume();
+      speakNextChunk();
+    };
+
+    // Avoid Chrome's cancel() -> speak() race. Only cancel when something is
+    // actually queued/playing, then give the engine a short reset window.
+    if (synth.speaking || synth.pending || synth.paused) {
+      synth.cancel();
+      window.setTimeout(startSpeech, 110);
+    } else {
+      startSpeech();
+    }
   };
 
   useEffect(() => {
     if (!("speechSynthesis" in window)) return undefined;
 
-    const preloadVoices = () => window.speechSynthesis.getVoices();
+    const preloadVoices = () => {
+      const voices = window.speechSynthesis.getVoices();
+      if (voices.length) voicesRef.current = voices;
+    };
+
     preloadVoices();
+    // Chromium sometimes populates voices a moment after page load.
+    const voiceTimer = window.setTimeout(preloadVoices, 350);
 
     window.speechSynthesis.addEventListener?.("voiceschanged", preloadVoices);
 
     return () => {
+      window.clearTimeout(voiceTimer);
       window.speechSynthesis.removeEventListener?.(
         "voiceschanged",
         preloadVoices,
@@ -691,6 +813,7 @@ export default function RobotAssistant() {
 
       speechQueueRef.current = [];
       activeUtteranceRef.current = null;
+      clearSpeechStartTimer();
 
       if (sectionTimerRef.current) {
         window.clearTimeout(sectionTimerRef.current);
@@ -708,6 +831,9 @@ export default function RobotAssistant() {
     if (!next) {
       speechQueueRef.current = [];
       activeUtteranceRef.current = null;
+      speechRetryRef.current = false;
+      speechConfirmedRef.current = false;
+      clearSpeechStartTimer();
 
       if ("speechSynthesis" in window) {
         window.speechSynthesis.cancel();
@@ -731,11 +857,13 @@ export default function RobotAssistant() {
       : "Sound is on. I'll read each section as you visit it.";
 
     lastSectionSpokenRef.current = "";
-    setMessage(greeting);
+    speechConfirmedRef.current = false;
+    speechRetryRef.current = false;
+    setMessage("Testing voice…");
 
-    // This is called directly from the user's click, which unlocks browser
-    // speech output. Keeping each utterance in a ref also prevents Chromium
-    // from dropping longer speech while it is playing.
+    // Called directly from the speaker-button user gesture. The speech
+    // pipeline prefers a local installed voice and retries with the browser
+    // default if the selected voice cannot start.
     speak(greeting, { force: true });
   };
 
