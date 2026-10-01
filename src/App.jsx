@@ -430,8 +430,8 @@ function App() {
             <nav className="limelight-nav" aria-label="Primary navigation">
               {[
                 ["about", "About"],
-                ["work", "Work"],
                 ["experience", "Experience"],
+                ["work", "Work"],
                 ["skills", "Skills"],
                 ["certifications", "Certifications"],
                 ["contact", "Contact"],
@@ -691,6 +691,83 @@ function App() {
         </section>
 
         {/* =========================
+            EXPERIENCE
+        ========================== */}
+        <section className="experience-section" id="experience">
+          <div className="experience-container">
+            <div className="experience-heading">
+              <p className="section-kicker">EXPERIENCE</p>
+
+              <h2>
+                Building across
+                <span> software, AI, mobile, and connected systems.</span>
+              </h2>
+            </div>
+
+            <div className="experience-list">
+              <span className="experience-progress-line" aria-hidden="true" />
+              <article className="experience-item">
+                <div className="experience-year">
+                  JAN 2026 — APR 2026
+                </div>
+
+                <div className="experience-role">
+                  <h3>Software Developer Intern</h3>
+
+                  <p className="experience-company">
+                    Ateneo Innovation Center
+                  </p>
+                </div>
+
+                <div className="experience-description">
+                  <p>
+                    Developed offline-first mobile applications for healthcare
+                    and AgTech, integrating local caching, OCR, cloud
+                    synchronization, and responsive mobile workflows.
+                  </p>
+
+                  <p>
+                    Built computer vision interfaces and control dashboards
+                    integrating Meta Ray-Ban AI Glasses for real-time obstacle
+                    and debris detection.
+                  </p>
+
+                  <p>
+                    Worked with machine learning pipelines, microcontrollers,
+                    cloud backends, and environmental weather station systems
+                    for real-time data streaming.
+                  </p>
+                </div>
+              </article>
+
+              <article className="experience-item">
+                <div className="experience-year">
+                  JUNE 2026
+                </div>
+
+                <div className="experience-role">
+                  <h3>Bachelor of Science in Information Technology</h3>
+
+                  <p className="experience-company">
+                    Technological Institute of the Philippines
+                  </p>
+                </div>
+
+                <div className="experience-description">
+                  <p>
+                    Completed a Bachelor of Science in Information Technology
+                    with hands-on work across software development, mobile
+                    engineering, databases, artificial intelligence, IoT, and
+                    systems development.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+
+        {/* =========================
             SELECTED WORK
         ========================== */}
         <section className="work-section work-section-v2" id="work">
@@ -893,82 +970,6 @@ function App() {
             </div>
           </div>
         )}
-
-        {/* =========================
-            EXPERIENCE
-        ========================== */}
-        <section className="experience-section" id="experience">
-          <div className="experience-container">
-            <div className="experience-heading">
-              <p className="section-kicker">EXPERIENCE</p>
-
-              <h2>
-                Building across
-                <span> software, AI, mobile, and connected systems.</span>
-              </h2>
-            </div>
-
-            <div className="experience-list">
-              <span className="experience-progress-line" aria-hidden="true" />
-              <article className="experience-item">
-                <div className="experience-year">
-                  JAN 2026 — APR 2026
-                </div>
-
-                <div className="experience-role">
-                  <h3>Software Developer Intern</h3>
-
-                  <p className="experience-company">
-                    Ateneo Innovation Center
-                  </p>
-                </div>
-
-                <div className="experience-description">
-                  <p>
-                    Developed offline-first mobile applications for healthcare
-                    and AgTech, integrating local caching, OCR, cloud
-                    synchronization, and responsive mobile workflows.
-                  </p>
-
-                  <p>
-                    Built computer vision interfaces and control dashboards
-                    integrating Meta Ray-Ban AI Glasses for real-time obstacle
-                    and debris detection.
-                  </p>
-
-                  <p>
-                    Worked with machine learning pipelines, microcontrollers,
-                    cloud backends, and environmental weather station systems
-                    for real-time data streaming.
-                  </p>
-                </div>
-              </article>
-
-              <article className="experience-item">
-                <div className="experience-year">
-                  JUNE 2026
-                </div>
-
-                <div className="experience-role">
-                  <h3>Bachelor of Science in Information Technology</h3>
-
-                  <p className="experience-company">
-                    Technological Institute of the Philippines
-                  </p>
-                </div>
-
-                <div className="experience-description">
-                  <p>
-                    Completed a Bachelor of Science in Information Technology
-                    with hands-on work across software development, mobile
-                    engineering, databases, artificial intelligence, IoT, and
-                    systems development.
-                  </p>
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
 
         {/* =========================
             SKILLS / TECH STACK
