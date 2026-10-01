@@ -387,7 +387,11 @@ function CinematicFooter() {
             </p>
 
             <div ref={linksRef} className="cinematic-footer__links">
-              <MagneticLink href="mailto:annapatriciavida12@gmail.com">
+              <MagneticLink
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=annapatriciavdia12@gmail.com"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <FaEnvelope /> Email me
               </MagneticLink>
               <MagneticLink href="/Anna-Patricia-Vida-Resume.pdf" download>
