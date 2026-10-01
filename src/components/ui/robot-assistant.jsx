@@ -327,33 +327,23 @@ function RobotScene({ pointerRef }) {
   );
 }
 
-const sectionSpeechSelectors = {
-  home: [".hero-eyebrow", ".hero-title", ".hero-description", ".hero-copy"],
-  about: [".about-content h2", ".about-grid p"],
-  experience: [
-    ".experience-year",
-    ".experience-role",
-    ".experience-company",
-    ".experience-description p",
-  ],
-  work: [
-    ".project-showcase-card .project-number",
-    ".project-showcase-card .project-title",
-    ".project-showcase-card .project-type",
-    ".project-showcase-card .project-description",
-  ],
-  skills: [
-    ".skills-heading h2",
-    ".skill-card-title",
-    ".skill-card-back .tech-pill",
-  ],
-  certifications: [
-    ".cert-pin-company",
-    ".cert-pin-copy h3",
-    ".cert-pin-date",
-  ],
-  contact: ["h2", "p", "a"],
-};
+const speechIgnoreSelector = [
+  ".robot-assistant",
+  ".hero-actions",
+  ".socials",
+  ".project-filters",
+  ".project-preview-badge",
+  ".skill-card-hint",
+  ".cert-pin-tooltip",
+  ".cert-pin-line",
+  ".cert-pin-ripples",
+  ".cert-pin-footer",
+  ".tech-library-group[aria-hidden=\"true\"]",
+  "[aria-hidden=\"true\"]",
+  "script",
+  "style",
+  "noscript",
+].join(",");
 
 const naturalVoiceHints = [
   /natural/i,
@@ -466,46 +456,48 @@ function getSectionSpeech(sectionId) {
   const section = document.getElementById(sectionId);
   if (!section) return "";
 
-  const selectors =
-    sectionSpeechSelectors[sectionId] || ["h1", "h2", "h3", "p", "li"];
-  const candidates = Array.from(section.querySelectorAll(selectors.join(",")));
-  const parts = [];
-  const seen = new Set();
+  const clone = section.cloneNode(true);
 
-  const pushText = (node, forcedText = "") => {
-    if (!node || !isVisibleElement(node)) return;
-    if (node.closest(".robot-assistant")) return;
-    if (node.closest('[aria-hidden="true"]')) return;
+  clone.querySelectorAll(speechIgnoreSelector).forEach((node) => node.remove());
 
-    let text = forcedText || cleanSpeechText(node.innerText || node.textContent);
-
-    if (node.classList?.contains("hero-shutter-title")) {
-      text = "Anna Patricia Vida";
-    }
-
-    if (!text || text.length < 3 || seen.has(text)) return;
-
-    seen.add(text);
-    parts.push(text);
-  };
+  // Buttons mostly contain navigation/action copy rather than page content.
+  // Keep project cards because their text contains the project information,
+  // but remove ordinary controls so they are not narrated repeatedly.
+  clone
+    .querySelectorAll(
+      "button:not(.project-showcase-card), input, textarea, select, option",
+    )
+    .forEach((node) => node.remove());
 
   if (sectionId === "home") {
-    const heroTitle = section.querySelector(".hero-shutter-title");
-    pushText(heroTitle, "Anna Patricia Vida");
+    const title = clone.querySelector(".hero-shutter-title");
+    if (title) {
+      title.replaceWith(document.createTextNode(" Anna Patricia Vida. "));
+    }
   }
 
-  for (const node of candidates) {
-    if (sectionId === "home" && node.classList?.contains("hero-shutter-title")) {
-      continue;
+  const parts = [];
+  const seen = new Set();
+  const walker = document.createTreeWalker(clone, NodeFilter.SHOW_TEXT);
+
+  let textNode = walker.nextNode();
+
+  while (textNode) {
+    const text = cleanSpeechText(textNode.nodeValue);
+
+    if (text && text.length > 1 && !seen.has(text)) {
+      seen.add(text);
+      parts.push(text);
     }
 
-    pushText(node);
-
-    if (parts.join(". ").length >= 1500) break;
+    textNode = walker.nextNode();
   }
 
-  const joined = parts.join(". ");
-  return joined.length > 1600 ? `${joined.slice(0, 1597)}...` : joined;
+  const joined = cleanSpeechText(parts.join(". "));
+
+  // Read the complete section. Chunking happens later so long sections do
+  // not overwhelm the browser speech engine.
+  return joined;
 }
 
 export default function RobotAssistant() {
@@ -516,6 +508,7 @@ export default function RobotAssistant() {
   const speechStartTimerRef = useRef(null);
   const speechRetryRef = useRef(false);
   const speechConfirmedRef = useRef(false);
+  const speechSessionRef = useRef(0);
   const voicesRef = useRef([]);
   const lastSpokenRef = useRef("");
   const lastSectionSpokenRef = useRef("");
@@ -548,15 +541,16 @@ export default function RobotAssistant() {
         const name = voice.name || "";
         let score = 0;
 
-        if (/^en-(US|GB|AU|CA|PH)/i.test(voice.lang)) score += 20;
-        if (voice.default) score += 8;
-        if (voice.localService) score += 4;
+        if (/^en-(US|GB|AU|CA|PH)/i.test(voice.lang)) score += 24;
+        if (voice.localService) score += 80;
+        if (voice.default) score += 28;
 
         naturalVoiceHints.forEach((hint, index) => {
-          if (hint.test(name)) score += 60 - index * 4;
+          if (hint.test(name)) score += 40 - index * 3;
         });
 
-        if (/online|neural|premium/i.test(name)) score += 18;
+        // Local voices are much more reliable for long automatic narration.
+        if (!voice.localService && /online|neural|premium/i.test(name)) score -= 24;
         if (/legacy|compact/i.test(name)) score -= 8;
 
         return { voice, score };
@@ -573,9 +567,27 @@ export default function RobotAssistant() {
     }
   };
 
-  const speakNextChunk = ({ useDefaultVoice = false } = {}) => {
+  const stopSpeech = () => {
+    speechSessionRef.current += 1;
+    speechQueueRef.current = [];
+    activeUtteranceRef.current = null;
+    speechRetryRef.current = false;
+    clearSpeechStartTimer();
+
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+
+    return speechSessionRef.current;
+  };
+
+  const speakNextChunk = (
+    sessionId,
+    { useDefaultVoice = false } = {},
+  ) => {
     if (!("speechSynthesis" in window)) return;
     if (!soundEnabledRef.current) return;
+    if (sessionId !== speechSessionRef.current) return;
 
     const nextChunk = speechQueueRef.current.shift();
 
@@ -589,8 +601,8 @@ export default function RobotAssistant() {
     const utterance = new SpeechSynthesisUtterance(nextChunk);
     const preferred = useDefaultVoice ? null : getPreferredVoice();
 
-    utterance.rate = 1.0;
-    utterance.pitch = 1.0;
+    utterance.rate = 0.98;
+    utterance.pitch = 1.03;
     utterance.volume = 1;
     utterance.lang = preferred?.lang || "en-US";
 
@@ -599,28 +611,43 @@ export default function RobotAssistant() {
     }
 
     utterance.onstart = () => {
+      if (sessionId !== speechSessionRef.current) {
+        synth.cancel();
+        return;
+      }
+
       clearSpeechStartTimer();
       speechRetryRef.current = false;
 
       if (!speechConfirmedRef.current) {
         speechConfirmedRef.current = true;
         setMessage(
-          "Sound is working. I'll read each section automatically as you move through the portfolio.",
+          "Sound is working. I'll read the whole section and switch immediately when you move to another one.",
         );
       }
     };
 
     utterance.onend = () => {
       clearSpeechStartTimer();
+
+      if (sessionId !== speechSessionRef.current) return;
+
       activeUtteranceRef.current = null;
 
-      if (soundEnabledRef.current) {
-        window.setTimeout(() => speakNextChunk(), 35);
+      if (soundEnabledRef.current && speechQueueRef.current.length) {
+        window.setTimeout(() => {
+          if (sessionId === speechSessionRef.current) {
+            speakNextChunk(sessionId);
+          }
+        }, 45);
       }
     };
 
     utterance.onerror = (event) => {
       clearSpeechStartTimer();
+
+      if (sessionId !== speechSessionRef.current) return;
+
       activeUtteranceRef.current = null;
 
       const harmless =
@@ -629,22 +656,22 @@ export default function RobotAssistant() {
 
       if (harmless) return;
 
-      // Some Chromium/Windows installations expose an online voice that
-      // appears valid but produces no sound. Retry once with the browser's
-      // default local voice before giving up.
       if (!speechRetryRef.current && soundEnabledRef.current) {
         speechRetryRef.current = true;
         speechQueueRef.current.unshift(nextChunk);
-        window.setTimeout(
-          () => speakNextChunk({ useDefaultVoice: true }),
-          90,
-        );
+
+        window.setTimeout(() => {
+          if (sessionId === speechSessionRef.current) {
+            speakNextChunk(sessionId, { useDefaultVoice: true });
+          }
+        }, 80);
+
         return;
       }
 
       speechRetryRef.current = false;
       setMessage(
-        "Voice could not start. Please make sure this tab/site is not muted, then tap the speaker once more.",
+        "I couldn't start the browser voice. Check that this tab is not muted, then tap the speaker again.",
       );
     };
 
@@ -653,12 +680,10 @@ export default function RobotAssistant() {
     synth.resume();
     synth.speak(utterance);
 
-    // If onstart never fires, Chrome can be stuck after a cancel() or can
-    // choose an unavailable cloud voice. Retry this chunk once with the
-    // browser default voice.
     clearSpeechStartTimer();
     speechStartTimerRef.current = window.setTimeout(() => {
       if (
+        sessionId === speechSessionRef.current &&
         activeUtteranceRef.current === utterance &&
         !speechConfirmedRef.current &&
         !synth.speaking
@@ -669,13 +694,15 @@ export default function RobotAssistant() {
         if (!speechRetryRef.current && soundEnabledRef.current) {
           speechRetryRef.current = true;
           speechQueueRef.current.unshift(nextChunk);
-          window.setTimeout(
-            () => speakNextChunk({ useDefaultVoice: true }),
-            120,
-          );
+
+          window.setTimeout(() => {
+            if (sessionId === speechSessionRef.current) {
+              speakNextChunk(sessionId, { useDefaultVoice: true });
+            }
+          }, 100);
         }
       }
-    }, 1400);
+    }, 1200);
   };
 
   const speak = (text, { force = false } = {}) => {
@@ -688,30 +715,22 @@ export default function RobotAssistant() {
 
     if (!force && !soundEnabledRef.current) return;
 
-    const chunks = chunkSpeechText(text);
+    const chunks = chunkSpeechText(text, 220);
     if (!chunks.length) return;
 
-    const synth = window.speechSynthesis;
-
+    // A new narration always owns the speech engine. This prevents chunks
+    // from a previous section from resuming after navigation.
+    const sessionId = stopSpeech();
     speechQueueRef.current = chunks;
-    activeUtteranceRef.current = null;
+    speechConfirmedRef.current = false;
     speechRetryRef.current = false;
-    clearSpeechStartTimer();
 
-    const startSpeech = () => {
-      if (!soundEnabledRef.current) return;
-      synth.resume();
-      speakNextChunk();
-    };
+    const synth = window.speechSynthesis;
+    synth.resume();
 
-    // Avoid Chrome's cancel() -> speak() race. Only cancel when something is
-    // actually queued/playing, then give the engine a short reset window.
-    if (synth.speaking || synth.pending || synth.paused) {
-      synth.cancel();
-      window.setTimeout(startSpeech, 110);
-    } else {
-      startSpeech();
-    }
+    // Starting synchronously when called from the sound button preserves the
+    // browser's user-gesture permission for speech.
+    speakNextChunk(sessionId);
   };
 
   useEffect(() => {
@@ -766,32 +785,84 @@ export default function RobotAssistant() {
 
     if (!sections.length) return undefined;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+    let frameId = null;
 
-        if (!visible[0]) return;
+    const setFromHash = () => {
+      const id = window.location.hash.replace("#", "");
+      if (sectionIds.includes(id) && document.getElementById(id)) {
+        setActiveSection(id);
+        return true;
+      }
+      return false;
+    };
 
-        setActiveSection(visible[0].target.id);
-      },
-      {
-        rootMargin: "-22% 0px -52% 0px",
-        threshold: [0.08, 0.18, 0.35, 0.55],
-      },
-    );
+    const updateFromViewport = () => {
+      frameId = null;
+      const focusY = window.innerHeight * 0.42;
 
-    sections.forEach((section) => observer.observe(section));
+      let bestSection = sections[0];
+      let bestDistance = Number.POSITIVE_INFINITY;
 
-    return () => observer.disconnect();
+      for (const section of sections) {
+        const rect = section.getBoundingClientRect();
+
+        if (rect.top <= focusY && rect.bottom >= focusY) {
+          bestSection = section;
+          bestDistance = 0;
+          break;
+        }
+
+        const distance = Math.min(
+          Math.abs(rect.top - focusY),
+          Math.abs(rect.bottom - focusY),
+        );
+
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          bestSection = section;
+        }
+      }
+
+      if (bestSection) {
+        setActiveSection(bestSection.id);
+      }
+    };
+
+    const requestUpdate = () => {
+      if (!frameId) {
+        frameId = window.requestAnimationFrame(updateFromViewport);
+      }
+    };
+
+    const handleHashChange = () => {
+      if (!setFromHash()) requestUpdate();
+    };
+
+    setFromHash();
+    requestUpdate();
+
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate, { passive: true });
+    window.addEventListener("hashchange", handleHashChange);
+
+    return () => {
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+      window.removeEventListener("hashchange", handleHashChange);
+
+      if (frameId) {
+        window.cancelAnimationFrame(frameId);
+      }
+    };
   }, []);
 
   useEffect(() => {
     if (!soundEnabled) return undefined;
-    if (!activeSection || lastSectionSpokenRef.current === activeSection) {
-      return undefined;
-    }
+    if (!activeSection) return undefined;
+
+    // Stop the old page immediately. Do not wait for the new section's
+    // debounce before cancelling the previous narration.
+    stopSpeech();
 
     if (sectionTimerRef.current) {
       window.clearTimeout(sectionTimerRef.current);
@@ -799,19 +870,29 @@ export default function RobotAssistant() {
 
     sectionTimerRef.current = window.setTimeout(() => {
       const sectionText = getSectionSpeech(activeSection);
-      if (!sectionText) return;
+      const label = sectionLabels[activeSection] || "this";
+
+      if (!sectionText) {
+        setMessage(`You're in the ${label} section.`);
+        return;
+      }
 
       lastSectionSpokenRef.current = activeSection;
       lastSpokenRef.current = sectionText;
 
-      const label = sectionLabels[activeSection] || "this";
-      setMessage(`You're in the ${label} section. I'm reading it for you now.`);
-      speak(sectionText);
-    }, 650);
+      setMessage(
+        `You're in the ${label} section. I'm reading the whole section now.`,
+      );
+
+      speak(
+        `You are now in the ${label} section. ${sectionText}`,
+      );
+    }, 260);
 
     return () => {
       if (sectionTimerRef.current) {
         window.clearTimeout(sectionTimerRef.current);
+        sectionTimerRef.current = null;
       }
     };
   }, [activeSection, soundEnabled]);
@@ -853,6 +934,7 @@ export default function RobotAssistant() {
         window.speechSynthesis.cancel();
       }
 
+      speechSessionRef.current += 1;
       speechQueueRef.current = [];
       activeUtteranceRef.current = null;
       clearSpeechStartTimer();
@@ -871,16 +953,8 @@ export default function RobotAssistant() {
     setSoundEnabled(next);
 
     if (!next) {
-      speechQueueRef.current = [];
-      activeUtteranceRef.current = null;
-      speechRetryRef.current = false;
+      stopSpeech();
       speechConfirmedRef.current = false;
-      clearSpeechStartTimer();
-
-      if ("speechSynthesis" in window) {
-        window.speechSynthesis.cancel();
-      }
-
       setMessage("Sound is off. I can still follow you around the portfolio.");
       return;
     }
@@ -904,7 +978,7 @@ export default function RobotAssistant() {
     speechConfirmedRef.current = false;
     speechRetryRef.current = false;
     setMessage(
-      `Sound is on. I'm reading the ${label} section automatically.`,
+      `Sound is on. I'm reading the whole ${label} section automatically.`,
     );
 
     speak(sectionText ? `${greeting} ${sectionText}` : greeting, {
@@ -976,7 +1050,7 @@ export default function RobotAssistant() {
             </span>
             <span>
               {soundEnabled
-                ? "Sound on · auto-reading section"
+                ? "Sound on · reading whole section"
                 : "Sound off · tap to enable"}
             </span>
             <span className="robot-toggle-track" aria-hidden="true">
