@@ -8437,3 +8437,237 @@ html[data-theme="accent"] .tech-library-card:hover {
   animation: none !important;
   box-shadow: none !important;
 }
+
+
+/* =========================================================
+   ABOUT PORTRAIT — STACKED PHOTO FRAME
+   Inspired by the supplied stacked instant-photo reference.
+========================================================= */
+
+.about-section-premium .about-visual-column {
+  align-items: center;
+}
+
+.about-portrait-wrap {
+  width: min(100%, 455px);
+  min-height: 540px;
+  align-items: center;
+  overflow: visible;
+}
+
+.about-portrait-glow {
+  width: 72%;
+  bottom: 8%;
+  opacity: 0.34;
+  filter: blur(32px);
+}
+
+.about-polaroid-stack {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 390px);
+  transform:
+    translate3d(
+      var(--portrait-x),
+      var(--portrait-y),
+      0
+    )
+    rotateX(var(--portrait-rx))
+    rotateY(var(--portrait-ry));
+  transform-origin: center 55%;
+  transition:
+    transform 0.18s ease-out,
+    filter 0.28s ease;
+}
+
+.about-polaroid-stack::before,
+.about-polaroid-stack::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(20, 20, 20, 0.08);
+  border-radius: 13px;
+  background: #e9e7df;
+  box-shadow: 0 18px 34px rgba(0,0,0,0.16);
+  pointer-events: none;
+}
+
+.about-polaroid-stack::before {
+  z-index: -2;
+  transform: translate(20px, 16px) rotate(4deg);
+  background: #d8d5ca;
+}
+
+.about-polaroid-stack::after {
+  z-index: -1;
+  transform: translate(10px, 8px) rotate(1.8deg);
+  background: #eeeae1;
+}
+
+.about-polaroid-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(20, 20, 20, 0.10);
+  border-radius: 13px;
+  background: #f2f0e9;
+  box-shadow:
+    0 24px 44px rgba(0,0,0,0.24),
+    0 5px 14px rgba(0,0,0,0.12);
+}
+
+.about-polaroid-photo {
+  margin: 13px 13px 0;
+  height: 390px;
+  overflow: hidden;
+  border-radius: 4px;
+  background:
+    linear-gradient(180deg, #ededeb 0%, #e2e2df 100%);
+}
+
+.about-polaroid-photo .about-portrait {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  max-height: none;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 17%;
+  filter:
+    grayscale(1)
+    contrast(1.035);
+  transform: none !important;
+  transition:
+    filter 0.28s ease,
+    scale 0.28s ease;
+}
+
+.about-polaroid-meta {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 86px;
+  padding: 18px 22px 19px;
+  color: #151515;
+}
+
+.about-polaroid-title {
+  margin: 0;
+  font-family: "Manrope", sans-serif;
+  font-size: 1rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: #141414;
+}
+
+.about-polaroid-subtitle {
+  margin: 5px 0 0;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  color: #8b8b86;
+}
+
+.about-polaroid-index {
+  flex: 0 0 auto;
+  padding-bottom: 2px;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #76766f;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .about-portrait-interactive:hover .about-polaroid-stack {
+    filter: drop-shadow(0 20px 26px rgba(0,0,0,0.16));
+  }
+
+  .about-portrait-interactive:hover .about-polaroid-photo .about-portrait {
+    filter:
+      grayscale(1)
+      contrast(1.06);
+    scale: 1.012;
+  }
+}
+
+/* The old image-only transform is disabled because the entire framed
+   card now follows the pointer instead. */
+.about-portrait-interactive .about-portrait {
+  transform: none !important;
+}
+
+@media (max-width: 1200px) {
+  .about-portrait-wrap {
+    width: min(100%, 410px);
+    min-height: 500px;
+  }
+
+  .about-polaroid-stack {
+    width: min(100%, 360px);
+  }
+
+  .about-polaroid-photo {
+    height: 350px;
+  }
+}
+
+@media (max-width: 900px) {
+  .about-portrait-wrap {
+    width: min(92vw, 390px);
+    min-height: 470px;
+  }
+
+  .about-polaroid-stack {
+    width: min(88vw, 350px);
+  }
+
+  .about-polaroid-photo {
+    height: 338px;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-portrait-wrap {
+    width: min(92vw, 330px);
+    min-height: 420px;
+  }
+
+  .about-polaroid-stack {
+    width: min(86vw, 310px);
+  }
+
+  .about-polaroid-photo {
+    margin: 10px 10px 0;
+    height: 296px;
+  }
+
+  .about-polaroid-meta {
+    min-height: 76px;
+    padding: 15px 18px 16px;
+  }
+
+  .about-polaroid-title {
+    font-size: 0.92rem;
+  }
+
+  .about-polaroid-subtitle {
+    font-size: 0.64rem;
+  }
+
+  .about-polaroid-stack::before {
+    transform: translate(14px, 12px) rotate(4deg);
+  }
+
+  .about-polaroid-stack::after {
+    transform: translate(7px, 6px) rotate(1.8deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-polaroid-stack,
+  .about-polaroid-photo .about-portrait {
+    transform: none !important;
+    transition: none !important;
+  }
+}
