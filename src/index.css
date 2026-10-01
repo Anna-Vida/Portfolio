@@ -9214,3 +9214,81 @@ html[data-theme="accent"] .tech-library-card:hover {
     display: none;
   }
 }
+
+
+/* =========================================================
+   ABOUT COMET CARD — SUBTLE BACK LAYERS
+   Keep the single dark Comet front card, with layered depth behind it.
+========================================================= */
+
+.about-comet-card::before,
+.about-comet-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  transform-style: preserve-3d;
+  transition:
+    transform 220ms cubic-bezier(.2,.72,.2,1),
+    opacity 220ms ease,
+    border-color 220ms ease;
+}
+
+.about-comet-card::before {
+  transform:
+    translate3d(14px, 14px, -28px)
+    rotate(2.2deg);
+  background:
+    linear-gradient(155deg, rgba(255,255,255,0.022), transparent 46%),
+    #191919;
+  border: 1px solid rgba(255,255,255,0.055);
+  box-shadow: 0 22px 34px rgba(0,0,0,0.20);
+}
+
+.about-comet-card::after {
+  transform:
+    translate3d(26px, 24px, -52px)
+    rotate(4deg);
+  background:
+    linear-gradient(155deg, rgba(255,255,255,0.016), transparent 48%),
+    #141414;
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 28px 44px rgba(0,0,0,0.16);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .about-portrait-interactive:hover .about-comet-card::before {
+    transform:
+      translate3d(17px, 16px, -30px)
+      rotate(2.8deg);
+  }
+
+  .about-portrait-interactive:hover .about-comet-card::after {
+    transform:
+      translate3d(31px, 28px, -56px)
+      rotate(4.8deg);
+  }
+}
+
+@media (max-width: 600px) {
+  .about-comet-card::before {
+    transform:
+      translate3d(10px, 10px, -22px)
+      rotate(2deg);
+  }
+
+  .about-comet-card::after {
+    transform:
+      translate3d(18px, 17px, -40px)
+      rotate(3.5deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-comet-card::before,
+  .about-comet-card::after {
+    transition: none !important;
+  }
+}
