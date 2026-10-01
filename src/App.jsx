@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import "./index.css";
 import HeroHexBackground from "./components/ui/hero-hex-background";
 import { AnimatedText } from "./components/ui/animated-text";
@@ -11,6 +11,8 @@ import FolderCard from "./components/ui/folder-card";
 import TechStackPager from "./components/ui/tech-stack-pager";
 import HeroShutterText from "./components/ui/hero-shutter-text";
 import CertificationPinCard from "./components/ui/certification-pin-card";
+
+const RobotAssistant = lazy(() => import("./components/ui/robot-assistant"));
 
 import {
   FaReact,
@@ -1331,6 +1333,10 @@ function App() {
       </main>
 
       <CinematicFooter />
+
+      <Suspense fallback={null}>
+        <RobotAssistant />
+      </Suspense>
     </>
   );
 }
