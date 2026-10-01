@@ -10917,3 +10917,91 @@ html[data-theme="accent"] .cert-pin-point {
     animation: none;
   }
 }
+
+
+/* =========================================================
+   PERFORMANCE PASS — SMOOTHER SCROLL + ROBOT ROAMING
+========================================================= */
+
+/* Animate the roaming assistant on the compositor. The previous left/top
+   transitions caused layout work during movement and could make scrolling
+   feel sticky on pages with several animated sections. */
+.robot-assistant,
+.robot-section-home,
+.robot-section-about,
+.robot-section-experience,
+.robot-section-work,
+.robot-section-skills,
+.robot-section-certifications,
+.robot-section-contact {
+  left: 0 !important;
+  top: 0 !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform:
+    translate3d(
+      clamp(12px, var(--robot-left), calc(100vw - 260px)),
+      clamp(92px, var(--robot-top), calc(100vh - 286px)),
+      0
+    );
+  transition:
+    transform 760ms cubic-bezier(.18,.72,.2,1),
+    filter 220ms ease !important;
+  will-change: transform;
+}
+
+/* Large backdrop blurs are expensive during continuous scrolling. The
+   sections already sit over the dark shared background, so no blur is needed. */
+.tech-marquee,
+.tech-library-marquee {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Keep transformed decorative layers from creating horizontal scroll work. */
+html,
+body {
+  overflow-x: clip;
+}
+
+@media (max-width: 980px) {
+  .robot-assistant,
+  .robot-section-home,
+  .robot-section-about,
+  .robot-section-experience,
+  .robot-section-work,
+  .robot-section-skills,
+  .robot-section-certifications,
+  .robot-section-contact {
+    transform:
+      translate3d(
+        clamp(10px, var(--robot-left), calc(100vw - 225px)),
+        clamp(86px, var(--robot-top), calc(100vh - 250px)),
+        0
+      );
+  }
+}
+
+@media (max-width: 760px) {
+  .robot-assistant,
+  .robot-section-home,
+  .robot-section-about,
+  .robot-section-experience,
+  .robot-section-work,
+  .robot-section-skills,
+  .robot-section-certifications,
+  .robot-section-contact {
+    transform:
+      translate3d(
+        calc(100vw - 200px),
+        calc(100vh - 232px),
+        0
+      );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .robot-assistant {
+    transition: none !important;
+  }
+}
