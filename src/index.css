@@ -8425,3 +8425,15 @@ html[data-theme="accent"] .tech-library-card:hover {
     animation: none;
   }
 }
+
+
+/* =========================================================
+   REMOVE MOVING GLOW DOTS FROM SKILL FOLDERS
+========================================================= */
+
+#skills .skill-flip-card::after {
+  display: none !important;
+  content: none !important;
+  animation: none !important;
+  box-shadow: none !important;
+}
