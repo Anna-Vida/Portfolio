@@ -69,7 +69,23 @@ export default function InteractiveAboutPortrait({ src, alt }) {
       onPointerLeave={resetPointer}
     >
       <div className="about-portrait-glow" aria-hidden="true" />
-      <img src={src} alt={alt} className="about-portrait" />
+
+      <div className="about-polaroid-stack">
+        <div className="about-polaroid-card">
+          <div className="about-polaroid-photo">
+            <img src={src} alt={alt} className="about-portrait" />
+          </div>
+
+          <div className="about-polaroid-meta">
+            <div>
+              <p className="about-polaroid-title">Software Developer</p>
+              <p className="about-polaroid-subtitle">Anna Patricia Vida</p>
+            </div>
+
+            <span className="about-polaroid-index">01</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
