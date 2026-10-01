@@ -11005,3 +11005,29 @@ body {
     transition: none !important;
   }
 }
+
+
+/* =========================================================
+   HEXAGON BACKGROUND — VISIBILITY SAFEGUARD
+   Keep the shared pattern visible through every main section.
+========================================================= */
+
+.site-hex-background {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.site-hex-background .hero-hex-background {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 0.92 !important;
+}
+
+.hero,
+main > .about-section-premium,
+main > .experience-section,
+main > .work-section-v2,
+main > .skills-section,
+main > .certifications-section {
+  background-color: transparent !important;
+}
