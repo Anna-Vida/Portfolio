@@ -10314,3 +10314,110 @@ html[data-theme="accent"] .cert-pin-point {
     font-size: clamp(2.25rem, 10.7vw, 3.45rem);
   }
 }
+
+
+/* =========================================================
+   HERO NAME — RESTORE ORIGINAL COMPOSITION
+   Preserve the automatic shutter animation, but return the name to
+   the original ANNA / PATRICIA VIDA scale and offset.
+========================================================= */
+
+.hero-title.hero-shutter-title {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  overflow: visible;
+  font-size: clamp(5rem, 12vw, 11.5rem);
+  line-height: 0.77;
+  letter-spacing: -0.075em;
+}
+
+.hero-title.hero-shutter-title > .hero-shutter-line {
+  width: max-content;
+  max-width: none;
+  flex-wrap: nowrap;
+  overflow: visible;
+  align-items: baseline;
+  font-size: inherit;
+}
+
+.hero-title.hero-shutter-title > .hero-shutter-line-primary {
+  margin-left: 0;
+  margin-top: 0;
+  font-size: inherit;
+}
+
+.hero-title.hero-shutter-title > .hero-shutter-line-secondary {
+  margin-left: 10vw;
+  margin-top: 18px;
+  font-size: inherit;
+}
+
+/* Keep the monochrome gradient while matching the original hierarchy. */
+.hero-title.hero-shutter-title .hero-shutter-line-primary .hero-shutter-base,
+.hero-title.hero-shutter-title .hero-shutter-line-primary .hero-shutter-slice {
+  color: transparent;
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f7f7f7 36%,
+      #d7d7d7 68%,
+      #8b8b8b 100%
+    );
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.hero-title.hero-shutter-title .hero-shutter-line-secondary .hero-shutter-base,
+.hero-title.hero-shutter-title .hero-shutter-line-secondary .hero-shutter-slice {
+  color: transparent;
+  background:
+    linear-gradient(
+      180deg,
+      #8d8d8d 0%,
+      #6d6d6d 34%,
+      #505050 68%,
+      #2d2d2d 100%
+    );
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.hero-title.hero-shutter-title .hero-shutter-char {
+  flex: 0 0 auto;
+  line-height: 0.77;
+}
+
+@media (max-width: 1100px) {
+  .hero-title.hero-shutter-title {
+    font-size: clamp(4.8rem, 12vw, 9rem);
+  }
+
+  .hero-title.hero-shutter-title > .hero-shutter-line-secondary {
+    margin-left: clamp(24px, 8vw, 88px);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title.hero-shutter-title {
+    font-size: clamp(4rem, 18vw, 6.5rem);
+    line-height: 0.82;
+    letter-spacing: -0.065em;
+  }
+
+  .hero-title.hero-shutter-title > .hero-shutter-line-secondary {
+    margin-left: 0;
+    margin-top: 12px;
+  }
+
+  .hero-title.hero-shutter-title .hero-shutter-char {
+    line-height: 0.82;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title.hero-shutter-title {
+    font-size: clamp(3.35rem, 16.5vw, 5rem);
+  }
+}
