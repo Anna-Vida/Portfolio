@@ -5,23 +5,24 @@ const HeroHexBackground = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) return undefined;
 
-    const hero = canvas.parentElement;
+    const host = canvas.parentElement;
     const ctx = canvas.getContext("2d");
 
-    if (!hero || !ctx) return;
+    if (!host || !ctx) return undefined;
 
     let animationFrameId = null;
-    let resizeObserver;
-    let intersectionObserver;
+    let resizeObserver = null;
+    let intersectionObserver = null;
+    let lastDrawTime = 0;
 
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     let reduceMotion = motionQuery.matches;
     let isVisible = true;
 
-    let width = 0;
-    let height = 0;
+    let width = 1;
+    let height = 1;
     let dpr = Math.min(window.devicePixelRatio || 1, 1.25);
 
     const pointer = {
@@ -34,55 +35,6 @@ const HeroHexBackground = () => {
     const hexWidth = Math.sqrt(3) * radius;
     const rowHeight = radius * 1.5;
     const hexagons = [];
-
-    const createHexagons = () => {
-      hexagons.length = 0;
-
-      const columns = Math.ceil(width / hexWidth) + 4;
-      const rows = Math.ceil(height / rowHeight) + 4;
-
-      for (let row = -2; row < rows; row += 1) {
-        for (let column = -2; column < columns; column += 1) {
-          const baseX =
-            column * hexWidth +
-            (row % 2 !== 0 ? hexWidth / 2 : 0);
-
-          const baseY = row * rowHeight;
-
-          hexagons.push({
-            baseX,
-            baseY,
-            x: baseX,
-            y: baseY,
-            velocityX: 0,
-            velocityY: 0,
-            phase: Math.random() * Math.PI * 2,
-          });
-        }
-      }
-    };
-
-    const resizeCanvas = () => {
-      const rect = hero.getBoundingClientRect();
-
-      width = Math.max(rect.width, 1);
-      height = Math.max(rect.height, 1);
-      dpr = Math.min(window.devicePixelRatio || 1, 1.25);
-
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
-
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      createHexagons();
-
-      if (reduceMotion) {
-        drawStatic();
-      }
-    };
 
     const drawHexagon = (x, y, size, opacity) => {
       ctx.beginPath();
@@ -105,6 +57,61 @@ const HeroHexBackground = () => {
       ctx.stroke();
     };
 
+    const createHexagons = () => {
+      hexagons.length = 0;
+
+      const columns = Math.ceil(width / hexWidth) + 4;
+      const rows = Math.ceil(height / rowHeight) + 4;
+
+      for (let row = -2; row < rows; row += 1) {
+        for (let column = -2; column < columns; column += 1) {
+          const baseX =
+            column * hexWidth +
+            (row % 2 !== 0 ? hexWidth / 2 : 0);
+          const baseY = row * rowHeight;
+
+          hexagons.push({
+            baseX,
+            baseY,
+            x: baseX,
+            y: baseY,
+            velocityX: 0,
+            velocityY: 0,
+            phase: Math.random() * Math.PI * 2,
+          });
+        }
+      }
+    };
+
+    const renderStatic = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      for (const hexagon of hexagons) {
+        drawHexagon(hexagon.baseX, hexagon.baseY, radius - 2, 0.05);
+      }
+    };
+
+    const resizeCanvas = () => {
+      const rect = host.getBoundingClientRect();
+
+      width = Math.max(rect.width, window.innerWidth, 1);
+      height = Math.max(rect.height, window.innerHeight, 1);
+      dpr = Math.min(window.devicePixelRatio || 1, 1.25);
+
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      createHexagons();
+
+      if (reduceMotion) {
+        renderStatic();
+      }
+    };
+
     const handlePointerMove = (event) => {
       const rect = canvas.getBoundingClientRect();
 
@@ -119,28 +126,17 @@ const HeroHexBackground = () => {
       pointer.y = -9999;
     };
 
-    const drawStatic = () => {
-      animationFrameId = requestAnimationFrame(animate);
-
-      // This background is subtle, so ~30fps is visually smooth while
-      // leaving more time for scrolling and the 3D assistant.
-      if (time - lastDrawTime < 32) return;
-      lastDrawTime = time;
-
-      ctx.clearRect(0, 0, width, height);
-
-      for (const hexagon of hexagons) {
-        drawHexagon(hexagon.baseX, hexagon.baseY, radius - 2, 0.045);
-      }
-    };
-
-    let lastDrawTime = 0;
-
-    const animate = (time) => {
+    const animate = (time = 0) => {
       if (!isVisible || reduceMotion) {
         animationFrameId = null;
         return;
       }
+
+      animationFrameId = requestAnimationFrame(animate);
+
+      // ~30fps is enough for the subtle background and keeps scrolling smooth.
+      if (time - lastDrawTime < 32) return;
+      lastDrawTime = time;
 
       ctx.clearRect(0, 0, width, height);
 
@@ -149,7 +145,7 @@ const HeroHexBackground = () => {
         let targetY = hexagon.baseY;
         let interactionStrength = 0;
 
-        if (pointer.active && !reduceMotion) {
+        if (pointer.active) {
           const dx = hexagon.baseX - pointer.x;
           const dy = hexagon.baseY - pointer.y;
           const distance = Math.hypot(dx, dy);
@@ -159,16 +155,12 @@ const HeroHexBackground = () => {
             interactionStrength = 1 - distance / interactionRadius;
 
             const pushDistance = interactionStrength * 27;
-
             targetX += (dx / distance) * pushDistance;
             targetY += (dy / distance) * pushDistance;
           }
         }
 
-        if (!reduceMotion) {
-          targetY +=
-            Math.sin(time * 0.0005 + hexagon.phase) * 1.4;
-        }
+        targetY += Math.sin(time * 0.0005 + hexagon.phase) * 1.4;
 
         hexagon.velocityX += (targetX - hexagon.x) * 0.07;
         hexagon.velocityY += (targetY - hexagon.y) * 0.07;
@@ -179,7 +171,7 @@ const HeroHexBackground = () => {
         hexagon.x += hexagon.velocityX;
         hexagon.y += hexagon.velocityY;
 
-        const opacity = 0.045 + interactionStrength * 0.18;
+        const opacity = 0.05 + interactionStrength * 0.18;
 
         drawHexagon(
           hexagon.x,
@@ -188,11 +180,11 @@ const HeroHexBackground = () => {
           opacity
         );
       }
-
     };
 
     const startAnimation = () => {
       if (!animationFrameId && isVisible && !reduceMotion) {
+        lastDrawTime = 0;
         animationFrameId = requestAnimationFrame(animate);
       }
     };
@@ -209,7 +201,7 @@ const HeroHexBackground = () => {
 
       if (reduceMotion) {
         stopAnimation();
-        drawStatic();
+        renderStatic();
       } else {
         startAnimation();
       }
@@ -217,7 +209,7 @@ const HeroHexBackground = () => {
 
     if (typeof ResizeObserver !== "undefined") {
       resizeObserver = new ResizeObserver(resizeCanvas);
-      resizeObserver.observe(hero);
+      resizeObserver.observe(host);
     }
 
     if (typeof IntersectionObserver !== "undefined") {
@@ -226,7 +218,11 @@ const HeroHexBackground = () => {
           isVisible = entry.isIntersecting;
 
           if (isVisible) {
-            startAnimation();
+            if (reduceMotion) {
+              renderStatic();
+            } else {
+              startAnimation();
+            }
           } else {
             stopAnimation();
           }
@@ -234,31 +230,34 @@ const HeroHexBackground = () => {
         { threshold: 0.01 }
       );
 
-      intersectionObserver.observe(hero);
+      intersectionObserver.observe(host);
     }
-
-    window.addEventListener("resize", resizeCanvas);
-    window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    document.addEventListener("mouseleave", handlePointerLeave);
-    window.addEventListener("blur", handlePointerLeave);
 
     const handleVisibilityChange = () => {
       isVisible = !document.hidden;
 
       if (isVisible) {
-        startAnimation();
+        if (reduceMotion) {
+          renderStatic();
+        } else {
+          startAnimation();
+        }
       } else {
         stopAnimation();
       }
     };
 
+    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    document.addEventListener("mouseleave", handlePointerLeave);
+    window.addEventListener("blur", handlePointerLeave);
     document.addEventListener("visibilitychange", handleVisibilityChange);
     motionQuery.addEventListener?.("change", handleMotionChange);
 
     resizeCanvas();
 
     if (reduceMotion) {
-      drawStatic();
+      renderStatic();
     } else {
       startAnimation();
     }
