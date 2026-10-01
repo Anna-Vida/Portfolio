@@ -9983,3 +9983,122 @@ html[data-theme="accent"] .cert-pin-point {
     width: calc(100% - 96px);
   }
 }
+
+
+/* =========================================================
+   CERTIFICATIONS — SMALL CARD SIZE
+   Match the compact ~380x230 proportion from the requested reference.
+========================================================= */
+
+#certifications .certification-list.certification-pin-grid {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 380px));
+  justify-content: center;
+  gap: 14px;
+}
+
+#certifications .certification-pin-grid .cert-pin {
+  width: 100%;
+  max-width: 380px;
+  min-height: 232px;
+}
+
+#certifications .certification-pin-grid .cert-pin-card {
+  inset: 30px 0 0;
+  min-height: 198px;
+  padding: 20px 20px 16px;
+  border-radius: 18px;
+}
+
+#certifications .certification-pin-grid .cert-pin-company {
+  margin-bottom: 9px;
+  font-size: 0.54rem;
+}
+
+#certifications .certification-pin-grid .cert-pin-copy h3 {
+  max-width: 90%;
+  font-size: clamp(1rem, 1.15vw, 1.28rem);
+  line-height: 1.08;
+}
+
+#certifications .certification-pin-grid .cert-pin-date {
+  margin-top: 9px;
+  font-size: 0.53rem;
+}
+
+#certifications .certification-pin-grid .cert-pin-art {
+  right: 14px;
+  bottom: 14px;
+  width: 72px;
+  height: 42px;
+  border-radius: 10px;
+  opacity: 0.46;
+}
+
+#certifications .certification-pin-grid .cert-pin-art-ring-one {
+  width: 40px;
+  height: 15px;
+}
+
+#certifications .certification-pin-grid .cert-pin-art-ring-two {
+  width: 58px;
+  height: 22px;
+}
+
+#certifications .certification-pin-grid .cert-pin-art-index {
+  right: 7px;
+  bottom: 5px;
+  font-size: 0.48rem;
+}
+
+#certifications .certification-pin-grid .cert-pin-footer {
+  width: calc(100% - 92px);
+  font-size: 0.48rem;
+}
+
+#certifications .certification-pin-grid .cert-pin-tooltip {
+  padding: 5px 11px;
+  font-size: 0.47rem;
+}
+
+#certifications .certification-pin-grid .cert-pin-line {
+  top: 25px;
+}
+
+#certifications .certification-pin-grid .cert-pin-ripples {
+  top: 116px;
+  width: 88px;
+  height: 44px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #certifications .certification-pin-grid .cert-pin:hover .cert-pin-line {
+    height: 62px;
+  }
+}
+
+@media (max-width: 900px) {
+  #certifications .certification-list.certification-pin-grid {
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
+  }
+
+  #certifications .certification-pin-grid .cert-pin {
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  #certifications .certification-list.certification-pin-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #certifications .certification-pin-grid .cert-pin {
+    max-width: 380px;
+    margin-inline: auto;
+    min-height: 220px;
+  }
+
+  #certifications .certification-pin-grid .cert-pin-card {
+    inset: 26px 0 0;
+    min-height: 188px;
+  }
+}
