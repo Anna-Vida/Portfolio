@@ -10102,3 +10102,61 @@ html[data-theme="accent"] .cert-pin-point {
     min-height: 188px;
   }
 }
+
+
+/* =========================================================
+   CERTIFICATIONS — ALIGN WITH SITE MARGINS
+   Use the same 92% / 1450px content width as the other main sections.
+   Cards fill the row instead of sitting as a small centered cluster.
+========================================================= */
+
+#certifications .certifications-container {
+  width: min(92%, 1450px);
+  max-width: 1450px;
+  margin-inline: auto;
+}
+
+#certifications .certification-list.certification-pin-grid {
+  width: 100%;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  justify-content: stretch;
+  gap: 14px;
+}
+
+#certifications .certification-pin-grid .cert-pin {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  margin: 0;
+}
+
+@media (max-width: 1200px) {
+  #certifications .certification-list.certification-pin-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  #certifications .certifications-container {
+    width: min(92%, 1450px);
+  }
+
+  #certifications .certification-list.certification-pin-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  #certifications .certifications-container {
+    width: calc(100% - 24px);
+  }
+
+  #certifications .certification-list.certification-pin-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #certifications .certification-pin-grid .cert-pin {
+    max-width: none;
+    margin: 0;
+  }
+}
