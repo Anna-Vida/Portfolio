@@ -11031,3 +11031,99 @@ main > .skills-section,
 main > .certifications-section {
   background-color: transparent !important;
 }
+
+
+/* =========================================================
+   SECTION SCROLL REVEALS
+   Inspired by 21st.dev's reveal-first scroll animation approach:
+   light blur + transform only, no scroll hijacking or pinned sections.
+========================================================= */
+
+[data-scroll-reveal] > * {
+  opacity: 0;
+  filter: blur(10px);
+  transform: translate3d(0, 26px, 0);
+  transition:
+    opacity 680ms cubic-bezier(.2,.72,.2,1),
+    transform 760ms cubic-bezier(.2,.72,.2,1),
+    filter 680ms ease;
+  will-change: opacity, transform, filter;
+}
+
+[data-scroll-reveal="left"] > * {
+  transform: translate3d(-28px, 18px, 0);
+}
+
+[data-scroll-reveal="right"] > * {
+  transform: translate3d(28px, 18px, 0);
+}
+
+[data-scroll-reveal="scale"] > * {
+  transform: translate3d(0, 18px, 0) scale(0.985);
+}
+
+[data-scroll-reveal] > *:nth-child(1) {
+  transition-delay: 0ms;
+}
+
+[data-scroll-reveal] > *:nth-child(2) {
+  transition-delay: 85ms;
+}
+
+[data-scroll-reveal] > *:nth-child(3) {
+  transition-delay: 150ms;
+}
+
+[data-scroll-reveal] > *:nth-child(4) {
+  transition-delay: 210ms;
+}
+
+[data-scroll-reveal].is-scroll-visible > * {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* Add one very subtle light sweep to the main section heading as it enters. */
+[data-scroll-reveal].is-scroll-visible > *:first-child h2 {
+  animation: sectionHeadingSoftGlow 900ms ease-out 120ms both;
+}
+
+@keyframes sectionHeadingSoftGlow {
+  0% {
+    filter: brightness(0.82);
+  }
+
+  48% {
+    filter: brightness(1.08);
+  }
+
+  100% {
+    filter: brightness(1);
+  }
+}
+
+@media (max-width: 700px) {
+  [data-scroll-reveal] > *,
+  [data-scroll-reveal="left"] > *,
+  [data-scroll-reveal="right"] > *,
+  [data-scroll-reveal="scale"] > * {
+    transform: translate3d(0, 18px, 0);
+    filter: blur(7px);
+  }
+
+  [data-scroll-reveal].is-scroll-visible > * {
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-scroll-reveal] > * {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
