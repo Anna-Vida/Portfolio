@@ -9825,3 +9825,161 @@ html[data-theme="accent"] .cert-pin-point {
     font-size: 0.5rem;
   }
 }
+
+
+/* =========================================================
+   CERTIFICATIONS — TECH-STACK GRID LAYOUT
+   Match the compact 3-column sequence of the Tech Stack folders
+   while preserving the existing 3D pin visual language.
+========================================================= */
+
+#certifications .certifications-container {
+  width: min(calc(100% - 64px), 1760px);
+  max-width: none;
+}
+
+#certifications .certification-list.certification-pin-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+#certifications .certification-pin-grid .cert-pin {
+  min-height: 244px;
+}
+
+#certifications .certification-pin-grid .cert-pin-card {
+  inset: 38px 0 0;
+  min-height: 202px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 22px 22px 18px;
+  border-radius: 22px;
+}
+
+#certifications .certification-pin-grid .cert-pin-copy {
+  display: block;
+  transform: translateZ(24px);
+}
+
+#certifications .certification-pin-grid .cert-pin-company {
+  margin-bottom: 10px;
+  font-size: 0.56rem;
+}
+
+#certifications .certification-pin-grid .cert-pin-copy h3 {
+  max-width: 96%;
+  font-size: clamp(1.05rem, 1.35vw, 1.42rem);
+  line-height: 1.08;
+}
+
+#certifications .certification-pin-grid .cert-pin-date {
+  margin-top: 10px;
+  font-size: 0.55rem;
+}
+
+#certifications .certification-pin-grid .cert-pin-art {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 92px;
+  height: 52px;
+  min-height: 0;
+  margin: 0;
+  border-radius: 12px;
+  opacity: 0.78;
+  transform: translateZ(16px);
+}
+
+#certifications .certification-pin-grid .cert-pin-art-ring-one {
+  width: 48px;
+  height: 18px;
+}
+
+#certifications .certification-pin-grid .cert-pin-art-ring-two {
+  width: 68px;
+  height: 28px;
+}
+
+#certifications .certification-pin-grid .cert-pin-art-index {
+  right: 8px;
+  bottom: 6px;
+  font-size: 0.52rem;
+}
+
+#certifications .certification-pin-grid .cert-pin-footer {
+  width: calc(100% - 116px);
+  padding-top: 6px;
+  font-size: 0.50rem;
+  transform: translateZ(22px);
+}
+
+#certifications .certification-pin-grid .cert-pin-tooltip {
+  padding: 5px 12px;
+  font-size: 0.50rem;
+}
+
+#certifications .certification-pin-grid .cert-pin-line {
+  top: 29px;
+}
+
+#certifications .certification-pin-grid .cert-pin-ripples {
+  top: 126px;
+  width: 106px;
+  height: 52px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #certifications .certification-pin-grid .cert-pin:hover .cert-pin-line {
+    height: 72px;
+  }
+}
+
+@media (max-width: 1180px) {
+  #certifications .certifications-container {
+    width: min(calc(100% - 40px), 1180px);
+  }
+
+  #certifications .certification-list.certification-pin-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+@media (max-width: 720px) {
+  #certifications .certifications-container {
+    width: calc(100% - 24px);
+  }
+
+  #certifications .certification-list.certification-pin-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  #certifications .certification-pin-grid .cert-pin {
+    min-height: 220px;
+  }
+
+  #certifications .certification-pin-grid .cert-pin-card {
+    inset: 30px 0 0;
+    min-height: 188px;
+    padding: 19px 18px 16px;
+    border-radius: 18px;
+  }
+
+  #certifications .certification-pin-grid .cert-pin-copy h3 {
+    font-size: 1rem;
+  }
+
+  #certifications .certification-pin-grid .cert-pin-art {
+    right: 14px;
+    bottom: 14px;
+    width: 78px;
+    height: 46px;
+  }
+
+  #certifications .certification-pin-grid .cert-pin-footer {
+    width: calc(100% - 96px);
+  }
+}
