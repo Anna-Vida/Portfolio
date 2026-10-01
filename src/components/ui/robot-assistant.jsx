@@ -377,6 +377,23 @@ const sectionLabels = {
   contact: "Contact",
 };
 
+const robotSoundStorageKey = "apv-robot-sound-enabled";
+
+const cursorReadableSelector = [
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "p",
+  "li",
+  ".project-showcase-card",
+  ".experience-item",
+  ".skill-folder-surface",
+  ".cert-pin-card",
+  ".about-copy",
+  ".footer-main",
+].join(",");
+
 function cleanSpeechText(value) {
   return String(value || "")
     .replace(/([a-z])([A-Z])/g, "$1 $2")
@@ -452,6 +469,26 @@ function isVisibleElement(element) {
   );
 }
 
+function getCursorSpeech(target, sectionId) {
+  const section = document.getElementById(sectionId);
+  if (!section || !(target instanceof Element) || !section.contains(target)) {
+    return "";
+  }
+
+  const readable = target.closest(cursorReadableSelector);
+  if (!readable || !section.contains(readable)) return "";
+  if (readable.closest(".robot-assistant")) return "";
+  if (!isVisibleElement(readable)) return "";
+
+  const clone = readable.cloneNode(true);
+  clone.querySelectorAll(speechIgnoreSelector).forEach((node) => node.remove());
+  clone
+    .querySelectorAll("button, input, textarea, select, option")
+    .forEach((node) => node.remove());
+
+  return cleanSpeechText(clone.textContent).slice(0, 520);
+}
+
 function getSectionSpeech(sectionId) {
   const section = document.getElementById(sectionId);
   if (!section) return "";
@@ -513,6 +550,9 @@ export default function RobotAssistant() {
   const lastSpokenRef = useRef("");
   const lastSectionSpokenRef = useRef("");
   const soundEnabledRef = useRef(false);
+  const cursorSpeechTimerRef = useRef(null);
+  const lastCursorTextRef = useRef("");
+  const currentCursorElementRef = useRef(null);
 
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
@@ -639,7 +679,7 @@ export default function RobotAssistant() {
           if (sessionId === speechSessionRef.current) {
             speakNextChunk(sessionId);
           }
-        }, 45);
+        }, 18);
       }
     };
 
@@ -702,7 +742,7 @@ export default function RobotAssistant() {
           }, 100);
         }
       }
-    }, 1200);
+    }, 650);
   };
 
   const speak = (text, { force = false } = {}) => {
@@ -758,11 +798,21 @@ export default function RobotAssistant() {
 
   useEffect(() => {
     const storedName = window.sessionStorage.getItem("apv-visitor-name");
+    const storedSound =
+      window.sessionStorage.getItem(robotSoundStorageKey) === "1";
+
     if (storedName) {
       setVisitorName(storedName);
       setMessage(
-        `Welcome back, ${storedName}! Turn sound on and I can read each section as you move through the portfolio.`,
+        storedSound
+          ? `Welcome back, ${storedName}! Sound is still on. I'll keep reading as you move through the portfolio.`
+          : `Welcome back, ${storedName}! Turn sound on once and I'll keep reading as you move through the portfolio.`,
       );
+    }
+
+    if (storedSound && "speechSynthesis" in window) {
+      soundEnabledRef.current = true;
+      setSoundEnabled(true);
     }
 
     const welcomed = window.sessionStorage.getItem("apv-robot-welcomed");
@@ -860,15 +910,23 @@ export default function RobotAssistant() {
     if (!soundEnabled) return undefined;
     if (!activeSection) return undefined;
 
-    // Stop the old page immediately. Do not wait for the new section's
-    // debounce before cancelling the previous narration.
+    // Switch narration immediately when the visitor changes sections.
     stopSpeech();
+    lastCursorTextRef.current = "";
+    currentCursorElementRef.current = null;
+
+    if (cursorSpeechTimerRef.current) {
+      window.clearTimeout(cursorSpeechTimerRef.current);
+      cursorSpeechTimerRef.current = null;
+    }
 
     if (sectionTimerRef.current) {
       window.clearTimeout(sectionTimerRef.current);
     }
 
     sectionTimerRef.current = window.setTimeout(() => {
+      if (!soundEnabledRef.current) return;
+
       const sectionText = getSectionSpeech(activeSection);
       const label = sectionLabels[activeSection] || "this";
 
@@ -881,13 +939,11 @@ export default function RobotAssistant() {
       lastSpokenRef.current = sectionText;
 
       setMessage(
-        `You're in the ${label} section. I'm reading the whole section now.`,
+        `You're in the ${label} section. I'm reading it now. Point at any text and I'll read that exact part.`,
       );
 
-      speak(
-        `You are now in the ${label} section. ${sectionText}`,
-      );
-    }, 260);
+      speak(`You are now in the ${label} section. ${sectionText}`);
+    }, 70);
 
     return () => {
       if (sectionTimerRef.current) {
@@ -928,6 +984,72 @@ export default function RobotAssistant() {
     };
   }, []);
 
+
+  useEffect(() => {
+    if (!soundEnabled) return undefined;
+
+    const handlePointerOver = (event) => {
+      if (!soundEnabledRef.current) return;
+      if (!(event.target instanceof Element)) return;
+      if (event.target.closest(".robot-assistant")) return;
+
+      const section = document.getElementById(activeSection);
+      if (!section || !section.contains(event.target)) return;
+
+      const readable = event.target.closest(cursorReadableSelector);
+      if (!readable || !section.contains(readable)) return;
+
+      if (currentCursorElementRef.current === readable) return;
+      currentCursorElementRef.current = readable;
+
+      if (cursorSpeechTimerRef.current) {
+        window.clearTimeout(cursorSpeechTimerRef.current);
+      }
+
+      cursorSpeechTimerRef.current = window.setTimeout(() => {
+        const text = getCursorSpeech(readable, activeSection);
+
+        if (
+          !text ||
+          !soundEnabledRef.current ||
+          text === lastCursorTextRef.current
+        ) {
+          return;
+        }
+
+        lastCursorTextRef.current = text;
+        setMessage("Reading what you're pointing at.");
+        speak(text);
+      }, 170);
+    };
+
+    const handlePointerOut = (event) => {
+      if (!(event.target instanceof Element)) return;
+      const readable = event.target.closest(cursorReadableSelector);
+
+      if (readable && readable === currentCursorElementRef.current) {
+        currentCursorElementRef.current = null;
+      }
+    };
+
+    document.addEventListener("pointerover", handlePointerOver, {
+      passive: true,
+    });
+    document.addEventListener("pointerout", handlePointerOut, {
+      passive: true,
+    });
+
+    return () => {
+      document.removeEventListener("pointerover", handlePointerOver);
+      document.removeEventListener("pointerout", handlePointerOut);
+
+      if (cursorSpeechTimerRef.current) {
+        window.clearTimeout(cursorSpeechTimerRef.current);
+        cursorSpeechTimerRef.current = null;
+      }
+    };
+  }, [activeSection, soundEnabled]);
+
   useEffect(
     () => () => {
       if ("speechSynthesis" in window) {
@@ -942,6 +1064,10 @@ export default function RobotAssistant() {
       if (sectionTimerRef.current) {
         window.clearTimeout(sectionTimerRef.current);
       }
+
+      if (cursorSpeechTimerRef.current) {
+        window.clearTimeout(cursorSpeechTimerRef.current);
+      }
     },
     [],
   );
@@ -951,6 +1077,7 @@ export default function RobotAssistant() {
 
     soundEnabledRef.current = next;
     setSoundEnabled(next);
+    window.sessionStorage.setItem(robotSoundStorageKey, next ? "1" : "0");
 
     if (!next) {
       stopSpeech();
@@ -1050,8 +1177,8 @@ export default function RobotAssistant() {
             </span>
             <span>
               {soundEnabled
-                ? "Sound on · reading whole section"
-                : "Sound off · tap to enable"}
+                ? "Sound on · follows section + cursor"
+                : "Sound off · tap once to enable"}
             </span>
             <span className="robot-toggle-track" aria-hidden="true">
               <span />
