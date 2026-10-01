@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import "./index.css";
-import GradientBlobCard from "./components/ui/gradient-bold-card";
 import HeroHexBackground from "./components/ui/hero-hex-background";
 import { AnimatedText } from "./components/ui/animated-text";
 import { ParticleTextEffect } from "./components/ui/interactive-text-particle";
@@ -11,6 +10,7 @@ import TextShimmer from "./components/ui/text-shimmer";
 import FolderCard from "./components/ui/folder-card";
 import TechStackPager from "./components/ui/tech-stack-pager";
 import HeroShutterText from "./components/ui/hero-shutter-text";
+import CertificationPinCard from "./components/ui/certification-pin-card";
 
 import {
   FaReact,
@@ -1245,252 +1245,85 @@ function App() {
               </h2>
             </div>
 
-            <div className="certification-list">
-              <a
+            <div className="certification-list certification-pin-grid">
+              <CertificationPinCard
+                index={1}
+                company="Google"
+                title="Using Python to Interact with the Operating System"
+                date="AUG 2026"
                 href="https://www.coursera.org/account/accomplishments/verify/8RIIRZ2R9Z98"
-                target="_blank"
-                rel="noreferrer"
-                className="certification-item"
-              >
-                                <GradientBlobCard />
-<div className="certification-company">
-                  Google
-                </div>
+              />
 
-                <div className="certification-title">
-                  <h3>
-                    Using Python to Interact with the Operating System
-                  </h3>
-                </div>
-
-                <div className="certification-date">
-                  AUG 2026
-                </div>
-
-                <div className="certification-arrow">
-                  ↗
-                </div>
-              </a>
-
-              <a
+              <CertificationPinCard
+                index={2}
+                company="OPSWAT Academy"
+                title="Introduction to CIP"
+                date="AUG 2026 — JUL 2027"
                 href="https://learn.opswatacademy.com/certificate/YKGWHt_m9w"
-                target="_blank"
-                rel="noreferrer"
-                className="certification-item"
-              >
-                                <GradientBlobCard />
-<div className="certification-company">
-                  OPSWAT Academy
-                </div>
+              />
 
-                <div className="certification-title">
-                  <h3>Introduction to CIP</h3>
-                </div>
-
-                <div className="certification-date">
-                  AUG 2026 — JUL 2027
-                </div>
-
-                <div className="certification-arrow">
-                  ↗
-                </div>
-              </a>
-
-              <a
+              <CertificationPinCard
+                index={3}
+                company="Appkademiya"
+                title="WinOps Certified Engineer (WNO-101)"
+                date="AUG 2026"
                 href="https://www.appkademiya.online/verify/CERT-WINOPS-CERTIFIED-ENGINEER-WNO101-20260815-975AF137D63B"
-                target="_blank"
-                rel="noreferrer"
-                className="certification-item"
-              >
-                                <GradientBlobCard />
-<div className="certification-company">
-                  Appkademiya
-                </div>
+              />
 
-                <div className="certification-title">
-                  <h3>
-                    WinOps Certified Engineer (WNO-101)
-                  </h3>
-                </div>
-
-                <div className="certification-date">
-                  AUG 2026
-                </div>
-
-                <div className="certification-arrow">
-                  ↗
-                </div>
-              </a>
-
-              <a
+              <CertificationPinCard
+                index={4}
+                company="Google"
+                title="Crash Course on Python"
+                date="FEB 2026"
                 href="https://www.coursera.org/account/accomplishments/verify/C6N2EHHSNU4K"
-                target="_blank"
-                rel="noreferrer"
-                className="certification-item"
-              >
-                                <GradientBlobCard />
-<div className="certification-company">
-                  Google
-                </div>
+              />
 
-                <div className="certification-title">
-                  <h3>Crash Course on Python</h3>
-                </div>
-
-                <div className="certification-date">
-                  FEB 2026
-                </div>
-
-                <div className="certification-arrow">
-                  ↗
-                </div>
-              </a>
-
-              <a
+              <CertificationPinCard
+                index={5}
+                company="HackerRank"
+                title="Java (Basic) Certificate"
+                date="APR 2026"
                 href="https://www.hackerrank.com/certificates/iframe/4875c3806a5c"
-                target="_blank"
-                rel="noreferrer"
-                className="certification-item"
-              >
-                                <GradientBlobCard />
-<div className="certification-company">
-                  HackerRank
-                </div>
+              />
 
-                <div className="certification-title">
-                  <h3>Java (Basic) Certificate</h3>
-                </div>
-
-                <div className="certification-date">
-                  APR 2026
-                </div>
-
-                <div className="certification-arrow">
-                  ↗
-                </div>
-              </a>
-
-              <a
+              <CertificationPinCard
+                index={6}
+                company="HackerRank"
+                title="Software Engineer Certificate"
+                date="APR 2026"
                 href="https://www.hackerrank.com/certificates/iframe/4d61bd0470ac"
-                target="_blank"
-                rel="noreferrer"
-                className="certification-item"
-              >
-                                <GradientBlobCard />
-<div className="certification-company">
-                  HackerRank
-                </div>
+              />
 
-                <div className="certification-title">
-                  <h3>
-                    Software Engineer Certificate
-                  </h3>
-                </div>
-
-                <div className="certification-date">
-                  APR 2026
-                </div>
-
-                <div className="certification-arrow">
-                  ↗
-                </div>
-              </a>
-
-              <a
+              <CertificationPinCard
+                index={7}
+                company="HackerRank"
+                title="Frontend Developer (React)"
+                date="APR 2026 — APR 2036"
                 href="https://www.hackerrank.com/certificates/be43a2286ab2"
-                target="_blank"
-                rel="noreferrer"
-                className="certification-item"
-              >
-                                <GradientBlobCard />
-<div className="certification-company">
-                  HackerRank
-                </div>
+              />
 
-                <div className="certification-title">
-                  <h3>
-                    Frontend Developer (React)
-                  </h3>
-                </div>
+              <CertificationPinCard
+                index={8}
+                company="Ateneo de Manila University"
+                title="Workshop on Advanced Photonics Technologies for Emerging ICT and Sensing Applications"
+                date="FEB 2026 — DEC 2036"
+              />
 
-                <div className="certification-date">
-                  APR 2026 — APR 2036
-                </div>
-
-                <div className="certification-arrow">
-                  ↗
-                </div>
-              </a>
-
-              <div className="certification-item no-link">
-                                <GradientBlobCard />
-<div className="certification-company">
-                  Ateneo de Manila University
-                </div>
-
-                <div className="certification-title">
-                  <h3>
-                    Workshop on Advanced Photonics Technologies for Emerging
-                    ICT and Sensing Applications
-                  </h3>
-                </div>
-
-                <div className="certification-date">
-                  FEB 2026 — DEC 2036
-                </div>
-
-                <div className="certification-arrow">
-                  —
-                </div>
-              </div>
-
-              <a
+              <CertificationPinCard
+                index={9}
+                company="Cisco"
+                title="Operating Systems Basics"
+                date="JUN 2025"
                 href="https://www.credly.com/badges/7972d039-2d48-4e69-8d83-44e21a4f345d/linked_in_profile"
-                target="_blank"
-                rel="noreferrer"
-                className="certification-item"
-              >
-                                <GradientBlobCard />
-<div className="certification-company">
-                  Cisco
-                </div>
+              />
 
-                <div className="certification-title">
-                  <h3>Operating Systems Basics</h3>
-                </div>
-
-                <div className="certification-date">
-                  JUN 2025
-                </div>
-
-                <div className="certification-arrow">
-                  ↗
-                </div>
-              </a>
-
-              <a
+              <CertificationPinCard
+                index={10}
+                company="Cisco"
+                title="Cyber Threat Management"
+                date="OCT 2025"
                 href="https://www.credly.com/badges/abfdca56-2a8f-44d4-a753-a4143cf6da5f/linked_in_profile"
-                target="_blank"
-                rel="noreferrer"
-                className="certification-item"
-              >
-                                <GradientBlobCard />
-<div className="certification-company">
-                  Cisco
-                </div>
-
-                <div className="certification-title">
-                  <h3>Cyber Threat Management</h3>
-                </div>
-
-                <div className="certification-date">
-                  OCT 2025
-                </div>
-
-                <div className="certification-arrow">
-                  ↗
-                </div>
-              </a>
+              />
             </div>
           </div>
         </section>
