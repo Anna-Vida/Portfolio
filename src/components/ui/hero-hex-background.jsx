@@ -22,7 +22,7 @@ const HeroHexBackground = () => {
 
     let width = 0;
     let height = 0;
-    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let dpr = Math.min(window.devicePixelRatio || 1, 1.25);
 
     const pointer = {
       x: -9999,
@@ -30,7 +30,7 @@ const HeroHexBackground = () => {
       active: false,
     };
 
-    const radius = 44;
+    const radius = 48;
     const hexWidth = Math.sqrt(3) * radius;
     const rowHeight = radius * 1.5;
     const hexagons = [];
@@ -67,7 +67,7 @@ const HeroHexBackground = () => {
 
       width = Math.max(rect.width, 1);
       height = Math.max(rect.height, 1);
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, 1.25);
 
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
@@ -120,12 +120,21 @@ const HeroHexBackground = () => {
     };
 
     const drawStatic = () => {
+      animationFrameId = requestAnimationFrame(animate);
+
+      // This background is subtle, so ~30fps is visually smooth while
+      // leaving more time for scrolling and the 3D assistant.
+      if (time - lastDrawTime < 32) return;
+      lastDrawTime = time;
+
       ctx.clearRect(0, 0, width, height);
 
       for (const hexagon of hexagons) {
         drawHexagon(hexagon.baseX, hexagon.baseY, radius - 2, 0.045);
       }
     };
+
+    let lastDrawTime = 0;
 
     const animate = (time) => {
       if (!isVisible || reduceMotion) {
@@ -180,7 +189,6 @@ const HeroHexBackground = () => {
         );
       }
 
-      animationFrameId = requestAnimationFrame(animate);
     };
 
     const startAnimation = () => {
@@ -233,6 +241,18 @@ const HeroHexBackground = () => {
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
     document.addEventListener("mouseleave", handlePointerLeave);
     window.addEventListener("blur", handlePointerLeave);
+
+    const handleVisibilityChange = () => {
+      isVisible = !document.hidden;
+
+      if (isVisible) {
+        startAnimation();
+      } else {
+        stopAnimation();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
     motionQuery.addEventListener?.("change", handleMotionChange);
 
     resizeCanvas();
@@ -251,6 +271,7 @@ const HeroHexBackground = () => {
       window.removeEventListener("pointermove", handlePointerMove);
       document.removeEventListener("mouseleave", handlePointerLeave);
       window.removeEventListener("blur", handlePointerLeave);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       motionQuery.removeEventListener?.("change", handleMotionChange);
 
       stopAnimation();

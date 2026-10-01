@@ -297,10 +297,27 @@ function App() {
   }, []);
 
   useEffect(() => {
+    let cursorFrame = null;
+    let cursorX = 0;
+    let cursorY = 0;
+
+    const paintCursor = () => {
+      cursorFrame = null;
+      if (!showCursor || !cursorRef.current) return;
+
+      cursorRef.current.style.transform =
+        `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+    };
+
     const handlePointerMove = (event) => {
       if (!showCursor || !cursorRef.current) return;
 
-      cursorRef.current.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0) translate(-50%, -50%)`;
+      cursorX = event.clientX;
+      cursorY = event.clientY;
+
+      if (!cursorFrame) {
+        cursorFrame = window.requestAnimationFrame(paintCursor);
+      }
     };
 
     const handlePointerOver = (event) => {
@@ -327,6 +344,7 @@ function App() {
 
     return () => {
       window.removeEventListener("pointermove", handlePointerMove);
+      if (cursorFrame) window.cancelAnimationFrame(cursorFrame);
       document.removeEventListener("pointerover", handlePointerOver);
       document.removeEventListener("pointerout", handlePointerOut);
     };

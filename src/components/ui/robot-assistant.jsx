@@ -133,7 +133,7 @@ function RobotArm({ side = 1, waving = false }) {
       </mesh>
 
       <mesh position={[side * 0.33, 0.01, 0]}>
-        <sphereGeometry args={[0.065, 24, 24]} />
+        <sphereGeometry args={[0.065, 18, 18]} />
         <meshPhysicalMaterial
           color="#f7f4fa"
           roughness={0.26}
@@ -241,7 +241,7 @@ function RobotModel({ pointerRef }) {
         scale={[0.72, 0.94, 0.58]}
         material={shellMaterial}
       >
-        <sphereGeometry args={[0.43, 48, 48]} />
+        <sphereGeometry args={[0.43, 32, 32]} />
       </mesh>
 
       <mesh position={[0, 0.22, 0]} material={shellMaterial}>
@@ -253,7 +253,7 @@ function RobotModel({ pointerRef }) {
 
       <group ref={headRef} position={[0, 0.58, 0]}>
         <mesh scale={[1.05, 0.90, 0.72]} material={shellMaterial}>
-          <sphereGeometry args={[0.34, 48, 48]} />
+          <sphereGeometry args={[0.34, 32, 32]} />
         </mesh>
 
         <mesh
@@ -261,7 +261,7 @@ function RobotModel({ pointerRef }) {
           scale={[0.97, 0.66, 0.20]}
           material={faceMaterial}
         >
-          <sphereGeometry args={[0.30, 42, 42]} />
+          <sphereGeometry args={[0.30, 30, 30]} />
         </mesh>
 
         <group position={[0, 0.015, 0.337]}>
@@ -327,8 +327,45 @@ function RobotScene({ pointerRef }) {
   );
 }
 
-const readableSelector =
-  "h1, h2, h3, p, li, .project-title, .project-description, .experience-role, .experience-description, .cert-pin-copy, .skill-card-back";
+const sectionSpeechSelectors = {
+  home: [".hero-eyebrow", ".hero-title", ".hero-description", ".hero-copy"],
+  about: [".about-content h2", ".about-grid p"],
+  experience: [
+    ".experience-year",
+    ".experience-role",
+    ".experience-company",
+    ".experience-description p",
+  ],
+  work: [
+    ".project-showcase-card .project-number",
+    ".project-showcase-card .project-title",
+    ".project-showcase-card .project-type",
+    ".project-showcase-card .project-description",
+  ],
+  skills: [
+    ".skills-heading h2",
+    ".skill-card-title",
+    ".skill-card-back .tech-pill",
+  ],
+  certifications: [
+    ".cert-pin-company",
+    ".cert-pin-copy h3",
+    ".cert-pin-date",
+  ],
+  contact: ["h2", "p", "a"],
+};
+
+const naturalVoiceHints = [
+  /natural/i,
+  /aria/i,
+  /jenny/i,
+  /ava/i,
+  /samantha/i,
+  /serena/i,
+  /google.*english/i,
+  /zira/i,
+  /susan/i,
+];
 
 const sectionIds = [
   "home",
@@ -352,12 +389,15 @@ const sectionLabels = {
 
 function cleanSpeechText(value) {
   return String(value || "")
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
     .replace(/\s+/g, " ")
     .replace(/[↗↺]/g, "")
+    .replace(/\bIoT\b/g, "Internet of Things")
+    .replace(/\bUI\/UX\b/g, "user interface and user experience")
     .trim();
 }
 
-function chunkSpeechText(text, maxLength = 180) {
+function chunkSpeechText(text, maxLength = 260) {
   const cleaned = cleanSpeechText(text);
   if (!cleaned) return [];
 
@@ -426,30 +466,50 @@ function getSectionSpeech(sectionId) {
   const section = document.getElementById(sectionId);
   if (!section) return "";
 
-  const candidates = Array.from(section.querySelectorAll(readableSelector));
+  const selectors =
+    sectionSpeechSelectors[sectionId] || ["h1", "h2", "h3", "p", "li"];
+  const candidates = Array.from(section.querySelectorAll(selectors.join(",")));
   const parts = [];
   const seen = new Set();
 
-  for (const node of candidates) {
-    if (!isVisibleElement(node)) continue;
-    if (node.closest(".robot-assistant")) continue;
+  const pushText = (node, forcedText = "") => {
+    if (!node || !isVisibleElement(node)) return;
+    if (node.closest(".robot-assistant")) return;
+    if (node.closest('[aria-hidden="true"]')) return;
 
-    const text = cleanSpeechText(node.innerText || node.textContent);
-    if (text.length < 3 || seen.has(text)) continue;
+    let text = forcedText || cleanSpeechText(node.innerText || node.textContent);
+
+    if (node.classList?.contains("hero-shutter-title")) {
+      text = "Anna Patricia Vida";
+    }
+
+    if (!text || text.length < 3 || seen.has(text)) return;
 
     seen.add(text);
     parts.push(text);
+  };
 
-    if (parts.join(". ").length >= 850) break;
+  if (sectionId === "home") {
+    const heroTitle = section.querySelector(".hero-shutter-title");
+    pushText(heroTitle, "Anna Patricia Vida");
+  }
+
+  for (const node of candidates) {
+    if (sectionId === "home" && node.classList?.contains("hero-shutter-title")) {
+      continue;
+    }
+
+    pushText(node);
+
+    if (parts.join(". ").length >= 1500) break;
   }
 
   const joined = parts.join(". ");
-  return joined.length > 900 ? `${joined.slice(0, 897)}...` : joined;
+  return joined.length > 1600 ? `${joined.slice(0, 1597)}...` : joined;
 }
 
 export default function RobotAssistant() {
   const pointerRef = useRef({ x: 0, y: 0 });
-  const hoverTimerRef = useRef(null);
   const sectionTimerRef = useRef(null);
   const speechQueueRef = useRef([]);
   const activeUtteranceRef = useRef(null);
@@ -473,37 +533,37 @@ export default function RobotAssistant() {
   const getPreferredVoice = () => {
     if (!("speechSynthesis" in window)) return null;
 
-    const synth = window.speechSynthesis;
-    const available = synth.getVoices();
+    const available = window.speechSynthesis.getVoices();
 
     if (available.length) {
       voicesRef.current = available;
     }
 
-    const voices = voicesRef.current;
-
-    return (
-      voices.find(
-        (voice) =>
-          voice.localService &&
-          /^en-PH/i.test(voice.lang),
-      ) ||
-      voices.find(
-        (voice) =>
-          voice.localService &&
-          /^en-(US|GB|AU|CA)/i.test(voice.lang),
-      ) ||
-      voices.find(
-        (voice) =>
-          voice.localService &&
-          /^en/i.test(voice.lang),
-      ) ||
-      voices.find((voice) => voice.default && /^en/i.test(voice.lang)) ||
-      voices.find((voice) => /^en/i.test(voice.lang)) ||
-      voices.find((voice) => voice.localService) ||
-      voices[0] ||
-      null
+    const englishVoices = voicesRef.current.filter((voice) =>
+      /^en/i.test(voice.lang),
     );
+
+    const ranked = englishVoices
+      .map((voice) => {
+        const name = voice.name || "";
+        let score = 0;
+
+        if (/^en-(US|GB|AU|CA|PH)/i.test(voice.lang)) score += 20;
+        if (voice.default) score += 8;
+        if (voice.localService) score += 4;
+
+        naturalVoiceHints.forEach((hint, index) => {
+          if (hint.test(name)) score += 60 - index * 4;
+        });
+
+        if (/online|neural|premium/i.test(name)) score += 18;
+        if (/legacy|compact/i.test(name)) score -= 8;
+
+        return { voice, score };
+      })
+      .sort((a, b) => b.score - a.score);
+
+    return ranked[0]?.voice || englishVoices[0] || voicesRef.current[0] || null;
   };
 
   const clearSpeechStartTimer = () => {
@@ -529,8 +589,8 @@ export default function RobotAssistant() {
     const utterance = new SpeechSynthesisUtterance(nextChunk);
     const preferred = useDefaultVoice ? null : getPreferredVoice();
 
-    utterance.rate = 0.94;
-    utterance.pitch = 1.04;
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
     utterance.volume = 1;
     utterance.lang = preferred?.lang || "en-US";
 
@@ -545,7 +605,7 @@ export default function RobotAssistant() {
       if (!speechConfirmedRef.current) {
         speechConfirmedRef.current = true;
         setMessage(
-          "Sound is working. I'll read each section as you move through the portfolio.",
+          "Sound is working. I'll read each section automatically as you move through the portfolio.",
         );
       }
     };
@@ -757,50 +817,32 @@ export default function RobotAssistant() {
   }, [activeSection, soundEnabled]);
 
   useEffect(() => {
+    let frameId = null;
+    let latestX = 0;
+    let latestY = 0;
+
+    const applyPointer = () => {
+      frameId = null;
+      pointerRef.current.x = (latestX / window.innerWidth) * 2 - 1;
+      pointerRef.current.y = (latestY / window.innerHeight) * 2 - 1;
+    };
+
     const handlePointerMove = (event) => {
-      pointerRef.current.x = (event.clientX / window.innerWidth) * 2 - 1;
-      pointerRef.current.y = (event.clientY / window.innerHeight) * 2 - 1;
+      latestX = event.clientX;
+      latestY = event.clientY;
 
-      if (!soundEnabledRef.current) return;
-
-      const target = document
-        .elementFromPoint(event.clientX, event.clientY)
-        ?.closest(readableSelector);
-
-      if (!target || target.closest(".robot-assistant")) {
-        if (hoverTimerRef.current) {
-          window.clearTimeout(hoverTimerRef.current);
-          hoverTimerRef.current = null;
-        }
-        return;
+      if (!frameId) {
+        frameId = window.requestAnimationFrame(applyPointer);
       }
-
-      const text = cleanSpeechText(target.innerText || target.textContent);
-
-      if (
-        text.length < 4 ||
-        text.length > 320 ||
-        text === lastSpokenRef.current
-      ) {
-        return;
-      }
-
-      if (hoverTimerRef.current) {
-        window.clearTimeout(hoverTimerRef.current);
-      }
-
-      hoverTimerRef.current = window.setTimeout(() => {
-        lastSpokenRef.current = text;
-        speak(text);
-      }, 900);
     };
 
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
 
     return () => {
       window.removeEventListener("pointermove", handlePointerMove);
-      if (hoverTimerRef.current) {
-        window.clearTimeout(hoverTimerRef.current);
+
+      if (frameId) {
+        window.cancelAnimationFrame(frameId);
       }
     };
   }, []);
@@ -852,19 +894,22 @@ export default function RobotAssistant() {
       return;
     }
 
+    const sectionText = getSectionSpeech(activeSection);
+    const label = sectionLabels[activeSection] || "current";
     const greeting = visitorName
-      ? `Sound is on, ${visitorName}. I'll read each section as you visit it.`
-      : "Sound is on. I'll read each section as you visit it.";
+      ? `Sound is on, ${visitorName}. You're in the ${label} section.`
+      : `Sound is on. You're in the ${label} section.`;
 
-    lastSectionSpokenRef.current = "";
+    lastSectionSpokenRef.current = activeSection;
     speechConfirmedRef.current = false;
     speechRetryRef.current = false;
-    setMessage("Testing voice…");
+    setMessage(
+      `Sound is on. I'm reading the ${label} section automatically.`,
+    );
 
-    // Called directly from the speaker-button user gesture. The speech
-    // pipeline prefers a local installed voice and retries with the browser
-    // default if the selected voice cannot start.
-    speak(greeting, { force: true });
+    speak(sectionText ? `${greeting} ${sectionText}` : greeting, {
+      force: true,
+    });
   };
 
   const submitName = (event) => {
@@ -931,7 +976,7 @@ export default function RobotAssistant() {
             </span>
             <span>
               {soundEnabled
-                ? "Sound on · reading each section"
+                ? "Sound on · auto-reading section"
                 : "Sound off · tap to enable"}
             </span>
             <span className="robot-toggle-track" aria-hidden="true">
@@ -948,8 +993,12 @@ export default function RobotAssistant() {
       >
         <Canvas
           camera={{ position: [0, 0.18, 4.35], fov: 38 }}
-          dpr={[1, 1.5]}
-          gl={{ alpha: true, antialias: true }}
+          dpr={[1, 1.25]}
+          gl={{
+            alpha: true,
+            antialias: false,
+            powerPreference: "high-performance",
+          }}
         >
           <RobotScene pointerRef={pointerRef} />
         </Canvas>
