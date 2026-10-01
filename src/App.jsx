@@ -10,6 +10,7 @@ import InteractiveAboutPortrait from "./components/ui/interactive-about-portrait
 import TextShimmer from "./components/ui/text-shimmer";
 import FolderCard from "./components/ui/folder-card";
 import TechStackPager from "./components/ui/tech-stack-pager";
+import HeroShutterText from "./components/ui/hero-shutter-text";
 
 import {
   FaReact,
@@ -572,10 +573,7 @@ function App() {
               SOFTWARE DEVELOPER — QUEZON CITY, PHILIPPINES
             </p>
 
-            <h1 className="hero-title">
-              ANNA
-              <span>PATRICIA VIDA</span>
-            </h1>
+            <HeroShutterText />
 
             <div className="hero-bottom">
               <p className="hero-copy">
