@@ -9,25 +9,8 @@ import {
   FaTimes,
 } from "react-icons/fa";
 
-class HeartCurve extends THREE.Curve {
-  getPoint(t, optionalTarget = new THREE.Vector3()) {
-    const angle = t * Math.PI * 2;
-    const x = 16 * Math.pow(Math.sin(angle), 3);
-    const y =
-      13 * Math.cos(angle) -
-      5 * Math.cos(2 * angle) -
-      2 * Math.cos(3 * angle) -
-      Math.cos(4 * angle);
-
-    return optionalTarget.set(x * 0.004, (y + 6) * 0.004, 0);
-  }
-}
-
-const heartCurve = new HeartCurve();
-
-function RobotEye({ position, loved, phase = 0 }) {
+function RobotEye({ position, phase = 0 }) {
   const eyeRef = useRef();
-  const heartRef = useRef();
 
   useFrame(({ clock }) => {
     const elapsed = clock.getElapsedTime() + phase;
@@ -35,73 +18,82 @@ function RobotEye({ position, loved, phase = 0 }) {
     const blinkScale = blink < 0.13 ? Math.max(0.08, blink / 0.13) : 1;
 
     if (eyeRef.current) {
-      eyeRef.current.visible = !loved;
       eyeRef.current.scale.y = blinkScale;
     }
-
-    if (heartRef.current) {
-      heartRef.current.visible = loved;
-    }
-  });
-
-  return (
-    <group position={position}>
-      <mesh ref={eyeRef} rotation={[0, 0, position[0] < 0 ? -0.14 : 0.14]}>
-        <boxGeometry args={[0.075, 0.038, 0.018]} />
-        <meshStandardMaterial
-          color="#fbfbff"
-          emissive="#f7f4ff"
-          emissiveIntensity={2}
-          toneMapped={false}
-        />
-      </mesh>
-
-      <mesh
-        ref={heartRef}
-        visible={false}
-        rotation={[0, 0, Math.PI]}
-        scale={0.82}
-      >
-        <tubeGeometry args={[heartCurve, 48, 0.006, 8, true]} />
-        <meshStandardMaterial
-          color="#d8b7ff"
-          emissive="#c59aff"
-          emissiveIntensity={2}
-          toneMapped={false}
-        />
-      </mesh>
-    </group>
-  );
-}
-
-function FloatingHeart() {
-  const heartRef = useRef();
-
-  useFrame(({ clock }) => {
-    if (!heartRef.current) return;
-    const t = clock.getElapsedTime();
-    heartRef.current.position.y = 0.36 + Math.sin(t * 1.65) * 0.035;
-    heartRef.current.rotation.z = -0.18 + Math.sin(t * 1.05) * 0.08;
-    heartRef.current.scale.setScalar(1 + Math.sin(t * 2.1) * 0.045);
   });
 
   return (
     <mesh
-      ref={heartRef}
-      position={[-0.63, 0.36, 0.02]}
-      rotation={[0, 0, Math.PI]}
-      scale={1.12}
+      ref={eyeRef}
+      position={position}
+      rotation={[0, 0, position[0] < 0 ? -0.16 : 0.16]}
     >
-      <tubeGeometry args={[heartCurve, 64, 0.012, 10, true]} />
+      <capsuleGeometry args={[0.018, 0.052, 8, 18]} />
       <meshStandardMaterial
-        color="#cda4ff"
-        emissive="#a86eff"
-        emissiveIntensity={1.45}
-        roughness={0.24}
-        metalness={0.02}
+        color="#fbfbff"
+        emissive="#f7f4ff"
+        emissiveIntensity={2.15}
         toneMapped={false}
       />
     </mesh>
+  );
+}
+
+function FloatingTablet() {
+  const tabletRef = useRef();
+
+  useFrame(({ clock }) => {
+    if (!tabletRef.current) return;
+
+    const t = clock.getElapsedTime();
+    tabletRef.current.position.y = 0.28 + Math.sin(t * 1.45) * 0.032;
+    tabletRef.current.rotation.z = -0.14 + Math.sin(t * 0.9) * 0.055;
+    tabletRef.current.rotation.y = -0.34 + Math.sin(t * 0.72) * 0.08;
+  });
+
+  return (
+    <group
+      ref={tabletRef}
+      position={[-0.64, 0.28, 0.02]}
+      rotation={[0.04, -0.34, -0.14]}
+      scale={1.08}
+    >
+      <mesh>
+        <boxGeometry args={[0.34, 0.46, 0.035]} />
+        <meshPhysicalMaterial
+          color="#17151c"
+          roughness={0.2}
+          metalness={0.08}
+          clearcoat={0.9}
+          clearcoatRoughness={0.12}
+        />
+      </mesh>
+
+      <mesh position={[0, 0.008, 0.023]}>
+        <boxGeometry args={[0.295, 0.385, 0.012]} />
+        <meshStandardMaterial
+          color="#cdb9ee"
+          emissive="#7b5ca7"
+          emissiveIntensity={0.35}
+          roughness={0.42}
+        />
+      </mesh>
+
+      <mesh position={[0, -0.135, 0.032]}>
+        <boxGeometry args={[0.18, 0.018, 0.008]} />
+        <meshStandardMaterial color="#f4efff" emissive="#d9c8ff" emissiveIntensity={0.6} />
+      </mesh>
+
+      <mesh position={[0, -0.075, 0.032]}>
+        <boxGeometry args={[0.12, 0.018, 0.008]} />
+        <meshStandardMaterial color="#f4efff" emissive="#d9c8ff" emissiveIntensity={0.5} />
+      </mesh>
+
+      <mesh position={[0, 0.18, 0.031]}>
+        <circleGeometry args={[0.012, 18]} />
+        <meshStandardMaterial color="#3d3746" />
+      </mesh>
+    </group>
   );
 }
 
@@ -154,7 +146,7 @@ function RobotArm({ side = 1, waving = false }) {
   );
 }
 
-function RobotModel({ pointerRef, loved }) {
+function RobotModel({ pointerRef }) {
   const robotRef = useRef();
   const headRef = useRef();
 
@@ -242,7 +234,7 @@ function RobotModel({ pointerRef, loved }) {
 
   return (
     <group ref={robotRef} position={[0, -0.12, 0]} scale={1.42}>
-      <FloatingHeart />
+      <FloatingTablet />
 
       <mesh
         position={[0, -0.10, 0]}
@@ -273,19 +265,43 @@ function RobotModel({ pointerRef, loved }) {
         </mesh>
 
         <group position={[0, 0.015, 0.337]}>
-          <RobotEye position={[-0.09, 0, 0]} loved={loved} />
-          <RobotEye
-            position={[0.09, 0, 0]}
-            loved={loved}
-            phase={0.09}
-          />
+          <RobotEye position={[-0.09, 0, 0]} />
+          <RobotEye position={[0.09, 0, 0]} phase={0.09} />
 
-          <mesh position={[0, -0.082, 0]} scale={[1, 0.52, 1]}>
-            <torusGeometry args={[0.037, 0.008, 10, 24, Math.PI]} />
+          <mesh position={[-0.145, -0.055, -0.002]} scale={[1.25, 0.58, 1]}>
+            <circleGeometry args={[0.020, 18]} />
+            <meshStandardMaterial
+              color="#b994e7"
+              emissive="#9c75cb"
+              emissiveIntensity={0.55}
+              transparent
+              opacity={0.8}
+              toneMapped={false}
+            />
+          </mesh>
+
+          <mesh position={[0.145, -0.055, -0.002]} scale={[1.25, 0.58, 1]}>
+            <circleGeometry args={[0.020, 18]} />
+            <meshStandardMaterial
+              color="#b994e7"
+              emissive="#9c75cb"
+              emissiveIntensity={0.55}
+              transparent
+              opacity={0.8}
+              toneMapped={false}
+            />
+          </mesh>
+
+          <mesh
+            position={[0, -0.086, 0]}
+            rotation={[0, 0, Math.PI]}
+            scale={[1.15, 0.62, 1]}
+          >
+            <torusGeometry args={[0.041, 0.008, 10, 28, Math.PI]} />
             <meshStandardMaterial
               color="#f7f4ff"
               emissive="#f7f4ff"
-              emissiveIntensity={1.6}
+              emissiveIntensity={1.8}
               toneMapped={false}
             />
           </mesh>
@@ -295,7 +311,7 @@ function RobotModel({ pointerRef, loved }) {
   );
 }
 
-function RobotScene({ pointerRef, loved }) {
+function RobotScene({ pointerRef }) {
   return (
     <>
       <ambientLight intensity={1.55} />
@@ -306,7 +322,7 @@ function RobotScene({ pointerRef, loved }) {
         color="#d5c0ff"
       />
       <pointLight position={[0, -1, 2]} intensity={0.65} color="#b17cff" />
-      <RobotModel pointerRef={pointerRef} loved={loved} />
+      <RobotModel pointerRef={pointerRef} />
     </>
   );
 }
@@ -339,6 +355,57 @@ function cleanSpeechText(value) {
     .replace(/\s+/g, " ")
     .replace(/[↗↺]/g, "")
     .trim();
+}
+
+function chunkSpeechText(text, maxLength = 180) {
+  const cleaned = cleanSpeechText(text);
+  if (!cleaned) return [];
+
+  const sentences = cleaned
+    .split(/(?<=[.!?])\s+/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+
+  const chunks = [];
+  let current = "";
+
+  for (const sentence of sentences) {
+    if (sentence.length > maxLength) {
+      if (current) {
+        chunks.push(current);
+        current = "";
+      }
+
+      const words = sentence.split(/\s+/);
+      let wordChunk = "";
+
+      for (const word of words) {
+        const candidate = wordChunk ? `${wordChunk} ${word}` : word;
+
+        if (candidate.length > maxLength && wordChunk) {
+          chunks.push(wordChunk);
+          wordChunk = word;
+        } else {
+          wordChunk = candidate;
+        }
+      }
+
+      if (wordChunk) chunks.push(wordChunk);
+      continue;
+    }
+
+    const candidate = current ? `${current} ${sentence}` : sentence;
+
+    if (candidate.length > maxLength && current) {
+      chunks.push(current);
+      current = sentence;
+    } else {
+      current = candidate;
+    }
+  }
+
+  if (current) chunks.push(current);
+  return chunks;
 }
 
 function isVisibleElement(element) {
@@ -384,64 +451,108 @@ export default function RobotAssistant() {
   const pointerRef = useRef({ x: 0, y: 0 });
   const hoverTimerRef = useRef(null);
   const sectionTimerRef = useRef(null);
+  const speechQueueRef = useRef([]);
+  const activeUtteranceRef = useRef(null);
   const lastSpokenRef = useRef("");
   const lastSectionSpokenRef = useRef("");
-  const loveTimerRef = useRef(null);
   const soundEnabledRef = useRef(false);
 
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [visitorName, setVisitorName] = useState("");
   const [nameInput, setNameInput] = useState("");
-  const [loved, setLoved] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [message, setMessage] = useState(
     "Hello! Welcome to Anna's portfolio. What's your name?",
   );
 
-  const speak = (text, { force = false } = {}) => {
-    if (!("speechSynthesis" in window)) return;
-    if (!force && !soundEnabledRef.current) return;
+  const getPreferredVoice = () => {
+    if (!("speechSynthesis" in window)) return null;
 
-    const cleaned = cleanSpeechText(text);
-    if (!cleaned) return;
+    const voices = window.speechSynthesis.getVoices();
+
+    return (
+      voices.find((voice) => /aria|zira|samantha|female/i.test(voice.name)) ||
+      voices.find((voice) => /^en-PH/i.test(voice.lang)) ||
+      voices.find((voice) => /^en/i.test(voice.lang)) ||
+      voices[0] ||
+      null
+    );
+  };
+
+  const speakNextChunk = () => {
+    if (!("speechSynthesis" in window)) return;
+    if (!soundEnabledRef.current) return;
+
+    const nextChunk = speechQueueRef.current.shift();
+    if (!nextChunk) {
+      activeUtteranceRef.current = null;
+      return;
+    }
 
     const synth = window.speechSynthesis;
-    synth.cancel();
-    synth.resume();
+    const utterance = new SpeechSynthesisUtterance(nextChunk);
 
-    const utterance = new SpeechSynthesisUtterance(cleaned);
     utterance.rate = 0.94;
-    utterance.pitch = 1.05;
+    utterance.pitch = 1.06;
     utterance.volume = 1;
     utterance.lang = "en-US";
 
-    const voices = synth.getVoices();
-    const preferred =
-      voices.find((voice) => /aria|zira|samantha|female/i.test(voice.name)) ||
-      voices.find((voice) => /^en/i.test(voice.lang));
-
+    const preferred = getPreferredVoice();
     if (preferred) utterance.voice = preferred;
 
+    utterance.onend = () => {
+      activeUtteranceRef.current = null;
+      if (soundEnabledRef.current) speakNextChunk();
+    };
+
+    utterance.onerror = () => {
+      activeUtteranceRef.current = null;
+      if (soundEnabledRef.current) speakNextChunk();
+    };
+
+    activeUtteranceRef.current = utterance;
+    synth.resume();
     synth.speak(utterance);
   };
 
-  useEffect(() => {
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.getVoices();
-
-      const preloadVoices = () => window.speechSynthesis.getVoices();
-      window.speechSynthesis.addEventListener?.("voiceschanged", preloadVoices);
-
-      return () => {
-        window.speechSynthesis.removeEventListener?.(
-          "voiceschanged",
-          preloadVoices,
-        );
-      };
+  const speak = (text, { force = false } = {}) => {
+    if (!("speechSynthesis" in window)) {
+      setMessage(
+        "Your browser does not support speech output, but I can still guide you visually.",
+      );
+      return;
     }
 
-    return undefined;
+    if (!force && !soundEnabledRef.current) return;
+
+    const chunks = chunkSpeechText(text);
+    if (!chunks.length) return;
+
+    const synth = window.speechSynthesis;
+    synth.cancel();
+
+    speechQueueRef.current = chunks;
+    activeUtteranceRef.current = null;
+
+    // Run immediately from the user's sound-button gesture when force=true.
+    speakNextChunk();
+  };
+
+  useEffect(() => {
+    if (!("speechSynthesis" in window)) return undefined;
+
+    const preloadVoices = () => window.speechSynthesis.getVoices();
+    preloadVoices();
+
+    window.speechSynthesis.addEventListener?.("voiceschanged", preloadVoices);
+
+    return () => {
+      window.speechSynthesis.removeEventListener?.(
+        "voiceschanged",
+        preloadVoices,
+      );
+    };
   }, []);
 
   useEffect(() => {
@@ -481,8 +592,7 @@ export default function RobotAssistant() {
 
         if (!visible[0]) return;
 
-        const nextSection = visible[0].target.id;
-        setActiveSection(nextSection);
+        setActiveSection(visible[0].target.id);
       },
       {
         rootMargin: "-22% 0px -52% 0px",
@@ -515,7 +625,7 @@ export default function RobotAssistant() {
       const label = sectionLabels[activeSection] || "this";
       setMessage(`You're in the ${label} section. I'm reading it for you now.`);
       speak(sectionText);
-    }, 850);
+    }, 650);
 
     return () => {
       if (sectionTimerRef.current) {
@@ -544,6 +654,7 @@ export default function RobotAssistant() {
       }
 
       const text = cleanSpeechText(target.innerText || target.textContent);
+
       if (
         text.length < 4 ||
         text.length > 320 ||
@@ -578,9 +689,8 @@ export default function RobotAssistant() {
         window.speechSynthesis.cancel();
       }
 
-      if (loveTimerRef.current) {
-        window.clearTimeout(loveTimerRef.current);
-      }
+      speechQueueRef.current = [];
+      activeUtteranceRef.current = null;
 
       if (sectionTimerRef.current) {
         window.clearTimeout(sectionTimerRef.current);
@@ -596,22 +706,36 @@ export default function RobotAssistant() {
     setSoundEnabled(next);
 
     if (!next) {
+      speechQueueRef.current = [];
+      activeUtteranceRef.current = null;
+
       if ("speechSynthesis" in window) {
         window.speechSynthesis.cancel();
       }
+
       setMessage("Sound is off. I can still follow you around the portfolio.");
       return;
     }
 
+    if (!("speechSynthesis" in window)) {
+      soundEnabledRef.current = false;
+      setSoundEnabled(false);
+      setMessage(
+        "Speech is not available in this browser. Try Chrome, Edge, or Safari.",
+      );
+      return;
+    }
+
     const greeting = visitorName
-      ? `Sound is on, ${visitorName}. I'll read each section as you visit it, and you can still hover over text to hear individual content.`
-      : "Sound is on. I'll read each section as you visit it, and you can still hover over text to hear individual content.";
+      ? `Sound is on, ${visitorName}. I'll read each section as you visit it.`
+      : "Sound is on. I'll read each section as you visit it.";
 
     lastSectionSpokenRef.current = "";
     setMessage(greeting);
 
-    // This first utterance runs directly from the user's click, which
-    // satisfies browser audio restrictions before automatic section reading.
+    // This is called directly from the user's click, which unlocks browser
+    // speech output. Keeping each utterance in a ref also prevents Chromium
+    // from dropping longer speech while it is playing.
     speak(greeting, { force: true });
   };
 
@@ -624,18 +748,13 @@ export default function RobotAssistant() {
     window.sessionStorage.setItem("apv-visitor-name", value);
 
     const reply = `Nice to meet you, ${value}! I'm Anna's portfolio guide. Turn sound on and I'll read each section while I follow you around the page.`;
+
     setMessage(reply);
     setNameInput("");
 
     if (soundEnabledRef.current) {
       speak(reply);
     }
-  };
-
-  const showLove = () => {
-    setLoved(true);
-    if (loveTimerRef.current) window.clearTimeout(loveTimerRef.current);
-    loveTimerRef.current = window.setTimeout(() => setLoved(false), 1500);
   };
 
   return (
@@ -696,15 +815,15 @@ export default function RobotAssistant() {
 
       <div
         className="robot-stage"
-        onClick={showLove}
-        aria-label="Floating robot portfolio guide"
+        onClick={() => setChatOpen(true)}
+        aria-label="Floating happy robot portfolio guide"
       >
         <Canvas
           camera={{ position: [0, 0.18, 4.35], fov: 38 }}
           dpr={[1, 1.5]}
           gl={{ alpha: true, antialias: true }}
         >
-          <RobotScene pointerRef={pointerRef} loved={loved} />
+          <RobotScene pointerRef={pointerRef} />
         </Canvas>
       </div>
 
