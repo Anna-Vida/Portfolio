@@ -10160,3 +10160,52 @@ html[data-theme="accent"] .cert-pin-point {
     margin: 0;
   }
 }
+
+
+/* =========================================================
+   CERTIFICATIONS — CONSISTENT CONTENT ALIGNMENT
+   Reset older grid alignment so every card uses the exact same
+   left-aligned text structure regardless of title length.
+========================================================= */
+
+#certifications .certification-pin-grid .cert-pin-card {
+  text-align: left;
+  align-items: stretch;
+}
+
+#certifications .certification-pin-grid .cert-pin-copy {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  align-self: stretch;
+  justify-self: stretch;
+  grid-column: auto;
+  grid-row: auto;
+  text-align: left;
+}
+
+#certifications .certification-pin-grid .cert-pin-company,
+#certifications .certification-pin-grid .cert-pin-copy h3,
+#certifications .certification-pin-grid .cert-pin-date {
+  width: 100%;
+  text-align: left;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#certifications .certification-pin-grid .cert-pin-copy h3 {
+  max-width: 100%;
+}
+
+#certifications .certification-pin-grid .cert-pin-company {
+  min-height: 1em;
+}
+
+#certifications .certification-pin-grid .cert-pin-date {
+  min-height: 1em;
+}
+
+#certifications .certification-pin-grid .cert-pin-footer {
+  align-self: stretch;
+  text-align: left;
+}
