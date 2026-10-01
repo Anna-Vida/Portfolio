@@ -41,12 +41,14 @@ export default function InteractiveAboutPortrait({ src, alt }) {
     const px = (event.clientX - rect.left) / rect.width - 0.5;
     const py = (event.clientY - rect.top) / rect.height - 0.5;
 
-    wrap.style.setProperty("--portrait-x", `${px * 12}px`);
-    wrap.style.setProperty("--portrait-y", `${py * 8}px`);
-    wrap.style.setProperty("--portrait-ry", `${px * 2.2}deg`);
-    wrap.style.setProperty("--portrait-rx", `${py * -1.6}deg`);
-    wrap.style.setProperty("--glow-x", `${px * 10}px`);
-    wrap.style.setProperty("--glow-y", `${py * 6}px`);
+    wrap.style.setProperty("--portrait-x", `${px * 14}px`);
+    wrap.style.setProperty("--portrait-y", `${py * 10}px`);
+    wrap.style.setProperty("--portrait-ry", `${px * -9}deg`);
+    wrap.style.setProperty("--portrait-rx", `${py * 7}deg`);
+    wrap.style.setProperty("--glow-x", `${px * 12}px`);
+    wrap.style.setProperty("--glow-y", `${py * 8}px`);
+    wrap.style.setProperty("--comet-glare-x", `${(px + 0.5) * 100}%`);
+    wrap.style.setProperty("--comet-glare-y", `${(py + 0.5) * 100}%`);
   };
 
   const resetPointer = () => {
@@ -59,6 +61,8 @@ export default function InteractiveAboutPortrait({ src, alt }) {
     wrap.style.setProperty("--portrait-rx", "0deg");
     wrap.style.setProperty("--glow-x", "0px");
     wrap.style.setProperty("--glow-y", "0px");
+    wrap.style.setProperty("--comet-glare-x", "50%");
+    wrap.style.setProperty("--comet-glare-y", "50%");
   };
 
   return (
@@ -72,6 +76,7 @@ export default function InteractiveAboutPortrait({ src, alt }) {
 
       <div className="about-polaroid-stack">
         <div className="about-polaroid-card">
+          <div className="about-comet-glare" aria-hidden="true" />
           <div className="about-polaroid-photo">
             <img src={src} alt={alt} className="about-portrait" />
           </div>
