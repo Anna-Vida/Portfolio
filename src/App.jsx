@@ -11,6 +11,7 @@ import FolderCard from "./components/ui/folder-card";
 import TechStackPager from "./components/ui/tech-stack-pager";
 import HeroShutterText from "./components/ui/hero-shutter-text";
 import CertificationPinCard from "./components/ui/certification-pin-card";
+import ScrollRevealController from "./components/ui/scroll-reveal-controller";
 
 const RobotAssistant = lazy(() => import("./components/ui/robot-assistant"));
 
@@ -644,7 +645,7 @@ function App() {
             ABOUT
         ========================== */}
         <section className="about-section about-section-premium" id="about">
-          <div className="about-shell">
+          <div className="about-shell" data-scroll-reveal="up">
             <div className="about-topline">
               <p>ABOUT</p>
               <span>01</span>
@@ -712,7 +713,7 @@ function App() {
             EXPERIENCE
         ========================== */}
         <section className="experience-section" id="experience">
-          <div className="experience-container">
+          <div className="experience-container" data-scroll-reveal="left">
             <div className="experience-heading">
               <p className="section-kicker">EXPERIENCE</p>
 
@@ -789,7 +790,7 @@ function App() {
             SELECTED WORK
         ========================== */}
         <section className="work-section work-section-v2" id="work">
-          <div className="work-container work-container-v2">
+          <div className="work-container work-container-v2" data-scroll-reveal="right">
             <div className="work-v2-top">
               <div className="work-heading work-heading-v2">
                 <p className="section-kicker work-kicker">PROJECTS CREATED</p>
@@ -993,7 +994,7 @@ function App() {
             SKILLS / TECH STACK
         ========================== */}
         <section className="skills-section" id="skills">
-          <div className="skills-container">
+          <div className="skills-container" data-scroll-reveal="scale">
             <div className="skills-heading">
               <p className="section-kicker">TECH STACK</p>
 
@@ -1250,7 +1251,7 @@ function App() {
           className="certifications-section"
           id="certifications"
         >
-          <div className="certifications-container">
+          <div className="certifications-container" data-scroll-reveal="up">
             <div className="certifications-heading">
               <p className="section-kicker">
                 CERTIFICATIONS
@@ -1350,6 +1351,7 @@ function App() {
 
       </main>
 
+      <ScrollRevealController />
       <CinematicFooter />
 
       <Suspense fallback={null}>
