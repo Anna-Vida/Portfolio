@@ -11625,7 +11625,7 @@ main > .certifications-section {
 :root {
   --site-gutter: clamp(28px, 4.8vw, 88px);
   --site-content-max: 1560px;
-  --site-section-y: 56px;
+  --site-section-y: 32px;
 }
 
 /* Navbar + Hero + every main content section now share one exact rail. */
@@ -11681,7 +11681,7 @@ main > .certifications-section {
 .work-v2-top,
 .skills-heading,
 .certifications-heading {
-  margin-bottom: 32px !important;
+  margin-bottom: 24px !important;
 }
 
 /* Match the footer's lower information rail to the same website margins
@@ -11697,7 +11697,7 @@ main > .certifications-section {
 @media (max-width: 1100px) {
   :root {
     --site-gutter: 28px;
-    --site-section-y: 48px;
+    --site-section-y: 28px;
   }
 
   .about-topline,
@@ -11705,14 +11705,14 @@ main > .certifications-section {
   .work-v2-top,
   .skills-heading,
   .certifications-heading {
-    margin-bottom: 28px !important;
+    margin-bottom: 22px !important;
   }
 }
 
 @media (max-width: 700px) {
   :root {
     --site-gutter: 16px;
-    --site-section-y: 40px;
+    --site-section-y: 22px;
   }
 
   .about-topline,
@@ -11720,7 +11720,7 @@ main > .certifications-section {
   .work-v2-top,
   .skills-heading,
   .certifications-heading {
-    margin-bottom: 24px !important;
+    margin-bottom: 20px !important;
   }
 }
 
@@ -13075,5 +13075,43 @@ main > .certifications-section {
 
   main > .certifications-section {
     padding-top: 18px !important;
+  }
+}
+
+
+/* =========================================================
+   SECTION TRANSITIONS — FINAL TIGHT SPACING
+   Keep adjacent portfolio sections visually connected without
+   changing their cards, content, or interaction design.
+========================================================= */
+
+main > .about-section-premium {
+  padding-bottom: 24px !important;
+}
+
+main > .experience-section {
+  padding-top: 24px !important;
+  padding-bottom: 28px !important;
+}
+
+@media (max-width: 1100px) {
+  main > .about-section-premium {
+    padding-bottom: 22px !important;
+  }
+
+  main > .experience-section {
+    padding-top: 22px !important;
+    padding-bottom: 24px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  main > .about-section-premium {
+    padding-bottom: 18px !important;
+  }
+
+  main > .experience-section {
+    padding-top: 18px !important;
+    padding-bottom: 20px !important;
   }
 }
