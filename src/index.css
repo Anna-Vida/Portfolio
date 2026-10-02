@@ -13033,3 +13033,47 @@ button.work-browser-secondary {
     padding-inline: 12px;
   }
 }
+
+
+/* =========================================================
+   SKILLS → CERTIFICATIONS — TIGHT TRANSITION
+   Remove the oversized empty band between Tech Library and Certifications.
+========================================================= */
+
+main > .skills-section,
+html[data-theme="original"] main > .skills-section,
+html[data-theme="accent"] main > .skills-section {
+  padding-bottom: 22px !important;
+}
+
+main > .certifications-section {
+  padding-top: 26px !important;
+}
+
+#skills .tech-library-marquee {
+  margin-bottom: 0 !important;
+}
+
+@media (max-width: 1100px) {
+  main > .skills-section,
+  html[data-theme="original"] main > .skills-section,
+  html[data-theme="accent"] main > .skills-section {
+    padding-bottom: 18px !important;
+  }
+
+  main > .certifications-section {
+    padding-top: 22px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  main > .skills-section,
+  html[data-theme="original"] main > .skills-section,
+  html[data-theme="accent"] main > .skills-section {
+    padding-bottom: 16px !important;
+  }
+
+  main > .certifications-section {
+    padding-top: 18px !important;
+  }
+}
