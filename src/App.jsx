@@ -714,63 +714,102 @@ function App() {
               </h2>
             </div>
 
-            <div className="experience-list">
-              <span className="experience-progress-line" aria-hidden="true" />
-              <article className="experience-item">
-                <div className="experience-year">
-                  JAN 2026 — APR 2026
+            <div className="experience-bento">
+              <article className="experience-item experience-card experience-card-featured">
+                <div className="experience-card-top">
+                  <span className="experience-card-index">01</span>
+                  <span className="experience-year">JAN 2026 — APR 2026</span>
                 </div>
 
-                <div className="experience-role">
-                  <h3>Software Developer Intern</h3>
+                <div className="experience-card-main">
+                  <div className="experience-role">
+                    <p className="experience-company">Ateneo Innovation Center</p>
+                    <h3>Software Developer Intern</h3>
+                  </div>
 
-                  <p className="experience-company">
-                    Ateneo Innovation Center
-                  </p>
+                  <div className="experience-description experience-description-lead">
+                    <p>
+                      Built practical software across healthcare, AgTech,
+                      computer vision, embedded systems, and real-time data
+                      workflows.
+                    </p>
+                  </div>
                 </div>
 
-                <div className="experience-description">
-                  <p>
-                    Developed offline-first mobile applications for healthcare
-                    and AgTech, integrating local caching, OCR, cloud
-                    synchronization, and responsive mobile workflows.
-                  </p>
+                <div className="experience-highlights">
+                  <div className="experience-highlight">
+                    <span>01</span>
+                    <p>
+                      Developed offline-first mobile applications with OCR,
+                      local caching, cloud synchronization, and responsive
+                      workflows.
+                    </p>
+                  </div>
 
-                  <p>
-                    Built computer vision interfaces and control dashboards
-                    integrating Meta Ray-Ban AI Glasses for real-time obstacle
-                    and debris detection.
-                  </p>
+                  <div className="experience-highlight">
+                    <span>02</span>
+                    <p>
+                      Built computer-vision interfaces and dashboards integrating
+                      Meta Ray-Ban AI Glasses for obstacle and debris detection.
+                    </p>
+                  </div>
 
-                  <p>
-                    Worked with machine learning pipelines, microcontrollers,
-                    cloud backends, and environmental weather station systems
-                    for real-time data streaming.
-                  </p>
+                  <div className="experience-highlight">
+                    <span>03</span>
+                    <p>
+                      Worked with machine-learning pipelines, microcontrollers,
+                      cloud backends, and live environmental weather-station data.
+                    </p>
+                  </div>
                 </div>
+
+                <div className="experience-tags" aria-label="Internship technologies">
+                  <span>Mobile</span>
+                  <span>OCR</span>
+                  <span>Computer Vision</span>
+                  <span>AI / ML</span>
+                  <span>IoT</span>
+                  <span>Cloud</span>
+                </div>
+
+                <span className="experience-card-mark" aria-hidden="true">AIC</span>
               </article>
 
-              <article className="experience-item">
-                <div className="experience-year">
-                  JUNE 2026
+              <article className="experience-item experience-card experience-card-education">
+                <div className="experience-card-top">
+                  <span className="experience-card-index">02</span>
+                  <span className="experience-year">JUNE 2026</span>
                 </div>
 
                 <div className="experience-role">
-                  <h3>Bachelor of Science in Information Technology</h3>
-
                   <p className="experience-company">
                     Technological Institute of the Philippines
                   </p>
+                  <h3>Bachelor of Science in Information Technology</h3>
                 </div>
 
                 <div className="experience-description">
                   <p>
-                    Completed a Bachelor of Science in Information Technology
-                    with hands-on work across software development, mobile
-                    engineering, databases, artificial intelligence, IoT, and
-                    systems development.
+                    Completed a BSIT degree with hands-on work in software
+                    development, mobile engineering, databases, artificial
+                    intelligence, IoT, and systems development.
                   </p>
                 </div>
+
+                <div className="experience-tags" aria-label="Education focus areas">
+                  <span>Software</span>
+                  <span>Mobile</span>
+                  <span>Databases</span>
+                  <span>AI</span>
+                  <span>IoT</span>
+                </div>
+
+                <div className="experience-education-footer">
+                  <span>QUEZON CITY</span>
+                  <span>2026</span>
+                </div>
+
+                <span className="experience-card-mark" aria-hidden="true">TIP</span>
               </article>
             </div>
           </div>
