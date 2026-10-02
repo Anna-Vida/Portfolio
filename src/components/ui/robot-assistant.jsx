@@ -29,7 +29,7 @@ function RobotEye({ position, phase = 0 }) {
       rotation={[0, 0, position[0] < 0 ? -0.12 : 0.12]}
       scale={[1.35, 0.82, 1]}
     >
-      <sphereGeometry args={[0.026, 20, 20]} />
+      <sphereGeometry args={[0.026, 14, 14]} />
       <meshStandardMaterial
         color="#ffffff"
         emissive="#ffffff"
@@ -143,7 +143,7 @@ function RobotArm({ side = 1, waving = false }) {
       rotation={[0, 0, side * 0.56]}
     >
       <mesh position={[side * 0.17, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-        <capsuleGeometry args={[0.055, 0.24, 10, 20]} />
+        <capsuleGeometry args={[0.055, 0.24, 7, 12]} />
         <meshPhysicalMaterial
           color="#f3f0f7"
           roughness={0.28}
@@ -154,7 +154,7 @@ function RobotArm({ side = 1, waving = false }) {
       </mesh>
 
       <mesh position={[side * 0.33, 0.01, 0]}>
-        <sphereGeometry args={[0.065, 18, 18]} />
+        <sphereGeometry args={[0.065, 14, 14]} />
         <meshPhysicalMaterial
           color="#f7f4fa"
           roughness={0.26}
@@ -262,11 +262,11 @@ function RobotModel({ pointerRef }) {
         scale={[0.72, 0.94, 0.58]}
         material={shellMaterial}
       >
-        <sphereGeometry args={[0.43, 32, 32]} />
+        <sphereGeometry args={[0.43, 22, 22]} />
       </mesh>
 
       <mesh position={[0, 0.22, 0]} material={shellMaterial}>
-        <cylinderGeometry args={[0.17, 0.21, 0.10, 36]} />
+        <cylinderGeometry args={[0.17, 0.21, 0.10, 24]} />
       </mesh>
 
       <RobotArm side={-1} waving />
@@ -274,7 +274,7 @@ function RobotModel({ pointerRef }) {
 
       <group ref={headRef} position={[0, 0.58, 0]}>
         <mesh scale={[1.05, 0.90, 0.72]} material={shellMaterial}>
-          <sphereGeometry args={[0.34, 32, 32]} />
+          <sphereGeometry args={[0.34, 22, 22]} />
         </mesh>
 
         <mesh
@@ -282,7 +282,7 @@ function RobotModel({ pointerRef }) {
           scale={[0.97, 0.66, 0.20]}
           material={faceMaterial}
         >
-          <sphereGeometry args={[0.30, 30, 30]} />
+          <sphereGeometry args={[0.30, 20, 20]} />
         </mesh>
 
         <group position={[0, 0.015, 0.337]}>
@@ -571,9 +571,7 @@ export default function RobotAssistant() {
   const lastSpokenRef = useRef("");
   const lastSectionSpokenRef = useRef("");
   const soundEnabledRef = useRef(false);
-  const cursorSpeechTimerRef = useRef(null);
   const lastCursorTextRef = useRef("");
-  const currentCursorElementRef = useRef(null);
 
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
@@ -742,6 +740,24 @@ export default function RobotAssistant() {
     synth.speak(utterance);
 
     clearSpeechStartTimer();
+    speechStartTimerRef.current = window.setTimeout(() => {
+      if (
+        sessionId !== speechSessionRef.current ||
+        activeUtteranceRef.current !== utterance ||
+        !soundEnabledRef.current
+      ) {
+        return;
+      }
+
+      // Some browsers expose a voice that fails to start. Retry the same
+      // chunk once with the browser default voice instead of going silent.
+      if (!useDefaultVoice && !synth.speaking) {
+        activeUtteranceRef.current = null;
+        speechQueueRef.current.unshift(nextChunk);
+        synth.cancel();
+        speakNextChunk(sessionId, { useDefaultVoice: true });
+      }
+    }, 1600);
 
   };
 
@@ -841,7 +857,7 @@ export default function RobotAssistant() {
 
     if (!sections.length) return undefined;
 
-    let frameId = null;
+    const visibleRatios = new Map();
 
     const setFromHash = () => {
       const id = window.location.hash.replace("#", "");
@@ -852,79 +868,57 @@ export default function RobotAssistant() {
       return false;
     };
 
-    const updateFromViewport = () => {
-      frameId = null;
-      const focusY = window.innerHeight * 0.42;
-
-      let bestSection = sections[0];
-      let bestDistance = Number.POSITIVE_INFINITY;
-
-      for (const section of sections) {
-        const rect = section.getBoundingClientRect();
-
-        if (rect.top <= focusY && rect.bottom >= focusY) {
-          bestSection = section;
-          bestDistance = 0;
-          break;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          visibleRatios.set(entry.target.id, entry.intersectionRatio);
         }
 
-        const distance = Math.min(
-          Math.abs(rect.top - focusY),
-          Math.abs(rect.bottom - focusY),
-        );
+        let bestId = "";
+        let bestRatio = 0;
 
-        if (distance < bestDistance) {
-          bestDistance = distance;
-          bestSection = section;
+        for (const [id, ratio] of visibleRatios) {
+          if (ratio > bestRatio) {
+            bestRatio = ratio;
+            bestId = id;
+          }
         }
-      }
 
-      if (bestSection) {
-        setActiveSection(bestSection.id);
-      }
-    };
+        if (bestId && bestRatio > 0) {
+          setActiveSection(bestId);
+        }
+      },
+      {
+        root: null,
+        rootMargin: "-18% 0px -42% 0px",
+        threshold: [0, 0.15, 0.35, 0.55, 0.75],
+      },
+    );
 
-    const requestUpdate = () => {
-      if (!frameId) {
-        frameId = window.requestAnimationFrame(updateFromViewport);
-      }
-    };
+    sections.forEach((section) => observer.observe(section));
 
     const handleHashChange = () => {
-      if (!setFromHash()) requestUpdate();
+      setFromHash();
     };
 
     setFromHash();
-    requestUpdate();
-
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate, { passive: true });
     window.addEventListener("hashchange", handleHashChange);
 
     return () => {
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
+      observer.disconnect();
       window.removeEventListener("hashchange", handleHashChange);
-
-      if (frameId) {
-        window.cancelAnimationFrame(frameId);
-      }
     };
   }, []);
 
   useEffect(() => {
-    if (!soundEnabled) return undefined;
+    if (!soundEnabledRef.current) return undefined;
     if (!activeSection) return undefined;
 
-    // Switch narration immediately when the visitor changes sections.
+    // Only restart narration when the section itself changes.
+    // This prevents the sound button's initial user-gesture speech from
+    // being immediately cancelled by a second React effect.
     stopSpeech();
     lastCursorTextRef.current = "";
-    currentCursorElementRef.current = null;
-
-    if (cursorSpeechTimerRef.current) {
-      window.clearTimeout(cursorSpeechTimerRef.current);
-      cursorSpeechTimerRef.current = null;
-    }
 
     if (sectionTimerRef.current) {
       window.clearTimeout(sectionTimerRef.current);
@@ -945,11 +939,11 @@ export default function RobotAssistant() {
       lastSpokenRef.current = sectionText;
 
       setMessage(
-        `You're in the ${label} section. I'm reading it now. Point at any text and I'll read that exact part.`,
+        `You're in the ${label} section. I'm reading it now. Click any text if you want me to read that specific part instead.`,
       );
 
       speak(`You are now in the ${label} section. ${sectionText}`);
-    }, 70);
+    }, 180);
 
     return () => {
       if (sectionTimerRef.current) {
@@ -957,7 +951,7 @@ export default function RobotAssistant() {
         sectionTimerRef.current = null;
       }
     };
-  }, [activeSection, soundEnabled]);
+  }, [activeSection]);
 
   useEffect(() => {
     let frameId = null;
@@ -994,7 +988,7 @@ export default function RobotAssistant() {
   useEffect(() => {
     if (!soundEnabled) return undefined;
 
-    const handlePointerOver = (event) => {
+    const handleContentClick = (event) => {
       if (!soundEnabledRef.current) return;
       if (!(event.target instanceof Element)) return;
       if (event.target.closest(".robot-assistant")) return;
@@ -1002,59 +996,38 @@ export default function RobotAssistant() {
       const section = document.getElementById(activeSection);
       if (!section || !section.contains(event.target)) return;
 
-      const readable = event.target.closest(cursorReadableSelector);
-      if (!readable || !section.contains(readable)) return;
+      const text = getCursorSpeech(event.target, activeSection);
 
-      if (currentCursorElementRef.current === readable) return;
-      currentCursorElementRef.current = readable;
+      if (!text || text === lastCursorTextRef.current) return;
 
-      if (cursorSpeechTimerRef.current) {
-        window.clearTimeout(cursorSpeechTimerRef.current);
-      }
-
-      cursorSpeechTimerRef.current = window.setTimeout(() => {
-        const text = getCursorSpeech(readable, activeSection);
-
-        if (
-          !text ||
-          !soundEnabledRef.current ||
-          text === lastCursorTextRef.current
-        ) {
-          return;
-        }
-
-        lastCursorTextRef.current = text;
-        setMessage("Reading what you're pointing at.");
-        speak(text);
-      }, 170);
+      lastCursorTextRef.current = text;
+      setMessage("Reading the part you selected.");
+      speak(text);
     };
 
-    const handlePointerOut = (event) => {
-      if (!(event.target instanceof Element)) return;
-      const readable = event.target.closest(cursorReadableSelector);
-
-      if (readable && readable === currentCursorElementRef.current) {
-        currentCursorElementRef.current = null;
-      }
-    };
-
-    document.addEventListener("pointerover", handlePointerOver, {
-      passive: true,
-    });
-    document.addEventListener("pointerout", handlePointerOut, {
-      passive: true,
-    });
+    document.addEventListener("click", handleContentClick);
 
     return () => {
-      document.removeEventListener("pointerover", handlePointerOver);
-      document.removeEventListener("pointerout", handlePointerOut);
-
-      if (cursorSpeechTimerRef.current) {
-        window.clearTimeout(cursorSpeechTimerRef.current);
-        cursorSpeechTimerRef.current = null;
-      }
+      document.removeEventListener("click", handleContentClick);
     };
   }, [activeSection, soundEnabled]);
+
+  useEffect(() => {
+    if (!soundEnabled) return undefined;
+    if (!("speechSynthesis" in window)) return undefined;
+
+    // Chromium may silently pause long speech queues. A lightweight resume
+    // watchdog keeps section narration moving without creating new utterances.
+    const synth = window.speechSynthesis;
+    const watchdog = window.setInterval(() => {
+      if (soundEnabledRef.current && synth.speaking) {
+        synth.resume();
+      }
+    }, 4000);
+
+    return () => window.clearInterval(watchdog);
+  }, [soundEnabled]);
+
 
   useEffect(
     () => () => {
@@ -1071,9 +1044,6 @@ export default function RobotAssistant() {
         window.clearTimeout(sectionTimerRef.current);
       }
 
-      if (cursorSpeechTimerRef.current) {
-        window.clearTimeout(cursorSpeechTimerRef.current);
-      }
     },
     [],
   );
@@ -1211,7 +1181,7 @@ export default function RobotAssistant() {
             </span>
             <span>
               {soundEnabled
-                ? "Sound on · follows section + cursor"
+                ? "Sound on · reads section + click text"
                 : "Sound off · tap once to enable"}
             </span>
             <span className="robot-toggle-track" aria-hidden="true">
@@ -1228,7 +1198,8 @@ export default function RobotAssistant() {
       >
         <Canvas
           camera={{ position: [0, 0.18, 4.35], fov: 38 }}
-          dpr={[1, 1.25]}
+          dpr={[0.75, 1]}
+          performance={{ min: 0.45, max: 1, debounce: 220 }}
           gl={{
             alpha: true,
             antialias: false,
