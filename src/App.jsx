@@ -103,7 +103,7 @@ const PROJECTS = [
       "A market research workspace combining a JavaScript stock interface, a React and TypeScript crypto dashboard, and a Python Flask API. It supports historical analytics, statistical forecasts, evaluation metrics, watchlists, research notes, alerts, and optional Supabase accounts.",
     tags: ["JavaScript", "React", "TypeScript", "Python", "Flask", "Supabase"],
     github: "https://github.com/Anna-Vida/Stock-Price-Prediction",
-    live: null,
+    live: "https://stock-price-prediction-bice.vercel.app/",
     year: "2026",
   },
   {
