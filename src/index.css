@@ -11568,3 +11568,50 @@ main > .certifications-section {
     margin-bottom: 22px !important;
   }
 }
+
+
+/* =========================================================
+   ROBOT PERFORMANCE — SCROLL FRIENDLY
+========================================================= */
+
+/* The 3D model already performs its own floating/bobbing motion.
+   Removing the second CSS transform animation avoids two transform systems
+   fighting while the assistant roams between sections. */
+.robot-stage {
+  animation: none !important;
+  contain: layout paint style;
+  transform: translateZ(0);
+  filter: drop-shadow(0 16px 22px rgba(0,0,0,0.24)) !important;
+}
+
+.robot-stage::after {
+  animation: none !important;
+  opacity: 0.38;
+  filter: blur(8px);
+}
+
+.robot-stage canvas {
+  pointer-events: none;
+  transform: translateZ(0);
+}
+
+/* Keep the roaming layer composited. */
+.robot-assistant {
+  backface-visibility: hidden;
+  contain: layout style;
+}
+
+/* Shorten travel slightly so section changes feel responsive without
+   dragging behind the user's scroll position. */
+.robot-assistant,
+.robot-section-home,
+.robot-section-about,
+.robot-section-experience,
+.robot-section-work,
+.robot-section-skills,
+.robot-section-certifications,
+.robot-section-contact {
+  transition:
+    transform 520ms cubic-bezier(.2,.72,.2,1),
+    filter 180ms ease !important;
+}
