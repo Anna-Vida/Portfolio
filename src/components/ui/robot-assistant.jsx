@@ -14,8 +14,8 @@ function RobotEye({ position, phase = 0 }) {
 
   useFrame(({ clock }) => {
     const elapsed = clock.getElapsedTime() + phase;
-    const blink = elapsed % 3.8;
-    const blinkScale = blink < 0.13 ? Math.max(0.08, blink / 0.13) : 1;
+    const blink = elapsed % 4.2;
+    const blinkScale = blink < 0.12 ? Math.max(0.12, blink / 0.12) : 1;
 
     if (eyeRef.current) {
       eyeRef.current.scale.y = blinkScale;
@@ -26,13 +26,14 @@ function RobotEye({ position, phase = 0 }) {
     <mesh
       ref={eyeRef}
       position={position}
-      rotation={[0, 0, position[0] < 0 ? -0.16 : 0.16]}
+      rotation={[0, 0, position[0] < 0 ? -0.12 : 0.12]}
+      scale={[1.35, 0.82, 1]}
     >
-      <capsuleGeometry args={[0.018, 0.052, 8, 18]} />
+      <sphereGeometry args={[0.026, 20, 20]} />
       <meshStandardMaterial
-        color="#fbfbff"
-        emissive="#f7f4ff"
-        emissiveIntensity={2.15}
+        color="#ffffff"
+        emissive="#ffffff"
+        emissiveIntensity={2.3}
         toneMapped={false}
       />
     </mesh>
@@ -72,11 +73,31 @@ function FloatingTablet() {
       <mesh position={[0, 0.008, 0.023]}>
         <boxGeometry args={[0.295, 0.385, 0.012]} />
         <meshStandardMaterial
-          color="#cdb9ee"
-          emissive="#7b5ca7"
-          emissiveIntensity={0.35}
-          roughness={0.42}
+          color="#e8e4ef"
+          emissive="#a99bbc"
+          emissiveIntensity={0.16}
+          roughness={0.38}
         />
+      </mesh>
+
+      <mesh position={[0, 0.060, 0.032]}>
+        <boxGeometry args={[0.19, 0.12, 0.007]} />
+        <meshStandardMaterial
+          color="#1a1820"
+          emissive="#2b2633"
+          emissiveIntensity={0.22}
+          roughness={0.36}
+        />
+      </mesh>
+
+      <mesh position={[0, 0.082, 0.038]}>
+        <boxGeometry args={[0.11, 0.016, 0.006]} />
+        <meshStandardMaterial color="#f4f1f8" emissive="#f4f1f8" emissiveIntensity={0.55} />
+      </mesh>
+
+      <mesh position={[0, 0.040, 0.038]}>
+        <boxGeometry args={[0.145, 0.012, 0.006]} />
+        <meshStandardMaterial color="#a9a3b0" emissive="#a9a3b0" emissiveIntensity={0.18} />
       </mesh>
 
       <mesh position={[0, -0.135, 0.032]}>
@@ -293,11 +314,11 @@ function RobotModel({ pointerRef }) {
           </mesh>
 
           <mesh
-            position={[0, -0.086, 0]}
+            position={[0, -0.090, 0]}
             rotation={[0, 0, Math.PI]}
-            scale={[1.15, 0.62, 1]}
+            scale={[1.45, 0.72, 1]}
           >
-            <torusGeometry args={[0.041, 0.008, 10, 28, Math.PI]} />
+            <torusGeometry args={[0.045, 0.008, 10, 30, Math.PI]} />
             <meshStandardMaterial
               color="#f7f4ff"
               emissive="#f7f4ff"
@@ -721,28 +742,7 @@ export default function RobotAssistant() {
     synth.speak(utterance);
 
     clearSpeechStartTimer();
-    speechStartTimerRef.current = window.setTimeout(() => {
-      if (
-        sessionId === speechSessionRef.current &&
-        activeUtteranceRef.current === utterance &&
-        !speechConfirmedRef.current &&
-        !synth.speaking
-      ) {
-        synth.cancel();
-        activeUtteranceRef.current = null;
 
-        if (!speechRetryRef.current && soundEnabledRef.current) {
-          speechRetryRef.current = true;
-          speechQueueRef.current.unshift(nextChunk);
-
-          window.setTimeout(() => {
-            if (sessionId === speechSessionRef.current) {
-              speakNextChunk(sessionId, { useDefaultVoice: true });
-            }
-          }, 100);
-        }
-      }
-    }, 650);
   };
 
   const speak = (text, { force = false } = {}) => {
@@ -810,9 +810,15 @@ export default function RobotAssistant() {
       );
     }
 
-    if (storedSound && "speechSynthesis" in window) {
-      soundEnabledRef.current = true;
-      setSoundEnabled(true);
+    if (storedSound) {
+      soundEnabledRef.current = false;
+      setSoundEnabled(false);
+
+      if (storedName) {
+        setMessage(
+          `Welcome back, ${storedName}! Tap the speaker once to enable voice for this visit.`,
+        );
+      }
     }
 
     const welcomed = window.sessionStorage.getItem("apv-robot-welcomed");
@@ -1105,12 +1111,40 @@ export default function RobotAssistant() {
     speechConfirmedRef.current = false;
     speechRetryRef.current = false;
     setMessage(
-      `Sound is on. I'm reading the whole ${label} section automatically.`,
+      `Sound is on. I'm reading the ${label} section now.`,
     );
 
-    speak(sectionText ? `${greeting} ${sectionText}` : greeting, {
-      force: true,
-    });
+    const synth = window.speechSynthesis;
+    synth.cancel();
+    synth.resume();
+
+    const primer = new SpeechSynthesisUtterance("Sound on.");
+    const preferred = getPreferredVoice();
+    primer.rate = 1;
+    primer.pitch = 1.04;
+    primer.volume = 1;
+    primer.lang = preferred?.lang || "en-US";
+    if (preferred) primer.voice = preferred;
+
+    primer.onend = () => {
+      if (!soundEnabledRef.current) return;
+
+      window.setTimeout(() => {
+        speak(sectionText ? `${greeting} ${sectionText}` : greeting, {
+          force: true,
+        });
+      }, 40);
+    };
+
+    primer.onerror = () => {
+      if (!soundEnabledRef.current) return;
+
+      speak(sectionText ? `${greeting} ${sectionText}` : greeting, {
+        force: true,
+      });
+    };
+
+    synth.speak(primer);
   };
 
   const submitName = (event) => {
