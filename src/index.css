@@ -13143,3 +13143,105 @@ main > .experience-section {
   }
 }
 
+/* =========================================================
+   PROJECT DETAILS — COMPACT READABLE MODAL
+   Override the previous maximized-view rules without changing
+   the modal content or project-browser interaction.
+========================================================= */
+
+.project-modal-backdrop {
+  place-items: center !important;
+  align-items: center !important;
+  padding: 24px !important;
+}
+
+.project-modal-card {
+  width: min(760px, calc(100vw - 48px)) !important;
+  max-width: 760px !important;
+  height: auto !important;
+  max-height: min(82vh, 760px) !important;
+  border-radius: 22px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+.project-modal-preview,
+.project-modal-text-preview {
+  min-height: 220px !important;
+  height: 220px !important;
+}
+
+.animated-text--modal {
+  max-width: 88% !important;
+  font-size: clamp(2.3rem, 5vw, 4.4rem) !important;
+  line-height: 0.9 !important;
+  white-space: normal !important;
+  flex-wrap: wrap !important;
+}
+
+.project-modal-body {
+  padding: 28px 32px 32px !important;
+}
+
+.project-modal-body h3 {
+  font-size: clamp(2rem, 4vw, 3rem) !important;
+}
+
+.project-modal-body > p {
+  max-width: 660px !important;
+  margin-top: 14px !important;
+  font-size: 0.94rem !important;
+  line-height: 1.65 !important;
+}
+
+.project-modal-tech {
+  margin-top: 22px !important;
+  padding-top: 20px !important;
+}
+
+.project-modal-actions {
+  margin-top: 24px !important;
+}
+
+.project-modal-close {
+  top: 12px !important;
+  margin: 12px 12px -54px 0 !important;
+  width: 40px !important;
+  height: 40px !important;
+  font-size: 1.45rem !important;
+}
+
+@media (max-width: 720px) {
+  .project-modal-backdrop {
+    place-items: center !important;
+    align-items: center !important;
+    padding: 10px !important;
+  }
+
+  .project-modal-card {
+    width: min(94vw, 620px) !important;
+    height: auto !important;
+    max-height: calc(100svh - 20px) !important;
+    border-radius: 18px !important;
+  }
+
+  .project-modal-preview,
+  .project-modal-text-preview {
+    min-height: 185px !important;
+    height: 185px !important;
+  }
+
+  .animated-text--modal {
+    font-size: clamp(2rem, 11vw, 3.25rem) !important;
+    max-width: 90% !important;
+  }
+
+  .project-modal-body {
+    padding: 24px 20px 26px !important;
+  }
+
+  .project-modal-actions a {
+    flex: 1 1 140px;
+  }
+}
+
