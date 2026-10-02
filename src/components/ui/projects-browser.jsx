@@ -10,7 +10,7 @@ function repoSlug(project) {
 }
 
 export default function ProjectsBrowser({ projects, onOpenProject }) {
-  const featuredProjects = useMemo(() => projects.slice(0, 3), [projects]);
+  const featuredProjects = useMemo(() => projects.slice(0, 5), [projects]);
   const totalScrollStages = featuredProjects.length + 1;
 
   const [activeTab, setActiveTab] = useState(0);
