@@ -11615,3 +11615,111 @@ main > .certifications-section {
     transform 520ms cubic-bezier(.2,.72,.2,1),
     filter 180ms ease !important;
 }
+
+
+/* =========================================================
+   SITE LAYOUT — FINAL UNIFORM CONTENT MARGINS
+   Give every main page section the same professional content rail.
+========================================================= */
+
+:root {
+  --site-gutter: clamp(28px, 4.8vw, 88px);
+  --site-content-max: 1560px;
+  --site-section-y: 56px;
+}
+
+/* Navbar + Hero + every main content section now share one exact rail. */
+.nav-container,
+.hero-inner,
+.about-shell,
+.experience-container,
+.work-container,
+.work-container-v2,
+.skills-container,
+.certifications-container,
+.contact-container {
+  width: min(
+    calc(100% - (var(--site-gutter) * 2)),
+    var(--site-content-max)
+  ) !important;
+  max-width: var(--site-content-max) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Same vertical breathing room from one page section to the next. */
+main > .about-section-premium,
+main > .experience-section,
+main > .work-section-v2,
+main > .skills-section,
+main > .certifications-section {
+  padding-top: var(--site-section-y) !important;
+  padding-bottom: var(--site-section-y) !important;
+}
+
+/* Remove stray internal offsets so headings, cards, and grids start on
+   the same left edge and finish on the same right edge. */
+.about-topline,
+.about-premium-grid,
+.experience-heading,
+.experience-list,
+.work-v2-top,
+.project-showcase-grid,
+.work-all-projects,
+.skills-heading,
+.skills-grid,
+.tech-library-marquee,
+.certifications-heading,
+.certification-list {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Keep consistent heading-to-content rhythm across sections. */
+.about-topline,
+.experience-heading,
+.work-v2-top,
+.skills-heading,
+.certifications-heading {
+  margin-bottom: 32px !important;
+}
+
+/* Match the footer's lower information rail to the same website margins
+   without changing the footer's centered cinematic content design. */
+.cinematic-footer__bottom {
+  width: min(
+    calc(100% - (var(--site-gutter) * 2)),
+    var(--site-content-max)
+  ) !important;
+  max-width: var(--site-content-max) !important;
+}
+
+@media (max-width: 1100px) {
+  :root {
+    --site-gutter: 28px;
+    --site-section-y: 48px;
+  }
+
+  .about-topline,
+  .experience-heading,
+  .work-v2-top,
+  .skills-heading,
+  .certifications-heading {
+    margin-bottom: 28px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  :root {
+    --site-gutter: 16px;
+    --site-section-y: 40px;
+  }
+
+  .about-topline,
+  .experience-heading,
+  .work-v2-top,
+  .skills-heading,
+  .certifications-heading {
+    margin-bottom: 24px !important;
+  }
+}
