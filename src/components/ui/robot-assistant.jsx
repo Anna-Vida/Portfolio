@@ -349,6 +349,92 @@ function RobotScene({ pointerRef }) {
   );
 }
 
+function CyberGloveHologram() {
+  return (
+    <div className="cyber-glove-visual" aria-hidden="true">
+      <div className="cyber-glove-orbit cyber-glove-orbit--outer" />
+      <div className="cyber-glove-orbit cyber-glove-orbit--inner" />
+
+      <svg
+        className="cyber-glove-svg"
+        viewBox="0 0 320 360"
+        role="presentation"
+      >
+        <defs>
+          <linearGradient id="gloveGlow" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#f2e6ff" />
+            <stop offset="45%" stopColor="#b98cff" />
+            <stop offset="100%" stopColor="#6b56ff" />
+          </linearGradient>
+          <filter id="gloveSoftGlow" x="-80%" y="-80%" width="260%" height="260%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        <g
+          fill="none"
+          stroke="url(#gloveGlow)"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          filter="url(#gloveSoftGlow)"
+        >
+          <path d="M112 288 C95 270 88 244 92 214 L99 139 C101 125 112 117 123 122 C132 126 136 135 135 149 L131 183" />
+          <path d="M132 184 L139 83 C140 68 151 59 162 61 C174 63 180 73 178 88 L169 182" />
+          <path d="M169 182 L179 70 C181 54 192 46 204 49 C216 52 221 63 218 78 L205 187" />
+          <path d="M205 188 L216 91 C218 76 229 69 240 72 C251 75 255 86 252 100 L237 199" />
+          <path d="M236 200 L246 127 C248 114 258 107 268 111 C278 115 281 126 278 139 L263 220" />
+          <path d="M112 288 C130 307 158 318 191 315 C225 312 251 293 265 263 C274 243 272 223 263 215 C254 207 244 207 237 214 L217 234" />
+          <path d="M216 234 C207 244 192 247 179 239 L150 222 C139 216 128 218 121 228 C115 237 118 248 128 255 L154 275" />
+          <path d="M112 288 L104 323 L207 323 L205 309" />
+
+          <path d="M123 122 L162 61" opacity="0.35" />
+          <path d="M135 149 L204 49" opacity="0.25" />
+          <path d="M169 182 L240 72" opacity="0.24" />
+          <path d="M205 188 L268 111" opacity="0.24" />
+
+          <path d="M123 226 C153 200 194 196 229 213" opacity="0.45" />
+          <path d="M131 259 C159 241 196 243 219 265" opacity="0.42" />
+          <path d="M147 294 C166 284 190 283 207 294" opacity="0.38" />
+
+          <path d="M160 91 L156 124" />
+          <path d="M201 79 L197 116" />
+          <path d="M236 100 L232 135" />
+          <path d="M265 137 L259 166" />
+          <path d="M123 148 L121 176" />
+        </g>
+
+        <g fill="#e9dcff" filter="url(#gloveSoftGlow)">
+          <circle cx="156" cy="124" r="5" />
+          <circle cx="197" cy="116" r="5" />
+          <circle cx="232" cy="135" r="5" />
+          <circle cx="259" cy="166" r="5" />
+          <circle cx="121" cy="176" r="5" />
+          <circle cx="176" cy="229" r="6" />
+        </g>
+
+        <g fill="#b98cff">
+          <circle cx="176" cy="229" r="15" opacity="0.12" />
+          <circle cx="176" cy="229" r="25" opacity="0.06" />
+        </g>
+      </svg>
+
+      <span className="cyber-glove-tag cyber-glove-tag--thumb">FLEX // A0</span>
+      <span className="cyber-glove-tag cyber-glove-tag--index">FLEX // A1</span>
+      <span className="cyber-glove-tag cyber-glove-tag--imu">IMU // MPU6050</span>
+
+      <div className="cyber-glove-core">
+        <span>ECHOWEAR</span>
+        <strong>GESTURE CORE ONLINE</strong>
+      </div>
+    </div>
+  );
+}
+
 const speechIgnoreSelector = [
   ".robot-assistant",
   ".hero-actions",
@@ -1355,46 +1441,31 @@ export default function RobotAssistant() {
                 </div>
               </header>
 
-              <div className="robot-tablet-body">
-                <aside className="robot-tablet-sidebar">
+              <div className="robot-tablet-body robot-tablet-body--console">
+                <aside className="robot-tablet-sidebar robot-tablet-sidebar--nav">
                   <div className="robot-tablet-profile-mark">APV</div>
-                  <p className="robot-tablet-kicker">CANDIDATE FILE</p>
+                  <p className="robot-tablet-kicker">RESUME DATABASE</p>
                   <h2>Anna Patricia Vida</h2>
                   <p className="robot-tablet-role">Software & Mobile Developer</p>
 
-                  <div className="robot-tablet-readout">
-                    <span>DATA SOURCE</span>
-                    <strong>Current Resume</strong>
-                  </div>
-
-                  <div className="robot-tablet-readout">
-                    <span>ACTIVE SECTION</span>
-                    <strong>{sectionLabels[activeSection] || "Portfolio"}</strong>
-                  </div>
-
-                  {!visitorName ? (
-                    <form className="robot-tablet-name-form" onSubmit={submitName}>
-                      <label htmlFor="robot-visitor-name">VISITOR ID · OPTIONAL</label>
-                      <div>
-                        <input
-                          id="robot-visitor-name"
-                          type="text"
-                          value={nameInput}
-                          onChange={(event) => setNameInput(event.target.value)}
-                          placeholder="Your name"
-                          maxLength={40}
-                        />
-                        <button type="submit" aria-label="Save visitor name">
-                          <FaPaperPlane />
-                        </button>
-                      </div>
-                    </form>
-                  ) : (
-                    <div className="robot-tablet-readout">
-                      <span>VISITOR</span>
-                      <strong>{visitorName}</strong>
-                    </div>
-                  )}
+                  <nav className="robot-tablet-nav" aria-label="Resume topics">
+                    {[
+                      ["Profile", "Professional summary"],
+                      ["Experience", "Internship experience"],
+                      ["Projects", "Projects"],
+                      ["Skills", "Technical skills"],
+                      ["Certificates", "Certifications"],
+                    ].map(([label, question], index) => (
+                      <button
+                        key={label}
+                        type="button"
+                        onClick={() => askResumeQuestion(question)}
+                      >
+                        <span>{String(index + 1).padStart(2, "0")}</span>
+                        <strong>{label}</strong>
+                      </button>
+                    ))}
+                  </nav>
 
                   <button
                     type="button"
@@ -1406,6 +1477,40 @@ export default function RobotAssistant() {
                     <span>{soundEnabled ? "VOICE ONLINE" : "VOICE OFFLINE"}</span>
                   </button>
                 </aside>
+
+                <section className="robot-tablet-hologram" aria-label="EchoWear hologram display">
+                  <div className="robot-tablet-holo-head">
+                    <div>
+                      <span className="robot-tablet-kicker">PROJECT VISUAL // ECHOWEAR</span>
+                      <h3>Smart Glove Interface</h3>
+                    </div>
+                    <span className="robot-holo-status">LIVE MODEL</span>
+                  </div>
+
+                  <div className="robot-tablet-holo-stage">
+                    <CyberGloveHologram />
+                  </div>
+
+                  <div className="robot-holo-data">
+                    <div>
+                      <span>CORE</span>
+                      <strong>ESP32</strong>
+                    </div>
+                    <div>
+                      <span>LINK</span>
+                      <strong>BLE</strong>
+                    </div>
+                    <div>
+                      <span>INPUT</span>
+                      <strong>FLEX + IMU</strong>
+                    </div>
+                  </div>
+
+                  <div className="robot-holo-caption">
+                    <span>FSL GESTURE TRANSLATION</span>
+                    <span>ON-DEVICE ML</span>
+                  </div>
+                </section>
 
                 <div className="robot-tablet-chat">
                   <div className="robot-tablet-chat-head">
@@ -1435,7 +1540,7 @@ export default function RobotAssistant() {
                   </div>
 
                   <div className="robot-tablet-quick">
-                    {RESUME_QUICK_QUESTIONS.map((question) => (
+                    {RESUME_QUICK_QUESTIONS.slice(0, 3).map((question) => (
                       <button
                         key={question}
                         type="button"
