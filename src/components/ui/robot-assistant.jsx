@@ -1437,18 +1437,22 @@ export default function RobotAssistant() {
 
                   <div className="robot-holo-data">
                     <div>
-                      <span>DEGREE</span>\n                      <strong>BSIT</strong>
+                      <span>DEGREE</span>
+                      <strong>BSIT</strong>
                     </div>
                     <div>
-                      <span>STATUS</span>\n                      <strong>GRADUATE</strong>
+                      <span>STATUS</span>
+                      <strong>GRADUATE</strong>
                     </div>
                     <div>
-                      <span>ROLE</span>\n                      <strong>SOFTWARE DEV</strong>
+                      <span>ROLE</span>
+                      <strong>SOFTWARE DEV</strong>
                     </div>
                   </div>
 
                   <div className="robot-holo-caption">
-                    <span>BS INFORMATION TECHNOLOGY</span>\n                    <span>CLASS OF 2026</span>
+                    <span>BS INFORMATION TECHNOLOGY</span>
+                    <span>CLASS OF 2026</span>
                   </div>
                 </section>
 
