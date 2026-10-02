@@ -349,87 +349,31 @@ function RobotScene({ pointerRef }) {
   );
 }
 
-function CyberGloveHologram() {
+function HologramPortrait() {
   return (
-    <div className="cyber-glove-visual" aria-hidden="true">
-      <div className="cyber-glove-orbit cyber-glove-orbit--outer" />
-      <div className="cyber-glove-orbit cyber-glove-orbit--inner" />
+    <div className="cyber-portrait-visual" aria-hidden="true">
+      <div className="cyber-portrait-ring cyber-portrait-ring--outer" />
+      <div className="cyber-portrait-ring cyber-portrait-ring--inner" />
+      <div className="cyber-portrait-crosshair cyber-portrait-crosshair--x" />
+      <div className="cyber-portrait-crosshair cyber-portrait-crosshair--y" />
 
-      <svg
-        className="cyber-glove-svg"
-        viewBox="0 0 320 360"
-        role="presentation"
-      >
-        <defs>
-          <linearGradient id="gloveGlow" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#f2e6ff" />
-            <stop offset="45%" stopColor="#b98cff" />
-            <stop offset="100%" stopColor="#6b56ff" />
-          </linearGradient>
-          <filter id="gloveSoftGlow" x="-80%" y="-80%" width="260%" height="260%">
-            <feGaussianBlur stdDeviation="4" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
+      <div className="cyber-portrait-image-shell">
+        <img
+          className="cyber-portrait-image"
+          src="/anna-hologram.webp"
+          alt=""
+          draggable="false"
+        />
+        <div className="cyber-portrait-scan" />
+        <div className="cyber-portrait-noise" />
+      </div>
 
-        <g
-          fill="none"
-          stroke="url(#gloveGlow)"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          filter="url(#gloveSoftGlow)"
-        >
-          <path d="M112 288 C95 270 88 244 92 214 L99 139 C101 125 112 117 123 122 C132 126 136 135 135 149 L131 183" />
-          <path d="M132 184 L139 83 C140 68 151 59 162 61 C174 63 180 73 178 88 L169 182" />
-          <path d="M169 182 L179 70 C181 54 192 46 204 49 C216 52 221 63 218 78 L205 187" />
-          <path d="M205 188 L216 91 C218 76 229 69 240 72 C251 75 255 86 252 100 L237 199" />
-          <path d="M236 200 L246 127 C248 114 258 107 268 111 C278 115 281 126 278 139 L263 220" />
-          <path d="M112 288 C130 307 158 318 191 315 C225 312 251 293 265 263 C274 243 272 223 263 215 C254 207 244 207 237 214 L217 234" />
-          <path d="M216 234 C207 244 192 247 179 239 L150 222 C139 216 128 218 121 228 C115 237 118 248 128 255 L154 275" />
-          <path d="M112 288 L104 323 L207 323 L205 309" />
+      <span className="cyber-portrait-tag cyber-portrait-tag--left">ID // APV-2026</span>
+      <span className="cyber-portrait-tag cyber-portrait-tag--right">STATUS // GRADUATE</span>
 
-          <path d="M123 122 L162 61" opacity="0.35" />
-          <path d="M135 149 L204 49" opacity="0.25" />
-          <path d="M169 182 L240 72" opacity="0.24" />
-          <path d="M205 188 L268 111" opacity="0.24" />
-
-          <path d="M123 226 C153 200 194 196 229 213" opacity="0.45" />
-          <path d="M131 259 C159 241 196 243 219 265" opacity="0.42" />
-          <path d="M147 294 C166 284 190 283 207 294" opacity="0.38" />
-
-          <path d="M160 91 L156 124" />
-          <path d="M201 79 L197 116" />
-          <path d="M236 100 L232 135" />
-          <path d="M265 137 L259 166" />
-          <path d="M123 148 L121 176" />
-        </g>
-
-        <g fill="#e9dcff" filter="url(#gloveSoftGlow)">
-          <circle cx="156" cy="124" r="5" />
-          <circle cx="197" cy="116" r="5" />
-          <circle cx="232" cy="135" r="5" />
-          <circle cx="259" cy="166" r="5" />
-          <circle cx="121" cy="176" r="5" />
-          <circle cx="176" cy="229" r="6" />
-        </g>
-
-        <g fill="#b98cff">
-          <circle cx="176" cy="229" r="15" opacity="0.12" />
-          <circle cx="176" cy="229" r="25" opacity="0.06" />
-        </g>
-      </svg>
-
-      <span className="cyber-glove-tag cyber-glove-tag--thumb">FLEX // A0</span>
-      <span className="cyber-glove-tag cyber-glove-tag--index">FLEX // A1</span>
-      <span className="cyber-glove-tag cyber-glove-tag--imu">IMU // MPU6050</span>
-
-      <div className="cyber-glove-core">
-        <span>ECHOWEAR</span>
-        <strong>GESTURE CORE ONLINE</strong>
+      <div className="cyber-portrait-core">
+        <span>ANNA PATRICIA VIDA</span>
+        <strong>PROFILE LINK ESTABLISHED</strong>
       </div>
     </div>
   );
@@ -1478,37 +1422,33 @@ export default function RobotAssistant() {
                   </button>
                 </aside>
 
-                <section className="robot-tablet-hologram" aria-label="EchoWear hologram display">
+                <section className="robot-tablet-hologram" aria-label="Anna Patricia Vida hologram profile">
                   <div className="robot-tablet-holo-head">
                     <div>
-                      <span className="robot-tablet-kicker">PROJECT VISUAL // ECHOWEAR</span>
-                      <h3>Smart Glove Interface</h3>
+                      <span className="robot-tablet-kicker">CANDIDATE HOLOGRAM // APV</span>
+                      <h3>Graduate Profile</h3>
                     </div>
-                    <span className="robot-holo-status">LIVE MODEL</span>
+                    <span className="robot-holo-status">LIVE ID</span>
                   </div>
 
                   <div className="robot-tablet-holo-stage">
-                    <CyberGloveHologram />
+                    <HologramPortrait />
                   </div>
 
                   <div className="robot-holo-data">
                     <div>
-                      <span>CORE</span>
-                      <strong>ESP32</strong>
+                      <span>DEGREE</span>\n                      <strong>BSIT</strong>
                     </div>
                     <div>
-                      <span>LINK</span>
-                      <strong>BLE</strong>
+                      <span>STATUS</span>\n                      <strong>GRADUATE</strong>
                     </div>
                     <div>
-                      <span>INPUT</span>
-                      <strong>FLEX + IMU</strong>
+                      <span>ROLE</span>\n                      <strong>SOFTWARE DEV</strong>
                     </div>
                   </div>
 
                   <div className="robot-holo-caption">
-                    <span>FSL GESTURE TRANSLATION</span>
-                    <span>ON-DEVICE ML</span>
+                    <span>BS INFORMATION TECHNOLOGY</span>\n                    <span>CLASS OF 2026</span>
                   </div>
                 </section>
 
