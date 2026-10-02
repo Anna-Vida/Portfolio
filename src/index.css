@@ -13245,3 +13245,8 @@ main > .experience-section {
   }
 }
 
+/* Hide the navbar settings button. */
+.navbar .settings-trigger {
+  display: none !important;
+}
+
