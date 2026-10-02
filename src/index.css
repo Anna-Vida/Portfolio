@@ -12832,3 +12832,204 @@ button.work-browser-secondary {
     transform: none !important;
   }
 }
+
+
+/* =========================================================
+   EXPERIENCE — CLEAN RESPONSIVE LAYOUT
+   Prevents the featured card content/highlights from collapsing
+   into narrow columns or overlapping each other.
+========================================================= */
+
+#experience .experience-bento {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.45fr) minmax(360px, 0.75fr) !important;
+  gap: 16px !important;
+  align-items: stretch !important;
+}
+
+#experience .experience-card {
+  min-width: 0 !important;
+  height: auto !important;
+  overflow: hidden !important;
+}
+
+#experience .experience-card-featured,
+#experience .experience-card-education {
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 30px !important;
+}
+
+#experience .experience-card-featured {
+  min-height: 500px !important;
+}
+
+#experience .experience-card-education {
+  min-height: 500px !important;
+}
+
+#experience .experience-card-main {
+  display: grid !important;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr) !important;
+  gap: 38px !important;
+  align-items: end !important;
+  width: 100% !important;
+  padding-bottom: 26px !important;
+}
+
+#experience .experience-role,
+#experience .experience-description,
+#experience .experience-highlight,
+#experience .experience-highlight p {
+  min-width: 0 !important;
+  max-width: none !important;
+}
+
+#experience .experience-card .experience-role h3,
+#experience .experience-card-education .experience-role h3 {
+  max-width: 100% !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: none !important;
+}
+
+#experience .experience-description p,
+#experience .experience-highlight p {
+  text-align: left !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  hyphens: none !important;
+}
+
+#experience .experience-highlights {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  width: 100% !important;
+  margin-top: 4px !important;
+  border-top: 1px solid rgba(255,255,255,0.07) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+}
+
+#experience .experience-highlight {
+  padding: 20px 18px 22px 0 !important;
+}
+
+#experience .experience-highlight + .experience-highlight {
+  padding-left: 18px !important;
+  border-left: 1px solid rgba(255,255,255,0.07) !important;
+}
+
+#experience .experience-highlight p {
+  font-size: 0.76rem !important;
+  line-height: 1.55 !important;
+}
+
+#experience .experience-tags {
+  margin-top: 20px !important;
+}
+
+#experience .experience-card-mark {
+  opacity: 0.62 !important;
+  pointer-events: none !important;
+}
+
+/* Real section-navigation buttons instead of loose end/back text. */
+.experience-section-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.experience-nav-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 42px;
+  padding: 0 17px;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 999px;
+  background: rgba(14,14,14,0.88);
+  color: #8d8d8d;
+  font-size: 0.58rem;
+  font-weight: 750;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    color 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.experience-nav-button-next {
+  color: #111;
+  background: #f1f1ef;
+  border-color: #f1f1ef;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .experience-nav-button:hover {
+    color: #f2f2f2;
+    border-color: rgba(255,255,255,0.22);
+    background: #171717;
+    transform: translateY(-2px);
+  }
+
+  .experience-nav-button-next:hover {
+    color: #000;
+    border-color: #fff;
+    background: #fff;
+  }
+}
+
+@media (max-width: 1180px) {
+  #experience .experience-bento {
+    grid-template-columns: 1fr !important;
+  }
+
+  #experience .experience-card-featured,
+  #experience .experience-card-education {
+    min-height: 0 !important;
+  }
+}
+
+@media (max-width: 780px) {
+  #experience .experience-card-featured,
+  #experience .experience-card-education {
+    padding: 22px !important;
+  }
+
+  #experience .experience-card-main {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+
+  #experience .experience-highlights {
+    grid-template-columns: 1fr !important;
+  }
+
+  #experience .experience-highlight,
+  #experience .experience-highlight + .experience-highlight {
+    padding: 16px 0 !important;
+    border-left: 0 !important;
+  }
+
+  #experience .experience-highlight + .experience-highlight {
+    border-top: 1px solid rgba(255,255,255,0.07) !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .experience-section-nav {
+    justify-content: stretch;
+  }
+
+  .experience-nav-button {
+    flex: 1;
+    padding-inline: 12px;
+  }
+}
