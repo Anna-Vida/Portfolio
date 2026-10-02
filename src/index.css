@@ -15013,3 +15013,59 @@ main > .experience-section {
   }
 }
 
+/* =========================================================
+   HOLOGRAM PORTRAIT — CLEAN FINAL DISPLAY
+   Use the selected portrait as-is; avoid double-processing it.
+========================================================= */
+
+.cyber-portrait-visual {
+  width: min(390px, 96%) !important;
+  height: min(455px, 100%) !important;
+}
+
+.cyber-portrait-image-shell {
+  width: 88% !important;
+  height: 100% !important;
+  overflow: visible !important;
+}
+
+.cyber-portrait-image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 12px rgba(255,255,255,0.08)) !important;
+  animation: none !important;
+}
+
+.cyber-portrait-scan,
+.cyber-portrait-noise {
+  display: none !important;
+}
+
+.cyber-portrait-ring {
+  opacity: 0.2 !important;
+  animation: none !important;
+}
+
+.cyber-portrait-crosshair {
+  opacity: 0.16 !important;
+}
+
+.cyber-portrait-visual::before {
+  opacity: 0.4 !important;
+}
+
+@media (max-width: 760px) {
+  .cyber-portrait-visual {
+    width: 158px !important;
+    height: 170px !important;
+  }
+
+  .cyber-portrait-image-shell {
+    width: 86% !important;
+    height: 100% !important;
+  }
+}
+
