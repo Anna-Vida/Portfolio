@@ -14517,3 +14517,499 @@ main > .experience-section {
   }
 }
 
+/* =========================================================
+   ROBOT RESUME CONSOLE — MONOCHROME HOLOGRAM FINAL
+   Black / white / gray palette with Anna's graduation portrait.
+========================================================= */
+
+.robot-chat-overlay {
+  background:
+    radial-gradient(circle at 50% 44%, rgba(255,255,255,0.055), transparent 36%),
+    rgba(0,0,0,0.74) !important;
+  backdrop-filter: blur(7px) !important;
+  -webkit-backdrop-filter: blur(7px) !important;
+}
+
+.robot-cyber-tablet {
+  --tablet-accent: #f3f3f3 !important;
+  --tablet-accent-soft: rgba(255,255,255,0.12) !important;
+  filter: grayscale(1) contrast(1.04) !important;
+  border-color: rgba(255,255,255,0.23) !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.025), transparent 20%),
+    radial-gradient(circle at 50% 42%, rgba(255,255,255,0.035), transparent 35%),
+    #050505 !important;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.035) inset,
+    0 0 28px rgba(255,255,255,0.07),
+    0 34px 100px rgba(0,0,0,0.76) !important;
+}
+
+.robot-cyber-tablet::before {
+  border-color: rgba(255,255,255,0.075) !important;
+}
+
+.robot-cyber-tablet::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.20) 24%,
+    rgba(255,255,255,0.86) 50%,
+    rgba(255,255,255,0.20) 76%,
+    transparent
+  ) !important;
+  box-shadow: 0 0 18px rgba(255,255,255,0.16) !important;
+}
+
+.robot-tablet-header {
+  border-bottom-color: rgba(255,255,255,0.075) !important;
+  background: rgba(255,255,255,0.012) !important;
+}
+
+.robot-tablet-status-dot {
+  background: #f2f2f2 !important;
+  box-shadow:
+    0 0 0 4px rgba(255,255,255,0.055),
+    0 0 15px rgba(255,255,255,0.48) !important;
+}
+
+.robot-tablet-mode,
+.robot-holo-status {
+  color: #aaa !important;
+  border-color: rgba(255,255,255,0.13) !important;
+  background: rgba(255,255,255,0.025) !important;
+}
+
+.robot-tablet-profile-mark {
+  border-color: rgba(255,255,255,0.18) !important;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.01)) !important;
+  color: #eee !important;
+  box-shadow:
+    inset 0 0 18px rgba(255,255,255,0.025),
+    0 0 12px rgba(255,255,255,0.025) !important;
+}
+
+.robot-tablet-kicker,
+.robot-tablet-nav button span,
+.robot-tablet-readout span,
+.robot-tablet-name-form label,
+.robot-chat-speaker,
+.robot-holo-data span,
+.robot-holo-caption {
+  color: #707070 !important;
+}
+
+.robot-tablet-sidebar h2,
+.robot-tablet-holo-head h3,
+.robot-tablet-chat-head h3 {
+  color: #f1f1f1 !important;
+}
+
+.robot-tablet-role,
+.robot-tablet-readout strong {
+  color: #8c8c8c !important;
+}
+
+.robot-tablet-nav button {
+  color: #727272 !important;
+}
+
+.robot-tablet-nav button:hover {
+  color: #f1f1f1 !important;
+  border-color: rgba(255,255,255,0.12) !important;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.065), transparent 88%) !important;
+}
+
+.robot-tablet-sidebar::after {
+  background: #d8d8d8 !important;
+  box-shadow: 0 0 12px rgba(255,255,255,0.20) !important;
+}
+
+.robot-tablet-sound {
+  border-color: rgba(255,255,255,0.07) !important;
+  background: rgba(255,255,255,0.012) !important;
+  color: #6e6e6e !important;
+}
+
+.robot-tablet-sound.is-on {
+  border-color: rgba(255,255,255,0.16) !important;
+  color: #d7d7d7 !important;
+  box-shadow: inset 0 0 16px rgba(255,255,255,0.025) !important;
+}
+
+.robot-tablet-hologram {
+  border-right-color: rgba(255,255,255,0.055) !important;
+  background:
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px),
+    radial-gradient(circle at 50% 46%, rgba(255,255,255,0.065), transparent 38%),
+    rgba(255,255,255,0.004) !important;
+  background-size:
+    30px 30px,
+    30px 30px,
+    auto,
+    auto !important;
+}
+
+.robot-tablet-hologram::before {
+  background:
+    linear-gradient(90deg, transparent 0 49%, rgba(255,255,255,0.025) 50%, transparent 51%),
+    linear-gradient(180deg, transparent 0 49%, rgba(255,255,255,0.025) 50%, transparent 51%) !important;
+}
+
+.robot-tablet-online {
+  color: #bdbdbd !important;
+}
+
+.robot-chat-row--assistant .robot-chat-speaker {
+  color: #9c9c9c !important;
+}
+
+.robot-chat-bubble {
+  border-color: rgba(255,255,255,0.075) !important;
+  background: rgba(255,255,255,0.018) !important;
+  color: #c9c9c9 !important;
+}
+
+.robot-chat-row--assistant .robot-chat-bubble {
+  border-left-color: rgba(255,255,255,0.30) !important;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.045), transparent 70%),
+    rgba(255,255,255,0.012) !important;
+}
+
+.robot-chat-row--user .robot-chat-bubble {
+  border-color: rgba(255,255,255,0.12) !important;
+  background: rgba(255,255,255,0.045) !important;
+  color: #ededed !important;
+}
+
+.robot-tablet-quick button {
+  border-color: rgba(255,255,255,0.09) !important;
+  background: rgba(255,255,255,0.015) !important;
+  color: #858585 !important;
+}
+
+.robot-tablet-quick button:hover {
+  color: #f0f0f0 !important;
+  border-color: rgba(255,255,255,0.19) !important;
+  background: rgba(255,255,255,0.05) !important;
+}
+
+.robot-tablet-input {
+  border-color: rgba(255,255,255,0.13) !important;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.025), transparent 42%),
+    rgba(0,0,0,0.34) !important;
+  box-shadow:
+    inset 0 0 20px rgba(255,255,255,0.012),
+    0 0 16px rgba(255,255,255,0.012) !important;
+}
+
+.robot-tablet-prompt {
+  color: #bdbdbd !important;
+}
+
+.robot-tablet-input button {
+  border-color: rgba(255,255,255,0.16) !important;
+  background: rgba(255,255,255,0.055) !important;
+  color: #ededed !important;
+}
+
+.robot-tablet-input button:hover {
+  border-color: rgba(255,255,255,0.30) !important;
+  background: rgba(255,255,255,0.10) !important;
+}
+
+.robot-tablet-footer {
+  border-top-color: rgba(255,255,255,0.055) !important;
+  background: rgba(2,2,2,0.94) !important;
+  color: #555 !important;
+}
+
+/* Graduation hologram replacing the old smart-glove visual. */
+.cyber-portrait-visual {
+  position: relative;
+  width: min(365px, 94%);
+  height: min(430px, 100%);
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+
+.cyber-portrait-visual::before {
+  content: "";
+  position: absolute;
+  inset: 8% 10%;
+  border: 1px solid rgba(255,255,255,0.055);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 50px rgba(255,255,255,0.018),
+    0 0 28px rgba(255,255,255,0.025);
+}
+
+.cyber-portrait-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.08);
+  pointer-events: none;
+}
+
+.cyber-portrait-ring::before,
+.cyber-portrait-ring::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: #e8e8e8;
+  box-shadow: 0 0 8px rgba(255,255,255,0.42);
+}
+
+.cyber-portrait-ring--outer {
+  width: 88%;
+  height: 76%;
+  border-style: solid;
+  animation: portraitOrbit 22s linear infinite;
+}
+
+.cyber-portrait-ring--outer::before {
+  width: 4px;
+  height: 4px;
+  top: 13%;
+  right: 8%;
+}
+
+.cyber-portrait-ring--outer::after {
+  width: 3px;
+  height: 3px;
+  bottom: 18%;
+  left: 8%;
+}
+
+.cyber-portrait-ring--inner {
+  width: 68%;
+  height: 59%;
+  border-style: dashed;
+  opacity: 0.62;
+  animation: portraitOrbitReverse 16s linear infinite;
+}
+
+.cyber-portrait-ring--inner::before {
+  width: 3px;
+  height: 3px;
+  top: 3%;
+  left: 46%;
+}
+
+.cyber-portrait-ring--inner::after {
+  width: 3px;
+  height: 3px;
+  right: 12%;
+  bottom: 9%;
+}
+
+.cyber-portrait-crosshair {
+  position: absolute;
+  z-index: 0;
+  opacity: 0.38;
+  pointer-events: none;
+}
+
+.cyber-portrait-crosshair--x {
+  left: 6%;
+  right: 6%;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.13), transparent);
+}
+
+.cyber-portrait-crosshair--y {
+  top: 5%;
+  bottom: 5%;
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.11), transparent);
+}
+
+.cyber-portrait-image-shell {
+  position: relative;
+  z-index: 3;
+  width: 77%;
+  height: 94%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.cyber-portrait-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  user-select: none;
+  opacity: 0.96;
+  filter:
+    brightness(1.04)
+    contrast(1.08)
+    drop-shadow(0 0 5px rgba(255,255,255,0.26))
+    drop-shadow(0 0 18px rgba(255,255,255,0.09)) !important;
+  animation: portraitFloat 4.8s ease-in-out infinite;
+}
+
+.cyber-portrait-scan {
+  position: absolute;
+  z-index: 5;
+  left: 8%;
+  right: 8%;
+  top: 8%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.72), transparent);
+  box-shadow:
+    0 0 7px rgba(255,255,255,0.24),
+    0 0 18px rgba(255,255,255,0.10);
+  animation: portraitScan 4.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.cyber-portrait-noise {
+  position: absolute;
+  z-index: 4;
+  inset: 5% 8%;
+  opacity: 0.13;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0,
+    transparent 3px,
+    rgba(255,255,255,0.07) 4px
+  );
+  mix-blend-mode: screen;
+}
+
+.cyber-portrait-tag {
+  position: absolute;
+  z-index: 6;
+  padding: 5px 7px;
+  color: #777;
+  border-color: rgba(255,255,255,0.20);
+  background: rgba(4,4,4,0.72);
+  font-family: monospace;
+  font-size: 0.46rem;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.cyber-portrait-tag--left {
+  left: 0;
+  top: 39%;
+  border-left: 1px solid rgba(255,255,255,0.25);
+}
+
+.cyber-portrait-tag--right {
+  right: 0;
+  top: 23%;
+  border-right: 1px solid rgba(255,255,255,0.25);
+}
+
+.cyber-portrait-core {
+  position: absolute;
+  z-index: 7;
+  left: 50%;
+  bottom: 1%;
+  display: grid;
+  gap: 3px;
+  width: max-content;
+  max-width: 82%;
+  transform: translateX(-50%);
+  text-align: center;
+  text-shadow: 0 0 10px rgba(255,255,255,0.07);
+}
+
+.cyber-portrait-core span {
+  color: #666;
+  font-size: 0.45rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.cyber-portrait-core strong {
+  color: #bdbdbd;
+  font-size: 0.53rem;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+}
+
+.robot-holo-data > div {
+  border-color: rgba(255,255,255,0.05) !important;
+  background: rgba(255,255,255,0.008) !important;
+}
+
+.robot-holo-data strong {
+  color: #aaa !important;
+}
+
+@keyframes portraitOrbit {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes portraitOrbitReverse {
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes portraitFloat {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.94; }
+  50% { transform: translateY(-6px) scale(1.006); opacity: 1; }
+}
+
+@keyframes portraitScan {
+  0%, 100% { transform: translateY(22px); opacity: 0.12; }
+  50% { transform: translateY(300px); opacity: 0.72; }
+}
+
+@media (max-width: 980px) {
+  .cyber-portrait-visual {
+    width: min(290px, 94%);
+  }
+
+  .cyber-portrait-tag {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .cyber-portrait-visual {
+    width: 142px;
+    height: 160px;
+  }
+
+  .cyber-portrait-image-shell {
+    width: 72%;
+    height: 100%;
+  }
+
+  .cyber-portrait-core,
+  .cyber-portrait-ring--inner {
+    display: none;
+  }
+
+  .cyber-portrait-ring--outer {
+    width: 94%;
+    height: 90%;
+  }
+
+  .cyber-portrait-scan {
+    left: 15%;
+    right: 15%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cyber-portrait-ring,
+  .cyber-portrait-image,
+  .cyber-portrait-scan {
+    animation: none !important;
+  }
+}
+
