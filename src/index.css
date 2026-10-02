@@ -11453,3 +11453,118 @@ main > .certifications-section {
   --robot-left: calc(50vw - 122px);
   --robot-top: calc(100vh - 292px);
 }
+
+
+/* =========================================================
+   GLOBAL SECTION RHYTHM — UNIFIED MARGINS
+   Keep every main section aligned to the same left/right edge
+   used by Tech Stack and Certifications.
+========================================================= */
+
+:root {
+  --section-gutter: 32px;
+  --section-max-width: 1760px;
+  --section-space-y: 54px;
+}
+
+/* One shared horizontal content rail across the portfolio. */
+.hero-inner,
+.about-shell,
+.about-container,
+.experience-container,
+.work-container,
+.work-container-v2,
+.skills-container,
+.certifications-container,
+.contact-container,
+.footer-container {
+  width: min(calc(100% - (var(--section-gutter) * 2)), var(--section-max-width)) !important;
+  max-width: var(--section-max-width) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Keep the major content sections on one consistent vertical rhythm. */
+main > .about-section-premium,
+main > .experience-section,
+main > .work-section-v2,
+main > .skills-section,
+main > .certifications-section {
+  padding-top: var(--section-space-y) !important;
+  padding-bottom: var(--section-space-y) !important;
+}
+
+/* Prevent nested wrappers from introducing a second horizontal offset. */
+.about-premium-grid,
+.experience-inner,
+.work-v2-top,
+.project-showcase-grid,
+.skills-grid,
+.certification-list {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Keep labels/headings visually aligned with the same content rail. */
+.about-topline,
+.experience-label,
+.work-label,
+.skills-label,
+.certifications-label {
+  margin-left: 0 !important;
+}
+
+/* Tight, consistent spacing from section label to main heading/content. */
+.experience-heading,
+.skills-heading,
+.certifications-heading {
+  margin-bottom: 34px !important;
+}
+
+.work-v2-top {
+  margin-bottom: 34px !important;
+}
+
+.about-topline {
+  margin-bottom: 28px !important;
+}
+
+/* The selected-work CTA should also finish on the same rail. */
+.work-all-projects {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Tablets */
+@media (max-width: 1100px) {
+  :root {
+    --section-gutter: 20px;
+    --section-space-y: 46px;
+  }
+
+  .experience-heading,
+  .skills-heading,
+  .certifications-heading,
+  .work-v2-top {
+    margin-bottom: 30px !important;
+  }
+}
+
+/* Phones */
+@media (max-width: 700px) {
+  :root {
+    --section-gutter: 12px;
+    --section-space-y: 38px;
+  }
+
+  .experience-heading,
+  .skills-heading,
+  .certifications-heading,
+  .work-v2-top {
+    margin-bottom: 26px !important;
+  }
+
+  .about-topline {
+    margin-bottom: 22px !important;
+  }
+}
