@@ -11085,7 +11085,7 @@ main > .certifications-section {
 }
 
 /* Add one very subtle light sweep to the main section heading as it enters. */
-[data-scroll-reveal].is-scroll-visible > *:first-child h2 {
+[data-scroll-reveal].is-scroll-visible:not(.experience-container) > *:first-child h2 {
   animation: sectionHeadingSoftGlow 900ms ease-out 120ms both;
 }
 
@@ -13115,3 +13115,31 @@ main > .experience-section {
     padding-bottom: 20px !important;
   }
 }
+
+/* =========================================================
+   EXPERIENCE + WORK — REMOVE FALSE EMPTY GAPS
+   Fix the Experience heading animation conflict and move the
+   Selected Work intro closer to the preceding section.
+========================================================= */
+
+/* Experience already has its own reveal animation. Excluding its container
+   from the generic heading glow above prevents that animation from being
+   replaced, which previously left the h2 transparent while still reserving
+   its full layout height. */
+#experience.experience-section.is-visible .experience-heading h2 {
+  animation: experienceReveal 0.8s 0.08s cubic-bezier(.2,.72,.2,1) forwards !important;
+}
+
+/* The browser showcase is intentionally sticky, but its intro should begin
+   near the top of the viewport instead of sitting in the vertical center. */
+.work-browser-intro {
+  justify-content: flex-start;
+  padding-top: clamp(68px, 9vh, 96px);
+}
+
+@media (max-width: 720px) {
+  .work-browser-intro {
+    padding-top: 52px;
+  }
+}
+
