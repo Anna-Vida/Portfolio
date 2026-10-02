@@ -11400,3 +11400,56 @@ main > .certifications-section {
     bottom: 154px;
   }
 }
+
+
+/* =========================================================
+   ROBOT GUIDE — HAPPY FLOATING POLISH
+========================================================= */
+
+.robot-stage {
+  filter:
+    drop-shadow(0 20px 28px rgba(0,0,0,0.34))
+    drop-shadow(0 0 18px rgba(214,196,239,0.05));
+}
+
+.robot-stage::after {
+  background: rgba(220, 206, 236, 0.10);
+  filter: blur(12px);
+}
+
+/* Keep the robot moving to a different safe corner as each section becomes
+   active instead of looking permanently docked to one side. */
+.robot-section-home {
+  --robot-left: calc(100vw - 275px);
+  --robot-top: calc(100vh - 300px);
+}
+
+.robot-section-about {
+  --robot-left: 30px;
+  --robot-top: 30vh;
+}
+
+.robot-section-experience {
+  --robot-left: calc(100vw - 285px);
+  --robot-top: 40vh;
+}
+
+.robot-section-work {
+  --robot-left: 34px;
+  --robot-top: 52vh;
+}
+
+.robot-section-skills {
+  --robot-left: calc(100vw - 282px);
+  --robot-top: 28vh;
+}
+
+.robot-section-certifications {
+  --robot-left: 32px;
+  --robot-top: 42vh;
+}
+
+.robot-section-contact {
+  --robot-left: calc(50vw - 122px);
+  --robot-top: calc(100vh - 292px);
+}
