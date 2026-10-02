@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
+import { createPortal } from "react-dom";
 import * as THREE from "three";
 import {
   FaCommentDots,
@@ -415,6 +416,129 @@ const cursorReadableSelector = [
   ".footer-main",
 ].join(",");
 
+const RESUME_PROFILE = {
+  summary:
+    "Anna Patricia Bolor Vida is an entry-level Software and Mobile Developer with practical internship and project experience, ready to contribute clean code and fresh problem-solving skills to a collaborative team.",
+  education:
+    "Anna earned a Bachelor of Science in Information Technology from the Technological Institute of the Philippines in June 2026.",
+  experience:
+    "Anna worked as a Software Developer Intern at the Ateneo Innovation Center in Quezon City from January 2026 to April 2026. Her resume highlights offline-first healthcare and AgTech mobile applications, OCR and cloud synchronization, computer vision dashboards using Meta Ray-Ban smart glasses, disaster-resilience data and machine-learning workflows, and microcontroller/backend work for environmental monitoring.",
+  projects: {
+    echowear:
+      "EchoWear is a 2026 smart glove translator for Filipino Sign Language. Anna developed a wearable and mobile prototype using ESP32, flex sensors, motion sensing, Bluetooth Low Energy, on-device machine-learning inference, and speech output for gesture-to-speech interaction.",
+    servease:
+      "ServEase is a 2026 full-stack business operations platform. Anna built role-based customer, staff, and admin workflows using React, TypeScript, Supabase Auth, and PostgreSQL Row Level Security, including service management, payments, analytics, staff assignment, audit logging, database-driven workflows, and Vercel deployment.",
+    pockethive:
+      "PocketHive is a 2025 AI-powered personal finance and expense management application. Anna developed a mobile budgeting application with automated expense tracking and AI-driven financial insights, using Firebase for real-time synchronization and secure user authentication.",
+  },
+  skills: {
+    programming:
+      "JavaScript, TypeScript, Python, Java, C#, C, C++, Dart, PHP, SQL, and Bash.",
+    frontend:
+      "React.js, React Native, Flutter, Ionic, HTML5, CSS3, Tailwind CSS, Vite, Expo, and Android Studio.",
+    backend:
+      "Node.js, Express.js, .NET and .NET Core, ASP.NET Core, RESTful APIs, CRUD operations, Supabase, Firebase, authentication, and authorization.",
+    databases: "PostgreSQL, MySQL, and SQLite.",
+    cloud:
+      "Git, GitHub, Docker, CI/CD, AWS, Vercel, and Render.",
+    testing:
+      "Postman, Swagger/OpenAPI, Jest, Visual Studio Code, and Linux.",
+    embedded:
+      "Arduino C/C++, Arduino boards including Uno, Nano, Mega, and MKR Series, ESP32, Raspberry Pi, microcontroller firmware, I2C, SPI, UART, sensor integration, and Bluetooth Low Energy.",
+    ai:
+      "Agile/Scrum, TensorFlow Lite, computer vision including OCR and CNNs, deep learning, and AI API integration.",
+  },
+  certifications:
+    "Google Crash Course on Python, issued February 2026, and Using Python to Interact with the Operating System, issued August 2026.",
+  contact:
+    "Anna is based in Quezon City. Her resume lists annapatriciavida12@gmail.com, LinkedIn at linkedin.com/in/annavida12, GitHub at github.com/Anna-Vida, and her portfolio at apv-portfolio.vercel.app.",
+};
+
+const RESUME_QUICK_QUESTIONS = [
+  "Professional summary",
+  "Internship experience",
+  "Projects",
+  "Technical skills",
+  "Certifications",
+];
+
+function answerResumeQuestion(value) {
+  const question = cleanSpeechText(value).toLowerCase();
+  if (!question) return "";
+
+  const has = (...terms) => terms.some((term) => question.includes(term));
+
+  if (/^(hi|hello|hey|good morning|good afternoon|good evening)\b/.test(question)) {
+    return "Hi! I'm Anna's resume assistant. Ask me about her education, internship, projects, technical skills, certifications, or contact information.";
+  }
+
+  if (has("echowear", "echo wear")) return RESUME_PROFILE.projects.echowear;
+  if (has("servease", "serv ease")) return RESUME_PROFILE.projects.servease;
+  if (has("pockethive", "pocket hive")) return RESUME_PROFILE.projects.pockethive;
+
+  if (has("education", "degree", "school", "college", "university", "graduate", "graduated", "tip", "technological institute")) {
+    return RESUME_PROFILE.education;
+  }
+
+  if (has("certification", "certifications", "certificate", "google course", "crash course")) {
+    return RESUME_PROFILE.certifications;
+  }
+
+  if (has("email", "linkedin", "github", "portfolio link", "contact", "reach anna", "location", "where is anna")) {
+    return RESUME_PROFILE.contact;
+  }
+
+  if (has("programming language", "languages", "javascript", "typescript", "python", "java", "c#", "c++", "dart", "php", "sql", "bash")) {
+    return `Anna's programming languages include ${RESUME_PROFILE.skills.programming}`;
+  }
+
+  if (has("frontend", "mobile", "react", "flutter", "ionic", "html", "css", "tailwind", "vite", "expo", "android")) {
+    return `For frontend and mobile development, Anna lists ${RESUME_PROFILE.skills.frontend}`;
+  }
+
+  if (has("backend", "api", "node", "express", ".net", "asp.net", "supabase", "firebase", "authentication", "authorization")) {
+    return `For backend and APIs, Anna lists ${RESUME_PROFILE.skills.backend}`;
+  }
+
+  if (has("database", "postgres", "postgresql", "mysql", "sqlite")) {
+    return `Anna's database skills include ${RESUME_PROFILE.skills.databases}`;
+  }
+
+  if (has("cloud", "devops", "docker", "ci/cd", "aws", "vercel", "render", "git")) {
+    return `For cloud and DevOps, Anna lists ${RESUME_PROFILE.skills.cloud}`;
+  }
+
+  if (has("testing", "postman", "swagger", "openapi", "jest", "linux", "visual studio code", "vs code")) {
+    return `For testing and development tools, Anna lists ${RESUME_PROFILE.skills.testing}`;
+  }
+
+  if (has("embedded", "hardware", "arduino", "esp32", "raspberry", "microcontroller", "sensor", "bluetooth", "ble", "i2c", "spi", "uart")) {
+    return `For embedded and hardware systems, Anna lists ${RESUME_PROFILE.skills.embedded}`;
+  }
+
+  if (has("ai", "machine learning", "ml", "tensorflow", "computer vision", "ocr", "cnn", "deep learning")) {
+    return `For AI and machine learning, Anna lists ${RESUME_PROFILE.skills.ai}`;
+  }
+
+  if (has("skills", "skill", "tech stack", "technologies", "technology")) {
+    return `Anna's resume covers programming (${RESUME_PROFILE.skills.programming}), frontend/mobile (${RESUME_PROFILE.skills.frontend}), backend/APIs (${RESUME_PROFILE.skills.backend}), databases (${RESUME_PROFILE.skills.databases}), cloud/DevOps (${RESUME_PROFILE.skills.cloud}), testing tools, embedded systems, and AI/ML.`;
+  }
+
+  if (has("project", "projects", "portfolio projects")) {
+    return `Anna's resume highlights three projects: EchoWear, a Filipino Sign Language smart glove; ServEase, a full-stack business operations platform; and PocketHive, an AI-powered personal finance mobile application. Ask me about any one of them for details.`;
+  }
+
+  if (has("ateneo", "aic", "intern", "internship", "work experience", "professional experience", "experience")) {
+    return RESUME_PROFILE.experience;
+  }
+
+  if (has("summary", "professional summary", "about anna", "who is anna", "tell me about anna", "profile", "software developer", "mobile developer")) {
+    return RESUME_PROFILE.summary;
+  }
+
+  return "I can only answer questions supported by Anna's resume. Try asking about her education, Ateneo Innovation Center internship, EchoWear, ServEase, PocketHive, technical skills, certifications, or contact information.";
+}
+
 function cleanSpeechText(value) {
   return String(value || "")
     .replace(/([a-z])([A-Z])/g, "$1 $2")
@@ -572,12 +696,22 @@ export default function RobotAssistant() {
   const lastSectionSpokenRef = useRef("");
   const soundEnabledRef = useRef(false);
   const lastCursorTextRef = useRef("");
+  const chatLogRef = useRef(null);
+  const chatMessageIdRef = useRef(1);
 
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [visitorName, setVisitorName] = useState("");
   const [nameInput, setNameInput] = useState("");
   const [activeSection, setActiveSection] = useState("home");
+  const [chatInput, setChatInput] = useState("");
+  const [chatMessages, setChatMessages] = useState([
+    {
+      id: 0,
+      role: "assistant",
+      text: "Hi — I'm Anna's resume assistant. Ask me anything about the information in her resume.",
+    },
+  ]);
   const [message, setMessage] = useState(
     "Hello! Welcome to Anna's portfolio. What's your name?",
   );
@@ -839,12 +973,7 @@ export default function RobotAssistant() {
 
     const welcomed = window.sessionStorage.getItem("apv-robot-welcomed");
     if (!welcomed) {
-      const timer = window.setTimeout(() => {
-        setChatOpen(true);
-        window.sessionStorage.setItem("apv-robot-welcomed", "1");
-      }, 1400);
-
-      return () => window.clearTimeout(timer);
+      window.sessionStorage.setItem("apv-robot-welcomed", "1");
     }
 
     return undefined;
@@ -952,6 +1081,29 @@ export default function RobotAssistant() {
       }
     };
   }, [activeSection]);
+
+  useEffect(() => {
+    if (!chatOpen || !chatLogRef.current) return undefined;
+
+    const frame = window.requestAnimationFrame(() => {
+      if (chatLogRef.current) {
+        chatLogRef.current.scrollTop = chatLogRef.current.scrollHeight;
+      }
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [chatOpen, chatMessages]);
+
+  useEffect(() => {
+    if (!chatOpen) return undefined;
+
+    const handleChatEscape = (event) => {
+      if (event.key === "Escape") setChatOpen(false);
+    };
+
+    document.addEventListener("keydown", handleChatEscape);
+    return () => document.removeEventListener("keydown", handleChatEscape);
+  }, [chatOpen]);
 
   useEffect(() => {
     let frameId = null;
@@ -1117,6 +1269,36 @@ export default function RobotAssistant() {
     synth.speak(primer);
   };
 
+  const appendAssistantMessage = (text) => {
+    const id = chatMessageIdRef.current++;
+    setChatMessages((current) => [...current, { id, role: "assistant", text }]);
+  };
+
+  const askResumeQuestion = (question) => {
+    const value = String(question || "").trim();
+    if (!value) return;
+
+    const userId = chatMessageIdRef.current++;
+    const reply = answerResumeQuestion(value);
+    const assistantId = chatMessageIdRef.current++;
+
+    setChatMessages((current) => [
+      ...current,
+      { id: userId, role: "user", text: value },
+      { id: assistantId, role: "assistant", text: reply },
+    ]);
+    setChatInput("");
+
+    if (soundEnabledRef.current) {
+      speak(reply);
+    }
+  };
+
+  const submitResumeQuestion = (event) => {
+    event.preventDefault();
+    askResumeQuestion(chatInput);
+  };
+
   const submitName = (event) => {
     event.preventDefault();
     const value = nameInput.trim();
@@ -1125,9 +1307,10 @@ export default function RobotAssistant() {
     setVisitorName(value);
     window.sessionStorage.setItem("apv-visitor-name", value);
 
-    const reply = `Nice to meet you, ${value}! I'm Anna's portfolio guide. Turn sound on and I'll read each section while I follow you around the page.`;
+    const reply = `Nice to meet you, ${value}! Ask me anything about Anna's resume. I can explain her education, internship, projects, skills, certifications, and contact information.`;
 
     setMessage(reply);
+    appendAssistantMessage(reply);
     setNameInput("");
 
     if (soundEnabledRef.current) {
@@ -1135,102 +1318,214 @@ export default function RobotAssistant() {
     }
   };
 
+  const chatTablet =
+    chatOpen && typeof document !== "undefined"
+      ? createPortal(
+          <div
+            className="robot-chat-overlay"
+            onMouseDown={(event) => {
+              if (event.target === event.currentTarget) setChatOpen(false);
+            }}
+          >
+            <section
+              className="robot-cyber-tablet"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Anna Vida resume assistant"
+              onMouseDown={(event) => event.stopPropagation()}
+            >
+              <div className="robot-tablet-scanlines" aria-hidden="true" />
+
+              <header className="robot-tablet-header">
+                <div className="robot-tablet-identity">
+                  <span className="robot-tablet-status-dot" aria-hidden="true" />
+                  <span>APV // RESUME CORE</span>
+                </div>
+
+                <div className="robot-tablet-header-actions">
+                  <span className="robot-tablet-mode">RESUME-ONLY</span>
+                  <button
+                    type="button"
+                    className="robot-tablet-close"
+                    onClick={() => setChatOpen(false)}
+                    aria-label="Close resume assistant"
+                  >
+                    <FaTimes />
+                  </button>
+                </div>
+              </header>
+
+              <div className="robot-tablet-body">
+                <aside className="robot-tablet-sidebar">
+                  <div className="robot-tablet-profile-mark">APV</div>
+                  <p className="robot-tablet-kicker">CANDIDATE FILE</p>
+                  <h2>Anna Patricia Vida</h2>
+                  <p className="robot-tablet-role">Software & Mobile Developer</p>
+
+                  <div className="robot-tablet-readout">
+                    <span>DATA SOURCE</span>
+                    <strong>Current Resume</strong>
+                  </div>
+
+                  <div className="robot-tablet-readout">
+                    <span>ACTIVE SECTION</span>
+                    <strong>{sectionLabels[activeSection] || "Portfolio"}</strong>
+                  </div>
+
+                  {!visitorName ? (
+                    <form className="robot-tablet-name-form" onSubmit={submitName}>
+                      <label htmlFor="robot-visitor-name">VISITOR ID · OPTIONAL</label>
+                      <div>
+                        <input
+                          id="robot-visitor-name"
+                          type="text"
+                          value={nameInput}
+                          onChange={(event) => setNameInput(event.target.value)}
+                          placeholder="Your name"
+                          maxLength={40}
+                        />
+                        <button type="submit" aria-label="Save visitor name">
+                          <FaPaperPlane />
+                        </button>
+                      </div>
+                    </form>
+                  ) : (
+                    <div className="robot-tablet-readout">
+                      <span>VISITOR</span>
+                      <strong>{visitorName}</strong>
+                    </div>
+                  )}
+
+                  <button
+                    type="button"
+                    className={`robot-tablet-sound ${soundEnabled ? "is-on" : ""}`}
+                    onClick={toggleSound}
+                    aria-pressed={soundEnabled}
+                  >
+                    {soundEnabled ? <FaVolumeUp /> : <FaVolumeMute />}
+                    <span>{soundEnabled ? "VOICE ONLINE" : "VOICE OFFLINE"}</span>
+                  </button>
+                </aside>
+
+                <div className="robot-tablet-chat">
+                  <div className="robot-tablet-chat-head">
+                    <div>
+                      <span className="robot-tablet-kicker">SECURE CHANNEL // 01</span>
+                      <h3>Resume Assistant</h3>
+                    </div>
+                    <span className="robot-tablet-online">● ONLINE</span>
+                  </div>
+
+                  <div
+                    className="robot-tablet-chat-log"
+                    ref={chatLogRef}
+                    aria-live="polite"
+                  >
+                    {chatMessages.map((item) => (
+                      <div
+                        key={item.id}
+                        className={`robot-chat-row robot-chat-row--${item.role}`}
+                      >
+                        <span className="robot-chat-speaker">
+                          {item.role === "assistant" ? "APV.AI" : "YOU"}
+                        </span>
+                        <div className="robot-chat-bubble">{item.text}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="robot-tablet-quick">
+                    {RESUME_QUICK_QUESTIONS.map((question) => (
+                      <button
+                        key={question}
+                        type="button"
+                        onClick={() => askResumeQuestion(question)}
+                      >
+                        {question}
+                      </button>
+                    ))}
+                  </div>
+
+                  <form className="robot-tablet-input" onSubmit={submitResumeQuestion}>
+                    <span className="robot-tablet-prompt" aria-hidden="true">
+                      &gt;_
+                    </span>
+                    <input
+                      type="text"
+                      value={chatInput}
+                      onChange={(event) => setChatInput(event.target.value)}
+                      placeholder="Ask about Anna's resume..."
+                      maxLength={220}
+                      aria-label="Ask a question about Anna's resume"
+                    />
+                    <button type="submit" aria-label="Send resume question">
+                      <FaPaperPlane />
+                    </button>
+                  </form>
+                </div>
+              </div>
+
+              <footer className="robot-tablet-footer">
+                <span>SYS: {message}</span>
+                <span>NO EXTERNAL KNOWLEDGE // RESUME DATA ONLY</span>
+              </footer>
+            </section>
+          </div>,
+          document.body,
+        )
+      : null;
+
   return (
-    <aside
-      className={`robot-assistant robot-section-${activeSection}`}
-      aria-label="Interactive portfolio guide"
-    >
-      {chatOpen && (
-        <div className="robot-chat-card">
+    <>
+      <aside
+        className={`robot-assistant robot-section-${activeSection}`}
+        aria-label="Interactive portfolio guide"
+      >
+        <div
+          className="robot-stage"
+          onClick={() => setChatOpen(true)}
+          aria-label="Floating happy robot portfolio guide"
+        >
+          <Canvas
+            camera={{ position: [0, 0.18, 4.35], fov: 38 }}
+            dpr={[0.75, 1]}
+            performance={{ min: 0.45, max: 1, debounce: 220 }}
+            gl={{
+              alpha: true,
+              antialias: false,
+              powerPreference: "high-performance",
+            }}
+          >
+            <RobotScene pointerRef={pointerRef} />
+          </Canvas>
+        </div>
+
+        <div className="robot-actions">
           <button
             type="button"
-            className="robot-chat-close"
-            onClick={() => setChatOpen(false)}
-            aria-label="Close robot message"
+            className={`robot-action-button ${chatOpen ? "is-active" : ""}`}
+            onClick={() => setChatOpen((open) => !open)}
+            aria-label="Open resume chatbot"
+            aria-expanded={chatOpen}
           >
-            <FaTimes />
+            <FaCommentDots />
+            <span className="robot-notification-dot" />
           </button>
 
-          <p className="robot-chat-eyebrow">PORTFOLIO GUIDE</p>
-          <p className="robot-chat-message">{message}</p>
-
-          {!visitorName && (
-            <form className="robot-name-form" onSubmit={submitName}>
-              <input
-                type="text"
-                value={nameInput}
-                onChange={(event) => setNameInput(event.target.value)}
-                placeholder="Your name"
-                maxLength={40}
-                aria-label="Your name"
-              />
-              <button type="submit" aria-label="Send name">
-                <FaPaperPlane />
-              </button>
-            </form>
-          )}
-
           <button
             type="button"
-            className={`robot-sound-switch ${soundEnabled ? "is-on" : ""}`}
+            className={`robot-action-button ${soundEnabled ? "is-active" : ""}`}
             onClick={toggleSound}
+            aria-label={soundEnabled ? "Turn sound off" : "Turn sound on"}
             aria-pressed={soundEnabled}
           >
-            <span className="robot-sound-switch-icon">
-              {soundEnabled ? <FaVolumeUp /> : <FaVolumeMute />}
-            </span>
-            <span>
-              {soundEnabled
-                ? "Sound on · reads section + click text"
-                : "Sound off · tap once to enable"}
-            </span>
-            <span className="robot-toggle-track" aria-hidden="true">
-              <span />
-            </span>
+            {soundEnabled ? <FaVolumeUp /> : <FaVolumeMute />}
           </button>
         </div>
-      )}
+      </aside>
 
-      <div
-        className="robot-stage"
-        onClick={() => setChatOpen(true)}
-        aria-label="Floating happy robot portfolio guide"
-      >
-        <Canvas
-          camera={{ position: [0, 0.18, 4.35], fov: 38 }}
-          dpr={[0.75, 1]}
-          performance={{ min: 0.45, max: 1, debounce: 220 }}
-          gl={{
-            alpha: true,
-            antialias: false,
-            powerPreference: "high-performance",
-          }}
-        >
-          <RobotScene pointerRef={pointerRef} />
-        </Canvas>
-      </div>
-
-      <div className="robot-actions">
-        <button
-          type="button"
-          className="robot-action-button"
-          onClick={() => setChatOpen((open) => !open)}
-          aria-label="Open robot message"
-        >
-          <FaCommentDots />
-          <span className="robot-notification-dot" />
-        </button>
-
-        <button
-          type="button"
-          className={`robot-action-button ${soundEnabled ? "is-active" : ""}`}
-          onClick={toggleSound}
-          aria-label={soundEnabled ? "Turn sound off" : "Turn sound on"}
-          aria-pressed={soundEnabled}
-        >
-          {soundEnabled ? <FaVolumeUp /> : <FaVolumeMute />}
-        </button>
-      </div>
-    </aside>
+      {chatTablet}
+    </>
   );
+
 }
