@@ -186,6 +186,17 @@ export default function ProjectsBrowser({ projects, onOpenProject }) {
               </div>
 
               <div className="work-browser-repo-actions">
+                {activeProject.live && (
+                  <a
+                    href={activeProject.live}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="work-browser-live-link"
+                  >
+                    Live ↗
+                  </a>
+                )}
+
                 <a
                   href={activeProject.github}
                   target="_blank"
@@ -239,7 +250,7 @@ export default function ProjectsBrowser({ projects, onOpenProject }) {
                       rel="noreferrer"
                       className="work-browser-primary"
                     >
-                      Live project ↗
+                      Open live project ↗
                     </a>
                   )}
 
