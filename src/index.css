@@ -13250,3 +13250,701 @@ main > .experience-section {
   display: none !important;
 }
 
+/* =========================================================
+   ROBOT RESUME CHAT — CYBERPUNK TABLET
+   Opens from the existing robot message action while keeping
+   the floating guide, section narration, and sound controls.
+========================================================= */
+
+.robot-chat-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(153, 99, 214, 0.09), transparent 38%),
+    rgba(2, 2, 4, 0.48);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  pointer-events: auto;
+  animation: robotTabletBackdropIn 180ms ease-out both;
+}
+
+.robot-cyber-tablet {
+  --tablet-accent: #bd8cff;
+  --tablet-accent-soft: rgba(189, 140, 255, 0.18);
+  position: relative;
+  isolation: isolate;
+  width: min(920px, calc(100vw - 40px));
+  height: min(610px, 80svh);
+  min-height: 480px;
+  overflow: hidden;
+  clip-path: polygon(
+    22px 0,
+    calc(100% - 22px) 0,
+    100% 22px,
+    100% calc(100% - 22px),
+    calc(100% - 22px) 100%,
+    22px 100%,
+    0 calc(100% - 22px),
+    0 22px
+  );
+  border: 1px solid rgba(189, 140, 255, 0.44);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.025), transparent 19%),
+    radial-gradient(circle at 88% 8%, rgba(175, 103, 255, 0.12), transparent 28%),
+    #09090d;
+  color: #ededf2;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.035) inset,
+    0 0 42px rgba(155, 94, 227, 0.16),
+    0 34px 90px rgba(0,0,0,0.62);
+  animation: robotTabletIn 320ms cubic-bezier(.18,.78,.2,1) both;
+}
+
+.robot-cyber-tablet::before,
+.robot-cyber-tablet::after {
+  content: "";
+  position: absolute;
+  z-index: 8;
+  pointer-events: none;
+}
+
+.robot-cyber-tablet::before {
+  inset: 8px;
+  border: 1px solid rgba(189, 140, 255, 0.11);
+  clip-path: polygon(
+    14px 0,
+    calc(100% - 14px) 0,
+    100% 14px,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    14px 100%,
+    0 calc(100% - 14px),
+    0 14px
+  );
+}
+
+.robot-cyber-tablet::after {
+  left: 26px;
+  right: 26px;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(189, 140, 255, 0.75) 24%,
+    rgba(255,255,255,0.88) 50%,
+    rgba(189, 140, 255, 0.75) 76%,
+    transparent
+  );
+  box-shadow: 0 0 18px rgba(189, 140, 255, 0.38);
+}
+
+.robot-tablet-scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.15;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0,
+    transparent 3px,
+    rgba(255,255,255,0.025) 4px
+  );
+  mix-blend-mode: screen;
+}
+
+.robot-tablet-header {
+  position: relative;
+  z-index: 2;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 22px 0 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.018);
+}
+
+.robot-tablet-identity,
+.robot-tablet-header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.robot-tablet-identity {
+  gap: 10px;
+  color: #ded9e7;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+}
+
+.robot-tablet-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d8bdff;
+  box-shadow:
+    0 0 0 4px rgba(189,140,255,0.09),
+    0 0 16px rgba(189,140,255,0.78);
+}
+
+.robot-tablet-header-actions {
+  gap: 10px;
+}
+
+.robot-tablet-mode {
+  padding: 7px 10px;
+  border: 1px solid rgba(189,140,255,0.18);
+  border-radius: 999px;
+  color: #9675b8;
+  background: rgba(189,140,255,0.045);
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.robot-tablet-close {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 9px;
+  background: rgba(255,255,255,0.025);
+  color: #a6a4ad;
+  cursor: pointer;
+  transition:
+    color 150ms ease,
+    border-color 150ms ease,
+    background 150ms ease,
+    transform 150ms ease;
+}
+
+.robot-tablet-close:hover {
+  color: #fff;
+  border-color: rgba(189,140,255,0.42);
+  background: rgba(189,140,255,0.09);
+  transform: rotate(4deg);
+}
+
+.robot-tablet-body {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  height: calc(100% - 94px);
+  min-height: 0;
+}
+
+.robot-tablet-sidebar {
+  position: relative;
+  min-width: 0;
+  padding: 24px 22px 18px;
+  border-right: 1px solid rgba(255,255,255,0.075);
+  background:
+    linear-gradient(180deg, rgba(189,140,255,0.035), transparent 42%),
+    rgba(255,255,255,0.012);
+}
+
+.robot-tablet-sidebar::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: 22px;
+  width: 1px;
+  height: 84px;
+  background: var(--tablet-accent);
+  box-shadow: 0 0 14px rgba(189,140,255,0.52);
+}
+
+.robot-tablet-profile-mark {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  place-items: center;
+  margin-bottom: 22px;
+  border: 1px solid rgba(189,140,255,0.28);
+  clip-path: polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px);
+  background:
+    linear-gradient(135deg, rgba(189,140,255,0.15), rgba(255,255,255,0.015));
+  color: #e3d4fa;
+  font-family: "Manrope", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  box-shadow: inset 0 0 18px rgba(189,140,255,0.06);
+}
+
+.robot-tablet-kicker {
+  display: block;
+  margin: 0 0 7px;
+  color: #766386;
+  font-size: 0.54rem;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+}
+
+.robot-tablet-sidebar h2 {
+  margin: 0;
+  color: #f1eff4;
+  font-family: "Manrope", sans-serif;
+  font-size: 1.24rem;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.robot-tablet-role {
+  margin: 7px 0 20px;
+  color: #7d7a84;
+  font-size: 0.70rem;
+  line-height: 1.45;
+}
+
+.robot-tablet-readout {
+  display: grid;
+  gap: 4px;
+  margin-top: 14px;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,0.055);
+}
+
+.robot-tablet-readout span,
+.robot-tablet-name-form label {
+  color: #5f5c66;
+  font-size: 0.48rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.robot-tablet-readout strong {
+  color: #bdb9c4;
+  font-size: 0.68rem;
+  font-weight: 650;
+}
+
+.robot-tablet-name-form {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.055);
+}
+
+.robot-tablet-name-form > div {
+  display: grid;
+  grid-template-columns: 1fr 32px;
+  gap: 6px;
+  margin-top: 7px;
+}
+
+.robot-tablet-name-form input {
+  min-width: 0;
+  height: 32px;
+  padding: 0 9px;
+  border: 1px solid rgba(255,255,255,0.08);
+  outline: 0;
+  background: rgba(0,0,0,0.26);
+  color: #d8d5de;
+  font: inherit;
+  font-size: 0.68rem;
+}
+
+.robot-tablet-name-form input:focus {
+  border-color: rgba(189,140,255,0.34);
+  box-shadow: 0 0 0 2px rgba(189,140,255,0.055);
+}
+
+.robot-tablet-name-form button {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(189,140,255,0.24);
+  background: rgba(189,140,255,0.08);
+  color: #d9c3f8;
+  cursor: pointer;
+}
+
+.robot-tablet-sound {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 9px;
+  margin-top: 16px;
+  padding: 10px;
+  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.018);
+  color: #75727c;
+  font: inherit;
+  font-size: 0.56rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  cursor: pointer;
+}
+
+.robot-tablet-sound.is-on {
+  border-color: rgba(189,140,255,0.26);
+  color: #cbb0ef;
+  box-shadow: inset 0 0 18px rgba(189,140,255,0.045);
+}
+
+.robot-tablet-chat {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  padding: 22px 24px 18px;
+}
+
+.robot-tablet-chat-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.065);
+}
+
+.robot-tablet-chat-head h3 {
+  margin: 0;
+  color: #f3f1f5;
+  font-family: "Manrope", sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: -0.035em;
+}
+
+.robot-tablet-online {
+  margin-top: 3px;
+  color: #a98acb;
+  font-size: 0.52rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.robot-tablet-chat-log {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 17px 6px 16px 0;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(189,140,255,0.32) rgba(255,255,255,0.025);
+}
+
+.robot-tablet-chat-log::-webkit-scrollbar {
+  width: 5px;
+}
+
+.robot-tablet-chat-log::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.02);
+}
+
+.robot-tablet-chat-log::-webkit-scrollbar-thumb {
+  background: rgba(189,140,255,0.28);
+}
+
+.robot-chat-row {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.robot-chat-row--user {
+  justify-items: end;
+}
+
+.robot-chat-speaker {
+  color: #5d5963;
+  font-size: 0.48rem;
+  font-weight: 850;
+  letter-spacing: 0.15em;
+}
+
+.robot-chat-row--assistant .robot-chat-speaker {
+  color: #9c7fba;
+}
+
+.robot-chat-bubble {
+  width: fit-content;
+  max-width: min(86%, 570px);
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.075);
+  background: rgba(255,255,255,0.022);
+  color: #c9c6cf;
+  font-size: 0.77rem;
+  line-height: 1.58;
+}
+
+.robot-chat-row--assistant .robot-chat-bubble {
+  border-left-color: rgba(189,140,255,0.48);
+  background:
+    linear-gradient(90deg, rgba(189,140,255,0.065), transparent 70%),
+    rgba(255,255,255,0.018);
+}
+
+.robot-chat-row--user .robot-chat-bubble {
+  border-color: rgba(255,255,255,0.11);
+  background: rgba(255,255,255,0.055);
+  color: #e0dde5;
+}
+
+.robot-tablet-quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 11px 0;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.robot-tablet-quick button {
+  padding: 7px 9px;
+  border: 1px solid rgba(189,140,255,0.13);
+  background: rgba(189,140,255,0.035);
+  color: #8f809e;
+  font: inherit;
+  font-size: 0.58rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    color 140ms ease,
+    border-color 140ms ease,
+    background 140ms ease;
+}
+
+.robot-tablet-quick button:hover {
+  color: #e0d3f1;
+  border-color: rgba(189,140,255,0.32);
+  background: rgba(189,140,255,0.08);
+}
+
+.robot-tablet-input {
+  display: grid;
+  grid-template-columns: auto 1fr 38px;
+  align-items: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 5px 5px 5px 11px;
+  border: 1px solid rgba(189,140,255,0.18);
+  background:
+    linear-gradient(90deg, rgba(189,140,255,0.05), transparent 40%),
+    rgba(0,0,0,0.32);
+  box-shadow:
+    inset 0 0 20px rgba(189,140,255,0.025),
+    0 0 18px rgba(189,140,255,0.025);
+}
+
+.robot-tablet-prompt {
+  color: #ad84d7;
+  font-family: monospace;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.robot-tablet-input input {
+  min-width: 0;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #ece9f0;
+  font: inherit;
+  font-size: 0.76rem;
+}
+
+.robot-tablet-input input::placeholder {
+  color: #56525c;
+}
+
+.robot-tablet-input button {
+  display: grid;
+  width: 38px;
+  height: 36px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(189,140,255,0.28);
+  background: rgba(189,140,255,0.10);
+  color: #dcc6fa;
+  cursor: pointer;
+  transition:
+    transform 140ms ease,
+    background 140ms ease,
+    border-color 140ms ease;
+}
+
+.robot-tablet-input button:hover {
+  transform: translateX(1px);
+  border-color: rgba(189,140,255,0.5);
+  background: rgba(189,140,255,0.16);
+}
+
+.robot-tablet-footer {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 0 22px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  background: rgba(4,4,7,0.92);
+  color: #55515c;
+  font-size: 0.48rem;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+}
+
+.robot-tablet-footer span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@keyframes robotTabletBackdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes robotTabletIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.975);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@media (max-width: 760px) {
+  .robot-chat-overlay {
+    padding: 8px;
+  }
+
+  .robot-cyber-tablet {
+    width: calc(100vw - 16px);
+    height: min(720px, 88svh);
+    min-height: 520px;
+    clip-path: polygon(
+      14px 0,
+      calc(100% - 14px) 0,
+      100% 14px,
+      100% calc(100% - 14px),
+      calc(100% - 14px) 100%,
+      14px 100%,
+      0 calc(100% - 14px),
+      0 14px
+    );
+  }
+
+  .robot-tablet-header {
+    height: 52px;
+    padding: 0 12px 0 14px;
+  }
+
+  .robot-tablet-identity {
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+  }
+
+  .robot-tablet-mode {
+    display: none;
+  }
+
+  .robot-tablet-body {
+    grid-template-columns: 1fr;
+    grid-template-rows: 58px minmax(0, 1fr);
+    height: calc(100% - 86px);
+  }
+
+  .robot-tablet-sidebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 9px 14px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.065);
+  }
+
+  .robot-tablet-sidebar::after,
+  .robot-tablet-profile-mark,
+  .robot-tablet-sidebar > .robot-tablet-kicker,
+  .robot-tablet-role,
+  .robot-tablet-readout,
+  .robot-tablet-name-form {
+    display: none;
+  }
+
+  .robot-tablet-sidebar h2 {
+    font-size: 0.92rem;
+  }
+
+  .robot-tablet-sound {
+    width: auto;
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 8px 10px;
+    font-size: 0.50rem;
+  }
+
+  .robot-tablet-chat {
+    padding: 13px 14px 11px;
+  }
+
+  .robot-tablet-chat-head {
+    padding-bottom: 10px;
+  }
+
+  .robot-tablet-chat-head h3 {
+    font-size: 1.08rem;
+  }
+
+  .robot-tablet-quick {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 8px 0;
+    scrollbar-width: none;
+  }
+
+  .robot-tablet-quick::-webkit-scrollbar {
+    display: none;
+  }
+
+  .robot-tablet-quick button {
+    flex: 0 0 auto;
+  }
+
+  .robot-chat-bubble {
+    max-width: 92%;
+    font-size: 0.72rem;
+  }
+
+  .robot-tablet-footer {
+    height: 34px;
+    padding: 0 12px;
+  }
+
+  .robot-tablet-footer span:last-child {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .robot-chat-overlay,
+  .robot-cyber-tablet {
+    animation: none !important;
+  }
+}
+
