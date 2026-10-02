@@ -12,6 +12,7 @@ import TechStackPager from "./components/ui/tech-stack-pager";
 import HeroShutterText from "./components/ui/hero-shutter-text";
 import CertificationPinCard from "./components/ui/certification-pin-card";
 import ScrollRevealController from "./components/ui/scroll-reveal-controller";
+import ProjectsBrowser from "./components/ui/projects-browser";
 
 const RobotAssistant = lazy(() => import("./components/ui/robot-assistant"));
 
@@ -47,8 +48,6 @@ import {
 } from "react-icons/si";
 
 
-
-const PROJECT_FILTERS = ["All Projects", "Fullstack", "Mobile Apps", "AI & IoT"];
 
 const PROJECTS = [
   {
@@ -151,7 +150,6 @@ const ACCENT_OPTIONS = [
 function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [activeNav, setActiveNav] = useState("");
-  const [projectFilter, setProjectFilter] = useState("All Projects");
   const [selectedProject, setSelectedProject] = useState(null);
   const [flippedSkill, setFlippedSkill] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -419,13 +417,6 @@ function App() {
     localStorage.removeItem("portfolio-show-cursor");
     localStorage.removeItem("portfolio-accent-color");
   };
-
-  const visibleProjects =
-    projectFilter === "All Projects"
-      ? PROJECTS
-      : PROJECTS.filter((project) =>
-          project.categories.includes(projectFilter)
-        );
 
   return (
     <>
@@ -789,115 +780,10 @@ function App() {
         {/* =========================
             SELECTED WORK
         ========================== */}
-        <section className="work-section work-section-v2" id="work">
-          <div className="work-container work-container-v2" data-scroll-reveal="right">
-            <div className="work-v2-top">
-              <div className="work-heading work-heading-v2">
-                <p className="section-kicker work-kicker">PROJECTS CREATED</p>
-                <h2>Selected Works</h2>
-                <p className="work-v2-intro">
-                  A collection of mobile applications, full-stack platforms,
-                  intelligent systems, and connected technology.
-                </p>
-              </div>
-
-              <div className="project-filters" aria-label="Project categories">
-                {PROJECT_FILTERS.map((filter) => (
-                  <button
-                    type="button"
-                    key={filter}
-                    className={`project-filter-btn ${
-                      projectFilter === filter ? "is-active" : ""
-                    }`}
-                    onClick={() => setProjectFilter(filter)}
-                    aria-pressed={projectFilter === filter}
-                  >
-                    {filter}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="project-showcase-grid">
-              {visibleProjects.map((project) => (
-                <button
-                  type="button"
-                  key={project.title}
-                  className="project-showcase-card"
-                  onClick={() => setSelectedProject(project)}
-                  aria-label={`Open details for ${project.title}`}
-                >
-                  <span className="project-showcase-preview project-text-preview">
-                    <span className="project-preview-index" aria-hidden="true">
-                      PROJECT {project.number}
-                    </span>
-
-                    <AnimatedText
-                      text={project.title}
-                      fontSize={
-                        project.title.length > 18
-                          ? "clamp(2rem, 3vw, 3.65rem)"
-                          : project.title.length > 10
-                            ? "clamp(2.35rem, 3.5vw, 4.25rem)"
-                            : "clamp(2.8rem, 4vw, 4.9rem)"
-                      }
-                      minWeight={260}
-                      maxWeight={760}
-                      animationDuration={1.8}
-                      delayMultiplier={0.07}
-                      className="animated-text--project"
-                    />
-
-                    <span className="project-preview-badge" aria-hidden="true">
-                      ↗
-                    </span>
-
-                    <span className="project-open-hint">View details ↗</span>
-                  </span>
-
-                  <span className="project-showcase-content">
-                    <span className="project-showcase-topline">
-                      <span className="project-showcase-number">
-                        {project.number}
-                      </span>
-                      <span className="project-showcase-type">
-                        {project.type}
-                      </span>
-                    </span>
-
-                    <span className="project-showcase-title">
-                      {project.title}
-                    </span>
-
-                    <span className="project-showcase-description">
-                      {project.shortDescription}
-                    </span>
-
-                    <span className="project-showcase-tags">
-                      {project.tags.slice(0, 3).map((tag) => (
-                        <span key={tag}>{tag}</span>
-                      ))}
-
-                      {project.tags.length > 3 && (
-                        <span>+{project.tags.length - 3}</span>
-                      )}
-                    </span>
-                  </span>
-                </button>
-              ))}
-            </div>
-
-            <div className="work-all-projects">
-              <a
-                href="https://github.com/Anna-Vida?tab=repositories"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Explore all projects on GitHub ↗
-              </a>
-            </div>
-          </div>
-        </section>
+        <ProjectsBrowser
+          projects={PROJECTS}
+          onOpenProject={setSelectedProject}
+        />
 
         {selectedProject && (
           <div
