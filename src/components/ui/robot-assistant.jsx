@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { createPortal } from "react-dom";
 import * as THREE from "three";
 import {
@@ -347,6 +347,53 @@ function RobotScene({ pointerRef }) {
       <RobotModel pointerRef={pointerRef} />
     </>
   );
+}
+
+function RobotFrameTicker() {
+  const invalidate = useThree((state) => state.invalidate);
+
+  useEffect(() => {
+    let scrollStopTimer = null;
+    let isScrolling = false;
+
+    const renderFrame = () => {
+      if (!isScrolling && document.visibilityState === "visible") {
+        invalidate();
+      }
+    };
+
+    // The robot is small on screen; ~30fps keeps its idle motion smooth
+    // without making Three.js compete with page scrolling at 60/120fps.
+    const frameTimer = window.setInterval(renderFrame, 34);
+
+    const handleScroll = () => {
+      isScrolling = true;
+
+      if (scrollStopTimer) {
+        window.clearTimeout(scrollStopTimer);
+      }
+
+      scrollStopTimer = window.setTimeout(() => {
+        isScrolling = false;
+        scrollStopTimer = null;
+        invalidate();
+      }, 140);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    invalidate();
+
+    return () => {
+      window.clearInterval(frameTimer);
+      window.removeEventListener("scroll", handleScroll);
+
+      if (scrollStopTimer) {
+        window.clearTimeout(scrollStopTimer);
+      }
+    };
+  }, [invalidate]);
+
+  return null;
 }
 
 function HologramPortrait() {
@@ -1537,14 +1584,16 @@ export default function RobotAssistant() {
         >
           <Canvas
             camera={{ position: [0, 0.18, 4.35], fov: 38 }}
-            dpr={[0.75, 1]}
-            performance={{ min: 0.45, max: 1, debounce: 220 }}
+            dpr={[0.65, 0.9]}
+            frameloop="demand"
+            performance={{ min: 0.4, max: 0.9, debounce: 220 }}
             gl={{
               alpha: true,
               antialias: false,
               powerPreference: "high-performance",
             }}
           >
+            <RobotFrameTicker />
             <RobotScene pointerRef={pointerRef} />
           </Canvas>
         </div>
