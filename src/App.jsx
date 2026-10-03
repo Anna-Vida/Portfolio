@@ -140,11 +140,11 @@ const DEFAULT_THEME = "original";
 
 const ACCENT_OPTIONS = [
   { name: "Original", value: "original", swatch: "#f2f2f2" },
-  { name: "White Glow", value: "#ffffff", swatch: "#ffffff" },
-  { name: "Silver", value: "#c7c7c7", swatch: "#c7c7c7" },
-  { name: "Steel", value: "#9a9a9a", swatch: "#9a9a9a" },
-  { name: "Soft Gray", value: "#7d7d7d", swatch: "#7d7d7d" },
-  { name: "Graphite", value: "#5f5f5f", swatch: "#5f5f5f" },
+  { name: "Ember", value: "#b45309", swatch: "#b45309" },
+  { name: "Forest", value: "#166534", swatch: "#166534" },
+  { name: "Midnight", value: "#1e3a8a", swatch: "#1e3a8a" },
+  { name: "Burgundy", value: "#7f1d1d", swatch: "#7f1d1d" },
+  { name: "Plum", value: "#581c87", swatch: "#581c87" },
 ];
 
 function App() {
@@ -526,7 +526,7 @@ function App() {
                   <div className="setting-group">
                     <div className="setting-group-title">
                       <span className="accent-palette-icon">◉</span>
-                      <span>Interface Glow</span>
+                      <span>Accent Theme</span>
                     </div>
 
                     <div className="accent-options">
@@ -539,7 +539,7 @@ function App() {
                           }`}
                           style={{ "--swatch": accent.swatch }}
                           onClick={() => setAccentColor(accent.value)}
-                          aria-label={`Use ${accent.name} interface glow`}
+                          aria-label={`Use ${accent.name} theme`}
                           title={accent.name}
                         />
                       ))}
