@@ -20,8 +20,7 @@ export default function ScrollRevealController() {
         entries.forEach((entry) => {
           if (entry.isIntersecting && entry.intersectionRatio >= 0.14) {
             entry.target.classList.add("is-scroll-visible");
-          } else if (!entry.isIntersecting) {
-            entry.target.classList.remove("is-scroll-visible");
+            observer.unobserve(entry.target);
           }
         });
       },
