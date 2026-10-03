@@ -16,6 +16,8 @@ const HeroHexBackground = () => {
     let resizeObserver = null;
     let intersectionObserver = null;
     let lastDrawTime = 0;
+    let scrollStopTimer = null;
+    let isScrolling = false;
 
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     let reduceMotion = motionQuery.matches;
@@ -113,10 +115,10 @@ const HeroHexBackground = () => {
     };
 
     const handlePointerMove = (event) => {
-      const rect = canvas.getBoundingClientRect();
-
-      pointer.x = event.clientX - rect.left;
-      pointer.y = event.clientY - rect.top;
+      // The canvas fills the viewport, so client coordinates already match
+      // its drawing space. Avoid getBoundingClientRect() on every pointer move.
+      pointer.x = event.clientX;
+      pointer.y = event.clientY;
       pointer.active = true;
     };
 
@@ -127,7 +129,7 @@ const HeroHexBackground = () => {
     };
 
     const animate = (time = 0) => {
-      if (!isVisible || reduceMotion) {
+      if (!isVisible || reduceMotion || isScrolling) {
         animationFrameId = null;
         return;
       }
@@ -183,7 +185,7 @@ const HeroHexBackground = () => {
     };
 
     const startAnimation = () => {
-      if (!animationFrameId && isVisible && !reduceMotion) {
+      if (!animationFrameId && isVisible && !reduceMotion && !isScrolling) {
         lastDrawTime = 0;
         animationFrameId = requestAnimationFrame(animate);
       }
@@ -194,6 +196,24 @@ const HeroHexBackground = () => {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
       }
+    };
+
+    const handleScroll = () => {
+      if (!isScrolling) {
+        isScrolling = true;
+        stopAnimation();
+        renderStatic();
+      }
+
+      if (scrollStopTimer) {
+        window.clearTimeout(scrollStopTimer);
+      }
+
+      scrollStopTimer = window.setTimeout(() => {
+        isScrolling = false;
+        scrollStopTimer = null;
+        startAnimation();
+      }, 140);
     };
 
     const handleMotionChange = (event) => {
@@ -248,6 +268,7 @@ const HeroHexBackground = () => {
     };
 
     window.addEventListener("resize", resizeCanvas);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
     document.addEventListener("mouseleave", handlePointerLeave);
     window.addEventListener("blur", handlePointerLeave);
@@ -267,11 +288,16 @@ const HeroHexBackground = () => {
       intersectionObserver?.disconnect();
 
       window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("pointermove", handlePointerMove);
       document.removeEventListener("mouseleave", handlePointerLeave);
       window.removeEventListener("blur", handlePointerLeave);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       motionQuery.removeEventListener?.("change", handleMotionChange);
+
+      if (scrollStopTimer) {
+        window.clearTimeout(scrollStopTimer);
+      }
 
       stopAnimation();
     };
