@@ -15,18 +15,24 @@ export default function ProjectsBrowser({ projects, onOpenProject }) {
 
   const [activeTab, setActiveTab] = useState(0);
   const [openedTabs, setOpenedTabs] = useState(1);
-  const [scrollAnim, setScrollAnim] = useState({
-    introOpacity: 1,
-    introY: 0,
-    browserY: 105,
-  });
 
   const containerRef = useRef(null);
+  const introRef = useRef(null);
+  const browserRef = useRef(null);
+  const activeTabRef = useRef(0);
+  const openedTabsRef = useRef(1);
 
   useEffect(() => {
-    const handleScroll = () => {
+    let frameId = null;
+
+    const updateFromScroll = () => {
+      frameId = null;
+
       const section = containerRef.current;
-      if (!section) return;
+      const intro = introRef.current;
+      const browser = browserRef.current;
+
+      if (!section || !intro || !browser) return;
 
       const scrollableDistance = Math.max(
         section.offsetHeight - window.innerHeight,
@@ -42,38 +48,66 @@ export default function ProjectsBrowser({ projects, onOpenProject }) {
       const currentStage = progress * totalScrollStages;
 
       if (currentStage <= 1) {
-        setScrollAnim({
-          introOpacity: Math.max(0, 1 - currentStage * 1.45),
-          introY: currentStage * -70,
-          browserY: 105 - currentStage * 105,
-        });
-        setActiveTab(0);
-        setOpenedTabs(1);
+        const introOpacity = Math.max(0, 1 - currentStage * 1.45);
+        const introY = currentStage * -70;
+        const browserY = 105 - currentStage * 105;
+
+        intro.style.opacity = String(introOpacity);
+        intro.style.transform = `translate3d(0, ${introY}px, 0)`;
+        browser.style.transform = `translate3d(0, ${browserY}vh, 0)`;
+
+        if (activeTabRef.current !== 0) {
+          activeTabRef.current = 0;
+          setActiveTab(0);
+        }
+
+        if (openedTabsRef.current !== 1) {
+          openedTabsRef.current = 1;
+          setOpenedTabs(1);
+        }
+
         return;
       }
 
-      setScrollAnim({
-        introOpacity: 0,
-        introY: -70,
-        browserY: 0,
-      });
+      intro.style.opacity = "0";
+      intro.style.transform = "translate3d(0, -70px, 0)";
+      browser.style.transform = "translate3d(0, 0, 0)";
 
       const tabIndex = Math.min(
         featuredProjects.length - 1,
         Math.floor(currentStage - 1 + 0.04),
       );
 
-      setActiveTab(tabIndex);
-      setOpenedTabs((count) => Math.max(count, tabIndex + 1));
+      if (activeTabRef.current !== tabIndex) {
+        activeTabRef.current = tabIndex;
+        setActiveTab(tabIndex);
+      }
+
+      const nextOpenedTabs = Math.max(openedTabsRef.current, tabIndex + 1);
+
+      if (nextOpenedTabs !== openedTabsRef.current) {
+        openedTabsRef.current = nextOpenedTabs;
+        setOpenedTabs(nextOpenedTabs);
+      }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll);
-    handleScroll();
+    const requestUpdate = () => {
+      if (frameId === null) {
+        frameId = window.requestAnimationFrame(updateFromScroll);
+      }
+    };
+
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+    requestUpdate();
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId);
+      }
     };
   }, [featuredProjects.length, totalScrollStages]);
 
@@ -106,10 +140,11 @@ export default function ProjectsBrowser({ projects, onOpenProject }) {
     >
       <div className="work-browser-sticky">
         <div
+          ref={introRef}
           className="work-browser-intro"
           style={{
-            opacity: scrollAnim.introOpacity,
-            transform: `translateY(${scrollAnim.introY}px)`,
+            opacity: 1,
+            transform: "translate3d(0, 0, 0)",
           }}
         >
           <span className="work-browser-kicker">PROJECTS CREATED</span>
@@ -127,8 +162,9 @@ export default function ProjectsBrowser({ projects, onOpenProject }) {
         </div>
 
         <div
+          ref={browserRef}
           className="work-browser-window"
-          style={{ transform: `translateY(${scrollAnim.browserY}vh)` }}
+          style={{ transform: "translate3d(0, 105vh, 0)" }}
         >
           <div className="work-browser-tabs">
             <div className="work-browser-tab-list">
