@@ -15069,3 +15069,91 @@ main > .experience-section {
   }
 }
 
+/* =========================================================
+   PERFORMANCE PASS — SMOOTH SCROLL FINAL OVERRIDES
+   Preserve the visual design while reducing repaint/compositing
+   work during continuous scrolling.
+========================================================= */
+
+/* Full-width backdrop blur on a fixed navbar forces expensive work while
+   every frame scrolls underneath it. A nearly opaque surface looks the same
+   here without re-blurring the whole viewport strip. */
+.navbar {
+  background: rgba(11, 11, 11, 0.96) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.limelight-nav {
+  background: rgba(14, 14, 14, 0.92) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Scroll reveals only need opacity + transform. Blur animation is much more
+   expensive to rasterize and was repeating as sections left/re-entered view. */
+[data-scroll-reveal] > * {
+  filter: none !important;
+  transition:
+    opacity 420ms cubic-bezier(.2,.72,.2,1),
+    transform 520ms cubic-bezier(.2,.72,.2,1) !important;
+  will-change: opacity, transform !important;
+}
+
+[data-scroll-reveal].is-scroll-visible > * {
+  filter: none !important;
+}
+
+/* Skip painting large off-screen sections until the browser is close to them. */
+main > .about-section-premium,
+main > .experience-section,
+main > .skills-section,
+main > .certifications-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 900px;
+}
+
+/* Keep the fixed canvas and sticky Work transforms on compositor layers. */
+.site-hex-background {
+  contain: paint;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.site-hex-background canvas,
+.work-browser-intro,
+.work-browser-window {
+  backface-visibility: hidden;
+  transform-style: flat;
+}
+
+.work-browser-intro {
+  will-change: opacity, transform;
+}
+
+.work-browser-window {
+  will-change: transform;
+}
+
+/* The robot already has a lightweight pseudo shadow. Avoid filtering the
+   entire continuously rendered WebGL stage as it moves around the viewport. */
+.robot-stage {
+  filter: none !important;
+}
+
+/* Glass cards keep their dark appearance without live backdrop sampling. */
+.gradient-blob-card__glass {
+  background: rgba(11, 11, 11, 0.92) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+@media (max-width: 900px) {
+  /* Mobile GPUs benefit from less continuous decorative motion. */
+  .gradient-blob-card__blob {
+    animation-duration: 10s !important;
+    filter: blur(18px) !important;
+    opacity: 0.72 !important;
+  }
+}
+
