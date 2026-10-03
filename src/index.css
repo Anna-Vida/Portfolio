@@ -13245,11 +13245,6 @@ main > .experience-section {
   }
 }
 
-/* Hide the navbar settings button. */
-.navbar .settings-trigger {
-  display: none !important;
-}
-
 /* =========================================================
    ROBOT RESUME CHAT — CYBERPUNK TABLET
    Opens from the existing robot message action while keeping
