@@ -12933,59 +12933,6 @@ button.work-browser-secondary {
   pointer-events: none !important;
 }
 
-/* Real section-navigation buttons instead of loose end/back text. */
-.experience-section-nav {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 18px;
-}
-
-.experience-nav-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  min-height: 42px;
-  padding: 0 17px;
-  border: 1px solid rgba(255,255,255,0.10);
-  border-radius: 999px;
-  background: rgba(14,14,14,0.88);
-  color: #8d8d8d;
-  font-size: 0.58rem;
-  font-weight: 750;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition:
-    color 180ms ease,
-    border-color 180ms ease,
-    background 180ms ease,
-    transform 180ms ease;
-}
-
-.experience-nav-button-next {
-  color: #111;
-  background: #f1f1ef;
-  border-color: #f1f1ef;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .experience-nav-button:hover {
-    color: #f2f2f2;
-    border-color: rgba(255,255,255,0.22);
-    background: #171717;
-    transform: translateY(-2px);
-  }
-
-  .experience-nav-button-next:hover {
-    color: #000;
-    border-color: #fff;
-    background: #fff;
-  }
-}
-
 @media (max-width: 1180px) {
   #experience .experience-bento {
     grid-template-columns: 1fr !important;
@@ -13022,18 +12969,6 @@ button.work-browser-secondary {
     border-top: 1px solid rgba(255,255,255,0.07) !important;
   }
 }
-
-@media (max-width: 560px) {
-  .experience-section-nav {
-    justify-content: stretch;
-  }
-
-  .experience-nav-button {
-    flex: 1;
-    padding-inline: 12px;
-  }
-}
-
 
 /* =========================================================
    SKILLS → CERTIFICATIONS — TIGHT TRANSITION
