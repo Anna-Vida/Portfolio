@@ -15496,3 +15496,59 @@ main > .certifications-section {
   }
 }
 
+/* =========================================================
+   ABOUT PORTRAIT — KEEP PHOTO INSIDE CIRCLE
+========================================================= */
+
+.about-showcase-photo-wrap {
+  top: 50% !important;
+  bottom: auto !important;
+  width: min(88%, 455px) !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  transform:
+    translate3d(
+      calc(-50% + var(--about-shift-x)),
+      calc(-50% + var(--about-shift-y)),
+      0
+    ) !important;
+}
+
+.about-showcase-photo {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center 12% !important;
+}
+
+.about-showcase-photo-fade {
+  border-radius: 0 0 50% 50%;
+}
+
+@media (max-width: 1200px) {
+  .about-showcase-photo-wrap {
+    width: min(88%, 430px) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .about-showcase-photo-wrap {
+    width: min(82vw, 430px) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-showcase-photo-wrap {
+    top: 50% !important;
+    width: min(82vw, 340px) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-showcase-photo-wrap {
+    transform: translate3d(-50%, -50%, 0) !important;
+  }
+}
+
