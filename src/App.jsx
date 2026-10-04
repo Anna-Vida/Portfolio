@@ -875,17 +875,6 @@ function App() {
               </article>
             </div>
 
-            <div className="experience-section-nav" aria-label="Experience section navigation">
-              <a href="#about" className="experience-nav-button">
-                <span aria-hidden="true">←</span>
-                <span>Back to About</span>
-              </a>
-
-              <a href="#work" className="experience-nav-button experience-nav-button-next">
-                <span>Next: Work</span>
-                <span aria-hidden="true">→</span>
-              </a>
-            </div>
           </div>
         </section>
 
