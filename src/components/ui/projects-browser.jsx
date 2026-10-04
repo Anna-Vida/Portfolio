@@ -15,12 +15,15 @@ export default function ProjectsBrowser({ projects, onOpenProject }) {
 
   const [activeTab, setActiveTab] = useState(0);
   const [openedTabs, setOpenedTabs] = useState(1);
+  const [typingActive, setTypingActive] = useState(false);
+  const [typingProgress, setTypingProgress] = useState(0);
 
   const containerRef = useRef(null);
   const introRef = useRef(null);
   const browserRef = useRef(null);
   const activeTabRef = useRef(0);
   const openedTabsRef = useRef(1);
+  const browserVisibleRef = useRef(false);
 
   useEffect(() => {
     let frameId = null;
@@ -66,7 +69,17 @@ export default function ProjectsBrowser({ projects, onOpenProject }) {
           setOpenedTabs(1);
         }
 
+        if (browserVisibleRef.current) {
+          browserVisibleRef.current = false;
+          setTypingActive(false);
+        }
+
         return;
+      }
+
+      if (!browserVisibleRef.current) {
+        browserVisibleRef.current = true;
+        setTypingActive(true);
       }
 
       intro.style.opacity = "0";
@@ -112,6 +125,98 @@ export default function ProjectsBrowser({ projects, onOpenProject }) {
   }, [featuredProjects.length, totalScrollStages]);
 
   const activeProject = featuredProjects[activeTab];
+  const activeRepo = repoSlug(activeProject);
+
+  const typingPlan = useMemo(() => {
+    const repoPause = 7;
+    const titlePause = 10;
+    const descriptionPause = 10;
+
+    const titleStart = activeRepo.length + repoPause;
+    const descriptionStart = titleStart + activeProject.title.length + titlePause;
+    const tagsStart =
+      descriptionStart + activeProject.description.length + descriptionPause;
+    const total = tagsStart + activeProject.tags.length * 4;
+
+    return {
+      titleStart,
+      descriptionStart,
+      tagsStart,
+      total,
+    };
+  }, [activeProject, activeRepo]);
+
+  useEffect(() => {
+    if (!typingActive) {
+      setTypingProgress(0);
+      return undefined;
+    }
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (reduceMotion) {
+      setTypingProgress(typingPlan.total);
+      return undefined;
+    }
+
+    setTypingProgress(0);
+    return undefined;
+  }, [activeTab, typingActive, typingPlan.total]);
+
+  useEffect(() => {
+    if (!typingActive || typingProgress >= typingPlan.total) {
+      return undefined;
+    }
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (reduceMotion) return undefined;
+
+    const timer = window.setTimeout(() => {
+      setTypingProgress((current) =>
+        Math.min(current + 1, typingPlan.total),
+      );
+    }, 12);
+
+    return () => window.clearTimeout(timer);
+  }, [typingActive, typingProgress, typingPlan.total]);
+
+  const repoProgress = Math.min(typingProgress, activeRepo.length);
+  const titleProgress = Math.min(
+    Math.max(typingProgress - typingPlan.titleStart, 0),
+    activeProject.title.length,
+  );
+  const descriptionProgress = Math.min(
+    Math.max(typingProgress - typingPlan.descriptionStart, 0),
+    activeProject.description.length,
+  );
+  const visibleTagCount = Math.min(
+    activeProject.tags.length,
+    Math.floor(
+      Math.max(typingProgress - typingPlan.tagsStart, 0) / 4,
+    ),
+  );
+
+  const typedRepo = activeRepo.slice(0, repoProgress);
+  const typedTitle = activeProject.title.slice(0, titleProgress);
+  const typedDescription = activeProject.description.slice(
+    0,
+    descriptionProgress,
+  );
+  const typingComplete = typingProgress >= typingPlan.total;
+  const typingRepo = typingActive && repoProgress < activeRepo.length;
+  const typingTitle =
+    typingActive &&
+    repoProgress >= activeRepo.length &&
+    titleProgress < activeProject.title.length;
+  const typingDescription =
+    typingActive &&
+    titleProgress >= activeProject.title.length &&
+    descriptionProgress < activeProject.description.length;
 
   const scrollToTab = (index) => {
     const section = containerRef.current;
@@ -208,7 +313,18 @@ export default function ProjectsBrowser({ projects, onOpenProject }) {
             <div className="work-browser-url">
               <span aria-hidden="true">⌁</span>
               <span className="work-browser-domain">github.com/Anna-Vida/</span>
-              <span>{repoSlug(activeProject)}</span>
+              <span
+                className="work-browser-type-inline"
+                aria-label={activeRepo}
+              >
+                <span className="work-browser-type-ghost" aria-hidden="true">
+                  {activeRepo}
+                </span>
+                <span className="work-browser-type-live" aria-hidden="true">
+                  {typingActive ? typedRepo : activeRepo}
+                  {typingRepo && <span className="work-browser-typing-caret" />}
+                </span>
+              </span>
             </div>
           </div>
 
@@ -217,7 +333,17 @@ export default function ProjectsBrowser({ projects, onOpenProject }) {
               <div className="work-browser-repo-name">
                 <span className="is-muted">Anna-Vida</span>
                 <span className="is-muted">/</span>
-                <strong>{repoSlug(activeProject)}</strong>
+                <strong
+                  className="work-browser-type-inline"
+                  aria-label={activeRepo}
+                >
+                  <span className="work-browser-type-ghost" aria-hidden="true">
+                    {activeRepo}
+                  </span>
+                  <span className="work-browser-type-live" aria-hidden="true">
+                    {typingActive ? typedRepo : activeRepo}
+                  </span>
+                </strong>
                 <span className="work-browser-public">Public</span>
               </div>
 
@@ -258,7 +384,18 @@ export default function ProjectsBrowser({ projects, onOpenProject }) {
                   <span className="work-browser-media-index">
                     PROJECT {activeProject.number}
                   </span>
-                  <strong>{activeProject.title}</strong>
+                  <strong
+                    className="work-browser-type-block"
+                    aria-label={activeProject.title}
+                  >
+                    <span className="work-browser-type-ghost" aria-hidden="true">
+                      {activeProject.title}
+                    </span>
+                    <span className="work-browser-type-live" aria-hidden="true">
+                      {typingActive ? typedTitle : activeProject.title}
+                      {typingTitle && <span className="work-browser-typing-caret" />}
+                    </span>
+                  </strong>
                   <span className="work-browser-media-type">
                     {activeProject.type}
                   </span>
@@ -266,12 +403,51 @@ export default function ProjectsBrowser({ projects, onOpenProject }) {
 
                 <div className="work-browser-narrative">
                   <span className="work-browser-label">PROJECT OVERVIEW</span>
-                  <h3>{activeProject.title}</h3>
-                  <p>{activeProject.description}</p>
+                  <h3
+                    className="work-browser-type-block"
+                    aria-label={activeProject.title}
+                  >
+                    <span className="work-browser-type-ghost" aria-hidden="true">
+                      {activeProject.title}
+                    </span>
+                    <span className="work-browser-type-live" aria-hidden="true">
+                      {typingActive ? typedTitle : activeProject.title}
+                    </span>
+                  </h3>
 
-                  <div className="work-browser-tech">
-                    {activeProject.tags.map((tag) => (
-                      <span key={tag}>{tag}</span>
+                  <p
+                    className="work-browser-type-block work-browser-type-paragraph"
+                    aria-label={activeProject.description}
+                  >
+                    <span className="work-browser-type-ghost" aria-hidden="true">
+                      {activeProject.description}
+                    </span>
+                    <span className="work-browser-type-live" aria-hidden="true">
+                      {typingActive
+                        ? typedDescription
+                        : activeProject.description}
+                      {typingDescription && (
+                        <span className="work-browser-typing-caret" />
+                      )}
+                    </span>
+                  </p>
+
+                  <div
+                    className={`work-browser-tech ${
+                      typingComplete ? "is-typing-complete" : ""
+                    }`}
+                  >
+                    {activeProject.tags.map((tag, index) => (
+                      <span
+                        key={tag}
+                        className={
+                          !typingActive || index < visibleTagCount
+                            ? "is-typed"
+                            : "is-pending"
+                        }
+                      >
+                        {tag}
+                      </span>
                     ))}
                   </div>
                 </div>
