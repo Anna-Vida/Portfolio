@@ -5,7 +5,7 @@ import { AnimatedText } from "./components/ui/animated-text";
 import { ParticleTextEffect } from "./components/ui/interactive-text-particle";
 import CinematicFooter from "./components/ui/motion-footer";
 import annaAboutPortrait from "./assets/anna-about-portrait.png.png.png";
-import InteractiveAboutPortrait from "./components/ui/interactive-about-portrait";
+import InteractiveAboutPortrait, { ABOUT_STATS } from "./components/ui/interactive-about-portrait";
 import TextShimmer from "./components/ui/text-shimmer";
 import FolderCard from "./components/ui/folder-card";
 import TechStackPager from "./components/ui/tech-stack-pager";
@@ -151,6 +151,7 @@ function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [activeNav, setActiveNav] = useState("");
   const [selectedProject, setSelectedProject] = useState(null);
+  const [aboutHighlight, setAboutHighlight] = useState(null);
   const [openSkill, setOpenSkill] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [compactView, setCompactView] = useState(() => {
@@ -647,6 +648,8 @@ function App() {
                 <InteractiveAboutPortrait
                   src={annaAboutPortrait}
                   alt="Anna Patricia Vida in graduation attire"
+                  activeStat={aboutHighlight}
+                  onStatChange={setAboutHighlight}
                 />
               </div>
 
@@ -663,6 +666,65 @@ function App() {
                     connected technology.
                   </span>
                 </h2>
+
+                <div
+                  id="about-highlight-panel"
+                  className={`about-highlight-panel ${
+                    aboutHighlight ? "is-open" : ""
+                  }`}
+                  aria-live="polite"
+                >
+                  {aboutHighlight && (() => {
+                    const detail = ABOUT_STATS.find(
+                      (item) => item.id === aboutHighlight
+                    );
+
+                    if (!detail) return null;
+
+                    return (
+                      <>
+                        <div className="about-highlight-topline">
+                          <div>
+                            <span className="about-highlight-eyebrow">
+                              {detail.eyebrow}
+                            </span>
+                            <strong>{detail.title}</strong>
+                          </div>
+
+                          <button
+                            type="button"
+                            className="about-highlight-close"
+                            onClick={() => setAboutHighlight(null)}
+                            aria-label="Close About highlight"
+                          >
+                            ×
+                          </button>
+                        </div>
+
+                        <span className="about-highlight-organization">
+                          {detail.organization}
+                        </span>
+
+                        <p>{detail.description}</p>
+
+                        <div className="about-highlight-tags">
+                          {detail.items.map((item) => (
+                            <span key={item}>{item}</span>
+                          ))}
+                        </div>
+
+                        {detail.cta && (
+                          <a
+                            href={detail.cta.href}
+                            className="about-highlight-link"
+                          >
+                            {detail.cta.label} ↘
+                          </a>
+                        )}
+                      </>
+                    );
+                  })()}
+                </div>
 
                 <div className="about-info-grid">
                   <article className="about-info-card">
