@@ -15729,3 +15729,137 @@ main > .certifications-section {
   }
 }
 
+/* =========================================================
+   WORK — TERMINAL-INSPIRED TEXT PALETTE ONLY
+   Keep the current browser layout, backgrounds and spacing.
+========================================================= */
+
+.work-browser-section {
+  --terminal-green: #7cff8a;
+  --terminal-green-soft: #a5f3ad;
+  --terminal-cyan: #68d9ff;
+  --terminal-amber: #ffd166;
+  --terminal-muted: #76907b;
+  --terminal-dim: #607064;
+}
+
+/* Intro copy */
+.work-browser-kicker {
+  color: var(--terminal-cyan) !important;
+}
+
+.work-browser-intro-lines span:first-child {
+  color: var(--terminal-green) !important;
+}
+
+.work-browser-intro-lines span:nth-child(2) {
+  color: var(--terminal-green-soft) !important;
+}
+
+.work-browser-intro-lines span:nth-child(3),
+.work-browser-scroll-note {
+  color: var(--terminal-muted) !important;
+}
+
+/* Browser tabs + address bar text */
+.work-browser-tab {
+  color: var(--terminal-dim) !important;
+}
+
+.work-browser-tab.is-active {
+  color: var(--terminal-green) !important;
+}
+
+.work-browser-tab-close,
+.work-browser-all {
+  color: var(--terminal-muted) !important;
+}
+
+.work-browser-all:hover {
+  color: var(--terminal-green) !important;
+}
+
+.work-browser-nav-icons {
+  color: var(--terminal-muted) !important;
+}
+
+.work-browser-url {
+  color: var(--terminal-green-soft) !important;
+}
+
+.work-browser-domain {
+  color: var(--terminal-cyan) !important;
+}
+
+/* Repository header */
+.work-browser-repo-name {
+  color: var(--terminal-green-soft) !important;
+}
+
+.work-browser-repo-name .is-muted {
+  color: var(--terminal-muted) !important;
+}
+
+.work-browser-repo-name strong {
+  color: var(--terminal-green) !important;
+}
+
+.work-browser-public {
+  color: var(--terminal-amber) !important;
+}
+
+.work-browser-repo-actions a {
+  color: var(--terminal-cyan) !important;
+}
+
+/* README chrome */
+.work-browser-readme-head {
+  color: var(--terminal-green-soft) !important;
+}
+
+.work-browser-statuses span {
+  color: var(--terminal-amber) !important;
+}
+
+/* Project card text */
+.work-browser-media-index,
+.work-browser-label {
+  color: var(--terminal-cyan) !important;
+}
+
+.work-browser-media strong,
+.work-browser-narrative h3 {
+  color: var(--terminal-green) !important;
+}
+
+.work-browser-media-type {
+  color: var(--terminal-amber) !important;
+}
+
+.work-browser-narrative p {
+  color: #9fbea5 !important;
+}
+
+.work-browser-tech span {
+  color: #84e9a0 !important;
+}
+
+/* Keep typing cursor in the same phosphor tone. */
+.work-browser-typing-caret {
+  background: var(--terminal-green) !important;
+}
+
+/* Project access text only — preserve the existing button surfaces. */
+.work-browser-access .work-browser-label {
+  color: var(--terminal-cyan) !important;
+}
+
+.work-browser-access a,
+.work-browser-access button {
+  color: var(--terminal-green-soft) !important;
+}
+
+.work-browser-primary {
+  color: #0b0b0b !important;
+}
+
