@@ -1,27 +1,33 @@
-import { FaFolderOpen } from "react-icons/fa";
-
 export default function FolderCard({
   number,
   title,
   count,
   open = false,
 }) {
-  return (
-    <span className="skill-folder-shell" aria-hidden="true">
-      <span className="skill-folder-tab" />
-      <span className="skill-folder-surface">
-        <span className="skill-folder-top">
-          <span className="skill-folder-number">{number}</span>
-          <FaFolderOpen className="skill-folder-icon" />
-        </span>
+  const technologyCount = String(count).match(/\d+/)?.[0] || count;
 
+  return (
+    <span
+      className={`skill-folder-shell ${open ? "is-open" : ""}`}
+      aria-hidden="true"
+    >
+      <span className="skill-folder-surface">
         <span className="skill-folder-copy">
           <span className="skill-folder-title">{title}</span>
-          <span className="skill-folder-count">{count}</span>
+          <span className="skill-folder-subtitle">Technology stack</span>
+        </span>
+
+        <span className="skill-folder-footer">
+          <span className="skill-folder-count">
+            <strong>{technologyCount}</strong>
+            <span>Technologies</span>
+          </span>
+
+          <span className="skill-folder-number">{number}</span>
         </span>
 
         <span className="skill-folder-action">
-          {open ? "Folder open" : "Open folder"} ↗
+          {open ? "Close stack ↓" : "Open stack ↑"}
         </span>
       </span>
     </span>
