@@ -15635,3 +15635,401 @@ main > .certifications-section {
   }
 }
 
+/* =========================================================
+   EXPERIENCE — WINDOWS TERMINAL AUTO-TYPE
+========================================================= */
+
+.experience-terminal-shell {
+  position: relative;
+  width: 100%;
+  min-height: 560px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  background: rgba(7, 7, 8, 0.94);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+  color: #d8d8d8;
+  font-family: "Cascadia Code", "Cascadia Mono", "SFMono-Regular", Consolas,
+    "Liberation Mono", monospace;
+  isolation: isolate;
+}
+
+.experience-terminal-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.12;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0,
+      transparent 3px,
+      rgba(255, 255, 255, 0.018) 4px
+    );
+}
+
+.experience-terminal-titlebar {
+  position: relative;
+  z-index: 2;
+  min-height: 46px;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  background: #171719;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  user-select: none;
+}
+
+.experience-terminal-tabs {
+  display: flex;
+  align-items: flex-end;
+  min-width: 0;
+  padding-left: 10px;
+}
+
+.experience-terminal-tab {
+  min-width: 190px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 8px;
+  padding: 0 13px;
+  border: 0;
+  border-radius: 8px 8px 0 0;
+  background: transparent;
+  color: #aaa;
+  font: inherit;
+  font-size: 0.73rem;
+  pointer-events: none;
+}
+
+.experience-terminal-tab.is-active {
+  background: #080809;
+  color: #ececec;
+}
+
+.experience-terminal-tab-icon {
+  color: #d6d6d6;
+  font-size: 0.66rem;
+  font-weight: 800;
+}
+
+.experience-terminal-tab-close {
+  margin-left: auto;
+  color: #757575;
+  font-size: 1rem;
+}
+
+.experience-terminal-new-tab,
+.experience-terminal-chevron {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  color: #999;
+  font-size: 1rem;
+}
+
+.experience-terminal-window-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 46px);
+  align-self: stretch;
+}
+
+.experience-terminal-window-actions span {
+  display: grid;
+  place-items: center;
+  color: #aaa;
+  font-family: "Inter", sans-serif;
+  font-size: 0.8rem;
+}
+
+.experience-terminal-window-close {
+  font-size: 1.1rem !important;
+}
+
+.experience-terminal-toolbar {
+  position: relative;
+  z-index: 2;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+  background: #0d0d0f;
+  color: #777;
+  font-size: 0.61rem;
+  letter-spacing: 0.04em;
+}
+
+.experience-terminal-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.experience-terminal-status i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #777;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.025);
+}
+
+.experience-terminal-shell.is-running .experience-terminal-status i {
+  background: #d0d0d0;
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.035),
+    0 0 11px rgba(255, 255, 255, 0.18);
+}
+
+.experience-terminal-shell.is-complete .experience-terminal-status i {
+  background: #f2f2f2;
+}
+
+.experience-terminal-output {
+  position: relative;
+  z-index: 2;
+  height: 438px;
+  overflow-y: auto;
+  padding: 25px 28px 34px;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(255, 255, 255, 0.025), transparent 26%),
+    #080809;
+  scrollbar-width: thin;
+  scrollbar-color: #333 transparent;
+}
+
+.experience-terminal-output::-webkit-scrollbar {
+  width: 6px;
+}
+
+.experience-terminal-output::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.experience-terminal-output::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 999px;
+}
+
+.experience-terminal-line {
+  min-height: 1.45em;
+  margin: 0;
+  color: #b9b9b9;
+  font-size: clamp(0.72rem, 1vw, 0.87rem);
+  line-height: 1.62;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.experience-terminal-line--blank {
+  min-height: 0.9em;
+}
+
+.experience-terminal-line--prompt {
+  color: #f0f0f0;
+  font-weight: 650;
+}
+
+.experience-terminal-line--system {
+  color: #777;
+  font-style: italic;
+}
+
+.experience-terminal-line--label {
+  margin-top: 2px;
+  color: #888;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.experience-terminal-line--title {
+  color: #fff;
+  font-size: clamp(0.9rem, 1.3vw, 1.15rem);
+  font-weight: 720;
+  letter-spacing: -0.02em;
+}
+
+.experience-terminal-line--value {
+  color: #d6d6d6;
+}
+
+.experience-terminal-line--output {
+  color: #aaa;
+  padding-left: 14px;
+  position: relative;
+}
+
+.experience-terminal-line--output::before {
+  content: "│";
+  position: absolute;
+  left: 0;
+  color: #4d4d4d;
+}
+
+.experience-terminal-line--meta {
+  color: #737373;
+  font-size: 0.69rem;
+  letter-spacing: 0.025em;
+}
+
+.experience-terminal-line--success {
+  margin-top: 4px;
+  color: #efefef;
+  font-weight: 700;
+}
+
+.experience-terminal-caret {
+  display: inline-block;
+  width: 8px;
+  height: 1.05em;
+  margin-left: 3px;
+  vertical-align: -0.15em;
+  background: #f2f2f2;
+  animation: experienceTerminalCaret 0.72s steps(1, end) infinite;
+}
+
+.experience-terminal-await {
+  min-height: 320px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  text-align: center;
+  color: #555;
+}
+
+.experience-terminal-await-icon {
+  margin-bottom: 12px;
+  color: #8b8b8b;
+  font-size: 1.45rem;
+  font-weight: 800;
+}
+
+.experience-terminal-await p {
+  max-width: 380px;
+  margin: 0;
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+.experience-terminal-footer {
+  position: relative;
+  z-index: 2;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 0 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.055);
+  background: #101012;
+  color: #666;
+  font-size: 0.55rem;
+  letter-spacing: 0.04em;
+}
+
+.experience-terminal-footer span:last-child {
+  margin-left: auto;
+}
+
+body.compact-mode .experience-terminal-shell {
+  min-height: 500px;
+}
+
+body.compact-mode .experience-terminal-output {
+  height: 380px;
+}
+
+@keyframes experienceTerminalCaret {
+  0%,
+  48% {
+    opacity: 1;
+  }
+
+  49%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .experience-terminal-shell {
+    min-height: 520px;
+    border-radius: 14px;
+  }
+
+  .experience-terminal-tab {
+    min-width: 150px;
+    font-size: 0.65rem;
+  }
+
+  .experience-terminal-window-actions {
+    grid-template-columns: repeat(3, 34px);
+  }
+
+  .experience-terminal-new-tab,
+  .experience-terminal-chevron {
+    display: none;
+  }
+
+  .experience-terminal-toolbar {
+    padding-inline: 12px;
+  }
+
+  .experience-terminal-output {
+    height: 398px;
+    padding: 20px 16px 26px;
+  }
+
+  .experience-terminal-line {
+    font-size: 0.7rem;
+    line-height: 1.58;
+  }
+
+  .experience-terminal-line--label,
+  .experience-terminal-line--meta {
+    font-size: 0.59rem;
+  }
+
+  .experience-terminal-line--title {
+    font-size: 0.87rem;
+  }
+
+  .experience-terminal-footer {
+    gap: 12px;
+    padding-inline: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .experience-terminal-window-actions span:first-child,
+  .experience-terminal-window-actions span:nth-child(2) {
+    display: none;
+  }
+
+  .experience-terminal-window-actions {
+    grid-template-columns: 38px;
+  }
+
+  .experience-terminal-tab {
+    min-width: 132px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience-terminal-caret {
+    animation: none !important;
+  }
+}
+
