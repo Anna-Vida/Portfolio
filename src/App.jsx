@@ -151,7 +151,7 @@ function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [activeNav, setActiveNav] = useState("");
   const [selectedProject, setSelectedProject] = useState(null);
-  const [flippedSkill, setFlippedSkill] = useState(null);
+  const [openSkill, setOpenSkill] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [compactView, setCompactView] = useState(() => {
     return localStorage.getItem("portfolio-compact-view") === "true";
@@ -959,12 +959,12 @@ function App() {
             <div className="skills-grid skills-flip-grid">
               <button
                 type="button"
-                className={`skill-flip-card ${flippedSkill === 0 ? "is-flipped" : ""}`}
+                className={`skill-flip-card ${openSkill === 0 ? "is-flipped" : ""}`}
                 onClick={() =>
-                  setFlippedSkill((current) => (current === 0 ? null : 0))
+                  setOpenSkill((current) => (current === 0 ? null : 0))
                 }
-                aria-pressed={flippedSkill === 0}
-                aria-label="Flip Mobile skill card"
+                aria-pressed={openSkill === 0}
+                aria-label="Open or close Mobile skill folder"
               >
                 <span className="skill-card-inner">
                   <span className="skill-card-face skill-card-front skill-folder-front">
@@ -972,7 +972,7 @@ function App() {
                       number="01"
                       title="Mobile"
                       count="6 technologies"
-                      open={flippedSkill === 0}
+                      open={openSkill === 0}
                     />
                   </span>
 
@@ -986,19 +986,19 @@ function App() {
                       <span>Dart</span>
                       <span>Android Studio</span>
                     </span>
-                    <span className="skill-card-hint">Close folder ↺</span>
+                    <span className="skill-card-hint">Click to close ↓</span>
                   </span>
                 </span>
               </button>
 
               <button
                 type="button"
-                className={`skill-flip-card ${flippedSkill === 1 ? "is-flipped" : ""}`}
+                className={`skill-flip-card ${openSkill === 1 ? "is-flipped" : ""}`}
                 onClick={() =>
-                  setFlippedSkill((current) => (current === 1 ? null : 1))
+                  setOpenSkill((current) => (current === 1 ? null : 1))
                 }
-                aria-pressed={flippedSkill === 1}
-                aria-label="Flip Frontend skill card"
+                aria-pressed={openSkill === 1}
+                aria-label="Open or close Frontend skill folder"
               >
                 <span className="skill-card-inner">
                   <span className="skill-card-face skill-card-front skill-folder-front">
@@ -1006,7 +1006,7 @@ function App() {
                       number="02"
                       title="Frontend"
                       count="9 technologies"
-                      open={flippedSkill === 1}
+                      open={openSkill === 1}
                     />
                   </span>
 
@@ -1023,19 +1023,19 @@ function App() {
                       <span>MUI</span>
                       <span>Redux</span>
                     </span>
-                    <span className="skill-card-hint">Close folder ↺</span>
+                    <span className="skill-card-hint">Click to close ↓</span>
                   </span>
                 </span>
               </button>
 
               <button
                 type="button"
-                className={`skill-flip-card ${flippedSkill === 2 ? "is-flipped" : ""}`}
+                className={`skill-flip-card ${openSkill === 2 ? "is-flipped" : ""}`}
                 onClick={() =>
-                  setFlippedSkill((current) => (current === 2 ? null : 2))
+                  setOpenSkill((current) => (current === 2 ? null : 2))
                 }
-                aria-pressed={flippedSkill === 2}
-                aria-label="Flip Backend & APIs skill card"
+                aria-pressed={openSkill === 2}
+                aria-label="Open or close Backend & APIs skill folder"
               >
                 <span className="skill-card-inner">
                   <span className="skill-card-face skill-card-front skill-folder-front">
@@ -1043,7 +1043,7 @@ function App() {
                       number="03"
                       title="Backend & APIs"
                       count="8 technologies"
-                      open={flippedSkill === 2}
+                      open={openSkill === 2}
                     />
                   </span>
 
@@ -1059,19 +1059,19 @@ function App() {
                       <span>Kotlin</span>
                       <span>C/C++</span>
                     </span>
-                    <span className="skill-card-hint">Close folder ↺</span>
+                    <span className="skill-card-hint">Click to close ↓</span>
                   </span>
                 </span>
               </button>
 
               <button
                 type="button"
-                className={`skill-flip-card ${flippedSkill === 3 ? "is-flipped" : ""}`}
+                className={`skill-flip-card ${openSkill === 3 ? "is-flipped" : ""}`}
                 onClick={() =>
-                  setFlippedSkill((current) => (current === 3 ? null : 3))
+                  setOpenSkill((current) => (current === 3 ? null : 3))
                 }
-                aria-pressed={flippedSkill === 3}
-                aria-label="Flip Databases skill card"
+                aria-pressed={openSkill === 3}
+                aria-label="Open or close Databases skill folder"
               >
                 <span className="skill-card-inner">
                   <span className="skill-card-face skill-card-front skill-folder-front">
@@ -1079,7 +1079,7 @@ function App() {
                       number="04"
                       title="Databases"
                       count="5 technologies"
-                      open={flippedSkill === 3}
+                      open={openSkill === 3}
                     />
                   </span>
 
@@ -1092,19 +1092,19 @@ function App() {
                       <span>MySQL</span>
                       <span>SQLite</span>
                     </span>
-                    <span className="skill-card-hint">Close folder ↺</span>
+                    <span className="skill-card-hint">Click to close ↓</span>
                   </span>
                 </span>
               </button>
 
               <button
                 type="button"
-                className={`skill-flip-card ${flippedSkill === 4 ? "is-flipped" : ""}`}
+                className={`skill-flip-card ${openSkill === 4 ? "is-flipped" : ""}`}
                 onClick={() =>
-                  setFlippedSkill((current) => (current === 4 ? null : 4))
+                  setOpenSkill((current) => (current === 4 ? null : 4))
                 }
-                aria-pressed={flippedSkill === 4}
-                aria-label="Flip Cloud & Tools skill card"
+                aria-pressed={openSkill === 4}
+                aria-label="Open or close Cloud & Tools skill folder"
               >
                 <span className="skill-card-inner">
                   <span className="skill-card-face skill-card-front skill-folder-front">
@@ -1112,7 +1112,7 @@ function App() {
                       number="05"
                       title="Cloud & Tools"
                       count="11 technologies"
-                      open={flippedSkill === 4}
+                      open={openSkill === 4}
                     />
                   </span>
 
@@ -1131,19 +1131,19 @@ function App() {
                       <span>GitHub Copilot</span>
                       <span>Cursor</span>
                     </span>
-                    <span className="skill-card-hint">Close folder ↺</span>
+                    <span className="skill-card-hint">Click to close ↓</span>
                   </span>
                 </span>
               </button>
 
               <button
                 type="button"
-                className={`skill-flip-card ${flippedSkill === 5 ? "is-flipped" : ""}`}
+                className={`skill-flip-card ${openSkill === 5 ? "is-flipped" : ""}`}
                 onClick={() =>
-                  setFlippedSkill((current) => (current === 5 ? null : 5))
+                  setOpenSkill((current) => (current === 5 ? null : 5))
                 }
-                aria-pressed={flippedSkill === 5}
-                aria-label="Flip AI, IoT & Security skill card"
+                aria-pressed={openSkill === 5}
+                aria-label="Open or close AI, IoT & Security skill folder"
               >
                 <span className="skill-card-inner">
                   <span className="skill-card-face skill-card-front skill-folder-front">
@@ -1151,7 +1151,7 @@ function App() {
                       number="06"
                       title="AI, IoT & Security"
                       count="7 technologies"
-                      open={flippedSkill === 5}
+                      open={openSkill === 5}
                     />
                   </span>
 
@@ -1166,7 +1166,7 @@ function App() {
                       <span>Raspberry Pi</span>
                       <span>Wearable Tech</span>
                     </span>
-                    <span className="skill-card-hint">Close folder ↺</span>
+                    <span className="skill-card-hint">Click to close ↓</span>
                   </span>
                 </span>
               </button>
