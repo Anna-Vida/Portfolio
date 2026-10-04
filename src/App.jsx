@@ -4,7 +4,7 @@ import HeroHexBackground from "./components/ui/hero-hex-background";
 import { AnimatedText } from "./components/ui/animated-text";
 import { ParticleTextEffect } from "./components/ui/interactive-text-particle";
 import CinematicFooter from "./components/ui/motion-footer";
-import annaAboutPortrait from "./assets/anna-about-portrait.png.png";
+import annaAboutPortrait from "./assets/anna-about-portrait.png.png.png";
 import InteractiveAboutPortrait from "./components/ui/interactive-about-portrait";
 import TextShimmer from "./components/ui/text-shimmer";
 import FolderCard from "./components/ui/folder-card";
