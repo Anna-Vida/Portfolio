@@ -16468,3 +16468,46 @@ html[data-theme="accent"] .skill-folder-surface {
   color: #777777 !important;
 }
 
+/* =========================================================
+   SKILLS FOLDERS — DARKER FRONT SURFACE
+   Reduce the bright off-white while keeping the folder shape readable.
+========================================================= */
+
+.skill-folder-surface,
+html[data-theme="original"] .skill-folder-surface,
+html[data-theme="accent"] .skill-folder-surface {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.025),
+      rgba(255, 255, 255, 0) 46%
+    ),
+    #242424 !important;
+  color: #f2f2f2 !important;
+}
+
+.skill-folder-title,
+.skill-folder-count strong,
+.skill-folder-number {
+  color: #f2f2f2 !important;
+}
+
+.skill-folder-subtitle,
+.skill-folder-count,
+.skill-folder-count span,
+.skill-folder-action {
+  color: #969696 !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .skills-grid.skills-flip-grid .skill-flip-card:hover .skill-folder-surface {
+    background:
+      linear-gradient(
+        145deg,
+        rgba(255, 255, 255, 0.04),
+        rgba(255, 255, 255, 0) 46%
+      ),
+      #2a2a2a !important;
+  }
+}
+
