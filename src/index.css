@@ -16390,3 +16390,81 @@ html[data-theme="accent"] .skill-folder-surface {
   }
 }
 
+/* =========================================================
+   SKILLS FOLDERS — PORTFOLIO MONOCHROME PALETTE
+   Keep the folder/pop-out interaction; remove violet/cream styling.
+========================================================= */
+
+/* Insert card: graphite / charcoal instead of violet. */
+.skills-grid.skills-flip-grid .skill-card-back,
+html[data-theme="original"] .skills-grid.skills-flip-grid .skill-card-back,
+html[data-theme="accent"] .skills-grid.skills-flip-grid .skill-card-back {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  background:
+    radial-gradient(
+      circle at 74% 90%,
+      rgba(255, 255, 255, 0.07),
+      transparent 38%
+    ),
+    linear-gradient(
+      145deg,
+      #1b1b1b 0%,
+      #121212 48%,
+      #090909 100%
+    ) !important;
+  color: #f2f2f2 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.045),
+    0 12px 30px rgba(0, 0, 0, 0.25) !important;
+}
+
+.skills-grid.skills-flip-grid .skill-flip-card.is-flipped .skill-card-back {
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 18px 42px rgba(0, 0, 0, 0.42),
+    0 0 26px rgba(255, 255, 255, 0.035) !important;
+}
+
+/* Folder front: use the same off-white already used elsewhere in the portfolio. */
+.skill-folder-surface,
+html[data-theme="original"] .skill-folder-surface,
+html[data-theme="accent"] .skill-folder-surface {
+  background: #efefeb !important;
+  color: #0b0b0b !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .skills-grid.skills-flip-grid .skill-flip-card:hover .skill-folder-surface {
+    background: #f7f7f3 !important;
+  }
+}
+
+.skill-folder-title,
+.skill-folder-count strong,
+.skill-folder-number {
+  color: #0b0b0b !important;
+}
+
+.skill-folder-subtitle,
+.skill-folder-count,
+.skill-folder-count span,
+.skill-folder-action {
+  color: #666666 !important;
+}
+
+/* Insert information follows the black / white / gray UI language. */
+.skills-grid.skills-flip-grid .skill-card-back-label {
+  color: #f2f2f2 !important;
+}
+
+.skills-grid.skills-flip-grid .skill-card-back .skill-tags span {
+  border-color: rgba(255, 255, 255, 0.11) !important;
+  background: rgba(255, 255, 255, 0.045) !important;
+  color: #d4d4d4 !important;
+}
+
+.skills-grid.skills-flip-grid .skill-card-back .skill-card-hint {
+  color: #777777 !important;
+}
+
