@@ -16286,3 +16286,107 @@ html[data-theme="accent"] .skill-folder-surface {
   }
 }
 
+/* =========================================================
+   SKILLS POP-OUT VISIBILITY FIX
+   Make the violet insert clearly visible and keep the cream folder beneath it.
+========================================================= */
+
+.skills-grid.skills-flip-grid .skill-flip-card {
+  overflow: hidden !important;
+  cursor: pointer !important;
+}
+
+/* Closed state: show a clear violet card edge above the folder. */
+.skills-grid.skills-flip-grid .skill-card-back,
+html[data-theme="original"] .skills-grid.skills-flip-grid .skill-card-back,
+html[data-theme="accent"] .skills-grid.skills-flip-grid .skill-card-back {
+  top: 8px !important;
+  left: 15px !important;
+  right: 15px !important;
+  height: 182px !important;
+  transform: translateY(24px) scale(0.97) !important;
+  z-index: 1 !important;
+}
+
+/* Lower the cream folder face slightly so the violet insert is visible. */
+.skill-folder-surface,
+html[data-theme="original"] .skill-folder-surface,
+html[data-theme="accent"] .skill-folder-surface {
+  height: 160px !important;
+}
+
+/* Open state: violet card rises in front, while the bottom of the folder stays visible. */
+.skills-grid.skills-flip-grid .skill-flip-card.is-flipped .skill-card-back {
+  top: 8px !important;
+  height: 174px !important;
+  transform: translateY(-2px) scale(0.985) !important;
+  z-index: 5 !important;
+  pointer-events: none !important;
+}
+
+.skills-grid.skills-flip-grid .skill-flip-card.is-flipped .skill-folder-surface {
+  transform: translateY(0) !important;
+}
+
+/* Make the revealed information immediately readable. */
+.skills-grid.skills-flip-grid .skill-flip-card.is-flipped .skill-card-back > * {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.skills-grid.skills-flip-grid .skill-card-back-label {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 9px !important;
+  font-size: 0.82rem !important;
+}
+
+.skills-grid.skills-flip-grid .skill-card-back .skill-tags {
+  position: relative;
+  z-index: 2;
+  max-height: 112px;
+  overflow: hidden;
+}
+
+.skills-grid.skills-flip-grid .skill-card-back .skill-tags span {
+  padding: 4px 7px !important;
+  font-size: 0.48rem !important;
+}
+
+.skills-grid.skills-flip-grid .skill-card-back .skill-card-hint {
+  display: none !important;
+}
+
+/* While open, keep enough of the cream folder showing at the bottom. */
+.skills-grid.skills-flip-grid .skill-flip-card.is-flipped .skill-folder-footer {
+  z-index: 7;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .skills-grid.skills-flip-grid .skill-flip-card:not(.is-flipped):hover .skill-card-back {
+    transform: translateY(18px) scale(0.975) !important;
+  }
+
+  .skills-grid.skills-flip-grid .skill-flip-card.is-flipped:hover .skill-card-back {
+    transform: translateY(-4px) scale(0.99) !important;
+  }
+}
+
+@media (max-width: 680px) {
+  .skill-folder-surface,
+  html[data-theme="original"] .skill-folder-surface,
+  html[data-theme="accent"] .skill-folder-surface {
+    height: 148px !important;
+  }
+
+  .skills-grid.skills-flip-grid .skill-card-back,
+  html[data-theme="original"] .skills-grid.skills-flip-grid .skill-card-back,
+  html[data-theme="accent"] .skills-grid.skills-flip-grid .skill-card-back {
+    height: 166px !important;
+  }
+
+  .skills-grid.skills-flip-grid .skill-flip-card.is-flipped .skill-card-back {
+    height: 160px !important;
+  }
+}
+
