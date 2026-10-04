@@ -75,6 +75,8 @@ export default function InteractiveAboutPortrait({
   onStatChange,
 }) {
   const wrapRef = useRef(null);
+  const pointerFrameRef = useRef(null);
+  const pointerPointRef = useRef(null);
   const [identityVisible, setIdentityVisible] = useState(false);
 
   useEffect(() => {
@@ -105,22 +107,42 @@ export default function InteractiveAboutPortrait({
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (pointerFrameRef.current !== null) {
+        window.cancelAnimationFrame(pointerFrameRef.current);
+      }
+    };
+  }, []);
+
   const handlePointerMove = (event) => {
     if (window.matchMedia("(pointer: coarse)").matches) return;
 
-    const wrap = wrapRef.current;
-    if (!wrap) return;
+    pointerPointRef.current = {
+      clientX: event.clientX,
+      clientY: event.clientY,
+    };
 
-    const rect = wrap.getBoundingClientRect();
-    const x = (event.clientX - rect.left) / rect.width;
-    const y = (event.clientY - rect.top) / rect.height;
-    const px = x - 0.5;
-    const py = y - 0.5;
+    if (pointerFrameRef.current !== null) return;
 
-    wrap.style.setProperty("--about-shift-x", `${px * 8}px`);
-    wrap.style.setProperty("--about-shift-y", `${py * 6}px`);
-    wrap.style.setProperty("--about-pointer-x", `${x * 100}%`);
-    wrap.style.setProperty("--about-pointer-y", `${y * 100}%`);
+    pointerFrameRef.current = window.requestAnimationFrame(() => {
+      pointerFrameRef.current = null;
+
+      const wrap = wrapRef.current;
+      const point = pointerPointRef.current;
+      if (!wrap || !point) return;
+
+      const rect = wrap.getBoundingClientRect();
+      const x = (point.clientX - rect.left) / rect.width;
+      const y = (point.clientY - rect.top) / rect.height;
+      const px = x - 0.5;
+      const py = y - 0.5;
+
+      wrap.style.setProperty("--about-shift-x", `${px * 8}px`);
+      wrap.style.setProperty("--about-shift-y", `${py * 6}px`);
+      wrap.style.setProperty("--about-pointer-x", `${x * 100}%`);
+      wrap.style.setProperty("--about-pointer-y", `${y * 100}%`);
+    });
   };
 
   const resetPointer = () => {
