@@ -15911,3 +15911,378 @@ main > .certifications-section {
     0 0 24px rgba(124, 255, 138, 0.10) !important;
 }
 
+/* =========================================================
+   SKILLS — FOLDER WITH POP-OUT INSERT CARD
+   Keeps the current grid and card dimensions. The old 3D flip is disabled.
+========================================================= */
+
+.skills-grid.skills-flip-grid {
+  perspective: none !important;
+}
+
+.skills-grid.skills-flip-grid .skill-flip-card {
+  min-height: 248px !important;
+  overflow: hidden !important;
+  border-radius: 26px !important;
+  contain: layout paint style;
+}
+
+.skills-grid.skills-flip-grid .skill-flip-card::before,
+.skills-grid.skills-flip-grid .skill-flip-card::after,
+.skills-grid.skills-flip-grid .skill-card-face::after {
+  display: none !important;
+}
+
+.skills-grid.skills-flip-grid .skill-card-inner,
+.skills-grid.skills-flip-grid .skill-flip-card.is-flipped .skill-card-inner,
+.skills-grid.skills-flip-grid .skill-flip-card:hover .skill-card-inner,
+.skills-grid.skills-flip-grid .skill-flip-card.is-flipped:hover .skill-card-inner {
+  min-height: 248px !important;
+  transform: none !important;
+  transform-style: flat !important;
+  transition: none !important;
+}
+
+.skills-grid.skills-flip-grid .skill-card-face {
+  inset: 0 !important;
+  padding: 0 !important;
+  backface-visibility: visible !important;
+  -webkit-backface-visibility: visible !important;
+  overflow: visible !important;
+}
+
+.skills-grid.skills-flip-grid .skill-card-front,
+html[data-theme="original"] .skills-grid.skills-flip-grid .skill-card-front,
+html[data-theme="accent"] .skills-grid.skills-flip-grid .skill-card-front {
+  z-index: 2;
+  transform: none !important;
+  background: transparent !important;
+  pointer-events: none;
+}
+
+/* Purple insert that lives behind the folder front. */
+.skills-grid.skills-flip-grid .skill-card-back,
+html[data-theme="original"] .skills-grid.skills-flip-grid .skill-card-back,
+html[data-theme="accent"] .skills-grid.skills-flip-grid .skill-card-back {
+  position: absolute !important;
+  z-index: 1;
+  top: 10px !important;
+  left: 14px !important;
+  right: 14px !important;
+  bottom: auto !important;
+  width: auto !important;
+  height: 188px !important;
+  min-height: 0 !important;
+  padding: 20px 20px 16px !important;
+  border: 1px solid rgba(207, 183, 255, 0.20) !important;
+  border-radius: 21px !important;
+  overflow: hidden !important;
+  transform: translateY(27px) scale(0.965) !important;
+  transform-origin: center bottom;
+  background:
+    radial-gradient(
+      circle at 72% 88%,
+      rgba(155, 93, 255, 0.68),
+      transparent 36%
+    ),
+    linear-gradient(
+      145deg,
+      #16082b 0%,
+      #251046 45%,
+      #512495 100%
+    ) !important;
+  color: #fff !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.10),
+    0 12px 30px rgba(0,0,0,0.18) !important;
+  opacity: 1 !important;
+  pointer-events: none;
+  transition:
+    transform 430ms cubic-bezier(.2,.78,.18,1),
+    box-shadow 360ms ease,
+    border-color 360ms ease !important;
+}
+
+/* Keep the insert visually present while closed, but hide its information. */
+.skills-grid.skills-flip-grid .skill-card-back > * {
+  opacity: 0;
+  transform: translateY(9px);
+  transition:
+    opacity 150ms ease,
+    transform 180ms ease;
+}
+
+/* Click = pull the purple information card out of the folder. */
+.skills-grid.skills-flip-grid .skill-flip-card.is-flipped .skill-card-back {
+  z-index: 4;
+  transform: translateY(-3px) scale(0.985) !important;
+  border-color: rgba(221, 207, 255, 0.34) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.13),
+    0 18px 42px rgba(34, 10, 66, 0.42),
+    0 0 34px rgba(113, 62, 218, 0.14) !important;
+}
+
+.skills-grid.skills-flip-grid .skill-flip-card.is-flipped .skill-card-back > * {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 145ms;
+}
+
+/* Folder shell + cream front inspired by the supplied reference. */
+.skill-folder-shell {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  height: 248px !important;
+  min-height: 248px !important;
+  padding: 0 !important;
+  filter: drop-shadow(0 13px 17px rgba(0,0,0,0.18));
+}
+
+.skill-folder-tab {
+  display: none !important;
+}
+
+.skill-folder-surface,
+html[data-theme="original"] .skill-folder-surface,
+html[data-theme="accent"] .skill-folder-surface {
+  position: absolute !important;
+  z-index: 2;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  top: auto !important;
+  width: 100% !important;
+  height: 174px !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  padding: 41px 24px 18px !important;
+  border: 0 !important;
+  border-radius: 0 0 25px 25px !important;
+  clip-path: polygon(
+    0 0,
+    54% 0,
+    66% 27px,
+    100% 27px,
+    100% 100%,
+    0 100%
+  );
+  background: #f0efe6 !important;
+  color: #111 !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  transform: translateY(0) !important;
+  transition:
+    transform 360ms cubic-bezier(.2,.78,.18,1),
+    background 220ms ease !important;
+}
+
+.skill-folder-surface::after {
+  display: none !important;
+}
+
+.skill-folder-copy {
+  position: relative;
+  z-index: 2;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px !important;
+}
+
+.skill-folder-title {
+  max-width: 82% !important;
+  color: #0d0d0d !important;
+  font-family: "Manrope", sans-serif !important;
+  font-size: clamp(1rem, 1.45vw, 1.28rem) !important;
+  font-weight: 720 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.035em !important;
+}
+
+.skill-folder-subtitle {
+  color: #766f65 !important;
+  font-size: 0.67rem;
+  line-height: 1.2;
+}
+
+.skill-folder-footer {
+  position: absolute;
+  z-index: 2;
+  left: 24px;
+  right: 24px;
+  bottom: 18px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.skill-folder-count {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: baseline;
+  gap: 7px !important;
+  color: #716d66 !important;
+  font-size: 0.66rem !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+.skill-folder-count strong {
+  color: #080808;
+  font-family: "Manrope", sans-serif;
+  font-size: 1.75rem;
+  font-weight: 650;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+}
+
+.skill-folder-count span {
+  color: #716d66;
+  font-size: 0.66rem;
+}
+
+.skill-folder-number {
+  color: #171717 !important;
+  font-size: 0.68rem !important;
+  font-weight: 760 !important;
+  letter-spacing: 0.10em !important;
+}
+
+.skill-folder-action {
+  position: absolute !important;
+  z-index: 3;
+  top: 42px;
+  right: 21px;
+  color: #756f67 !important;
+  font-size: 0.50rem !important;
+  font-weight: 720 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+}
+
+/* The folder front settles slightly lower when the insert is pulled out. */
+.skills-grid.skills-flip-grid .skill-flip-card.is-flipped .skill-folder-surface {
+  transform: translateY(7px) !important;
+}
+
+/* Info-card typography. */
+.skills-grid.skills-flip-grid .skill-card-back-label {
+  display: block;
+  margin: 0 0 10px !important;
+  color: #f6efff !important;
+  font-family: "Manrope", sans-serif;
+  font-size: 0.82rem !important;
+  font-weight: 750;
+  letter-spacing: -0.015em;
+}
+
+.skills-grid.skills-flip-grid .skill-card-back .skill-tags {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-content: flex-start;
+  gap: 6px !important;
+}
+
+.skills-grid.skills-flip-grid .skill-card-back .skill-tags span {
+  min-height: 0 !important;
+  padding: 5px 7px !important;
+  border: 1px solid rgba(255,255,255,0.14) !important;
+  border-radius: 999px !important;
+  background: rgba(255,255,255,0.075) !important;
+  color: #f1e9ff !important;
+  font-size: 0.50rem !important;
+  line-height: 1.1 !important;
+}
+
+.skills-grid.skills-flip-grid .skill-card-back .skill-card-hint {
+  position: absolute;
+  left: 20px;
+  bottom: 13px;
+  padding: 0 !important;
+  color: rgba(240, 229, 255, 0.60) !important;
+  font-size: 0.49rem !important;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Hover keeps the folder interaction subtle instead of flipping or lifting the card. */
+@media (hover: hover) and (pointer: fine) {
+  .skills-grid.skills-flip-grid .skill-flip-card:hover .skill-folder-surface {
+    transform: translateY(-2px) !important;
+    background: #f5f3ea !important;
+  }
+
+  .skills-grid.skills-flip-grid .skill-flip-card.is-flipped:hover .skill-folder-surface {
+    transform: translateY(7px) !important;
+  }
+
+  .skills-grid.skills-flip-grid .skill-flip-card:not(.is-flipped):hover .skill-card-back {
+    transform: translateY(23px) scale(0.97) !important;
+  }
+}
+
+@media (max-width: 680px) {
+  .skills-grid.skills-flip-grid .skill-flip-card,
+  .skills-grid.skills-flip-grid .skill-card-inner,
+  .skill-folder-shell {
+    min-height: 226px !important;
+    height: 226px !important;
+  }
+
+  .skill-folder-surface {
+    height: 160px !important;
+    padding: 38px 20px 16px !important;
+    clip-path: polygon(
+      0 0,
+      55% 0,
+      68% 24px,
+      100% 24px,
+      100% 100%,
+      0 100%
+    ) !important;
+  }
+
+  .skills-grid.skills-flip-grid .skill-card-back {
+    left: 11px !important;
+    right: 11px !important;
+    height: 171px !important;
+    padding: 16px 16px 14px !important;
+  }
+
+  .skill-folder-footer {
+    left: 20px;
+    right: 20px;
+    bottom: 15px;
+  }
+
+  .skill-folder-action {
+    top: 38px;
+    right: 18px;
+  }
+
+  .skill-folder-title {
+    font-size: 1rem !important;
+  }
+
+  .skill-folder-count strong {
+    font-size: 1.55rem;
+  }
+
+  .skills-grid.skills-flip-grid .skill-card-back .skill-tags span {
+    padding: 4px 6px !important;
+    font-size: 0.47rem !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skills-grid.skills-flip-grid .skill-card-back,
+  .skill-folder-surface,
+  .skills-grid.skills-flip-grid .skill-card-back > * {
+    transition: none !important;
+  }
+}
+
