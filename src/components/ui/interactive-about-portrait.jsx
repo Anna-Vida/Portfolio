@@ -1,5 +1,28 @@
 import { useEffect, useRef } from "react";
 
+const ABOUT_STATS = [
+  {
+    value: "4 MO",
+    label: "Software Internship",
+    position: "top-left",
+  },
+  {
+    value: "2026",
+    label: "BSIT Graduate",
+    position: "top-right",
+  },
+  {
+    value: "6",
+    label: "Featured Projects",
+    position: "bottom-left",
+  },
+  {
+    value: "6",
+    label: "Tech Domains",
+    position: "bottom-right",
+  },
+];
+
 export default function InteractiveAboutPortrait({ src, alt }) {
   const wrapRef = useRef(null);
 
@@ -23,7 +46,7 @@ export default function InteractiveAboutPortrait({ src, alt }) {
           observer.disconnect();
         }
       },
-      { threshold: 0.25 }
+      { threshold: 0.22 }
     );
 
     observer.observe(wrap);
@@ -41,50 +64,50 @@ export default function InteractiveAboutPortrait({ src, alt }) {
     const px = (event.clientX - rect.left) / rect.width - 0.5;
     const py = (event.clientY - rect.top) / rect.height - 0.5;
 
-    wrap.style.setProperty("--portrait-x", `${px * 18}px`);
-    wrap.style.setProperty("--portrait-y", `${py * 12}px`);
-    wrap.style.setProperty("--portrait-ry", `${px * -15}deg`);
-    wrap.style.setProperty("--portrait-rx", `${py * 11}deg`);
-    wrap.style.setProperty("--comet-glare-x", `${(px + 0.5) * 100}%`);
-    wrap.style.setProperty("--comet-glare-y", `${(py + 0.5) * 100}%`);
+    wrap.style.setProperty("--about-shift-x", `${px * 8}px`);
+    wrap.style.setProperty("--about-shift-y", `${py * 6}px`);
   };
 
   const resetPointer = () => {
     const wrap = wrapRef.current;
     if (!wrap) return;
 
-    wrap.style.setProperty("--portrait-x", "0px");
-    wrap.style.setProperty("--portrait-y", "0px");
-    wrap.style.setProperty("--portrait-ry", "0deg");
-    wrap.style.setProperty("--portrait-rx", "0deg");
-    wrap.style.setProperty("--comet-glare-x", "50%");
-    wrap.style.setProperty("--comet-glare-y", "50%");
+    wrap.style.setProperty("--about-shift-x", "0px");
+    wrap.style.setProperty("--about-shift-y", "0px");
   };
 
   return (
     <div
       ref={wrapRef}
-      className="about-portrait-wrap about-portrait-interactive"
+      className="about-portrait-wrap about-portrait-interactive about-showcase"
       onPointerMove={handlePointerMove}
       onPointerLeave={resetPointer}
     >
-      <div className="about-portrait-glow" aria-hidden="true" />
+      <div className="about-showcase-stage" aria-hidden="true">
+        <div className="about-showcase-orbit" />
+        <div className="about-showcase-glow" />
+      </div>
 
-      <div className="about-comet-card">
-        <div className="about-comet-glare" aria-hidden="true" />
+      <div className="about-showcase-photo-wrap">
+        <img
+          src={src}
+          alt={alt}
+          className="about-showcase-photo"
+          draggable="false"
+        />
+        <div className="about-showcase-photo-fade" aria-hidden="true" />
+      </div>
 
-        <div className="about-comet-photo">
-          <img src={src} alt={alt} className="about-portrait" />
-        </div>
-
-        <div className="about-comet-meta">
-          <div>
-            <p className="about-comet-title">Software Developer</p>
-            <p className="about-comet-subtitle">Anna Patricia Vida</p>
-          </div>
-
-          <span className="about-comet-index">01</span>
-        </div>
+      <div className="about-showcase-stats" aria-label="Anna Patricia Vida highlights">
+        {ABOUT_STATS.map((stat) => (
+          <article
+            key={stat.position}
+            className={`about-showcase-stat about-showcase-stat--${stat.position}`}
+          >
+            <strong>{stat.value}</strong>
+            <span>{stat.label}</span>
+          </article>
+        ))}
       </div>
     </div>
   );
