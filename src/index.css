@@ -15863,3 +15863,28 @@ main > .certifications-section {
   color: #0b0b0b !important;
 }
 
+/* =========================================================
+   WORK INTRO — RESTORE ORIGINAL MONOCHROME COLORS
+   Keep terminal colors only inside the project browser.
+========================================================= */
+
+.work-browser-kicker {
+  color: #777 !important;
+}
+
+.work-browser-intro-lines span:first-child {
+  color: #f2f2f2 !important;
+}
+
+.work-browser-intro-lines span:nth-child(2) {
+  color: #d4d4d4 !important;
+}
+
+.work-browser-intro-lines span:nth-child(3) {
+  color: #777 !important;
+}
+
+.work-browser-scroll-note {
+  color: #666 !important;
+}
+
