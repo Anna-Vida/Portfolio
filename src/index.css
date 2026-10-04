@@ -15634,3 +15634,98 @@ main > .certifications-section {
       ) !important;
   }
 }
+
+/* =========================================================
+   WORK — AUTO-TYPING CONTENT INSIDE EXISTING BROWSER LAYOUT
+========================================================= */
+
+.work-browser-type-inline,
+.work-browser-type-block {
+  position: relative;
+}
+
+.work-browser-type-inline {
+  display: inline-block;
+  min-width: 1ch;
+}
+
+.work-browser-type-block {
+  display: block;
+}
+
+.work-browser-type-ghost {
+  visibility: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.work-browser-type-live {
+  position: absolute;
+  inset: 0;
+  display: block;
+  color: inherit;
+}
+
+.work-browser-type-inline .work-browser-type-live {
+  white-space: nowrap;
+}
+
+.work-browser-type-paragraph .work-browser-type-live,
+.work-browser-type-paragraph .work-browser-type-ghost {
+  white-space: normal;
+}
+
+.work-browser-typing-caret {
+  display: inline-block;
+  width: 1px;
+  height: 0.95em;
+  margin-left: 2px;
+  vertical-align: -0.08em;
+  background: currentColor;
+  opacity: 0.9;
+  animation: workBrowserCaretBlink 0.68s steps(1, end) infinite;
+}
+
+.work-browser-tech > span {
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease,
+    border-color 150ms ease,
+    background 150ms ease;
+}
+
+.work-browser-tech > span.is-pending {
+  opacity: 0.14;
+  transform: translateY(3px);
+}
+
+.work-browser-tech > span.is-typed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes workBrowserCaretBlink {
+  0%,
+  48% {
+    opacity: 1;
+  }
+
+  49%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-browser-typing-caret {
+    display: none !important;
+    animation: none !important;
+  }
+
+  .work-browser-tech > span {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
