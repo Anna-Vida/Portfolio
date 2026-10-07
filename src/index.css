@@ -16827,3 +16827,822 @@ html[data-theme="accent"] .skill-folder-surface {
   }
 }
 
+/* =========================================================
+   SITE-WIDE RESPONSIVE PASS — TABLET + MOBILE
+   Final overrides only. Desktop design remains unchanged.
+========================================================= */
+
+/* Universal overflow / media safety. */
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+}
+
+html,
+body {
+  overflow-x: clip !important;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+img,
+video,
+svg,
+canvas {
+  max-width: 100%;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  max-width: 100%;
+}
+
+main > section {
+  min-width: 0;
+}
+
+/* Touch devices do not need the desktop custom cursor. */
+@media (hover: none), (pointer: coarse) {
+  .custom-cursor {
+    display: none !important;
+  }
+
+  body.custom-cursor-enabled,
+  body.custom-cursor-enabled a,
+  body.custom-cursor-enabled button {
+    cursor: auto !important;
+  }
+}
+
+/* ---------------- TABLET ---------------- */
+@media (max-width: 900px) {
+  :root {
+    --site-gutter: 20px;
+    --site-section-y: 52px;
+    --section-gutter: 20px;
+    --section-space-y: 52px;
+  }
+
+  .nav-container,
+  .hero-inner,
+  .about-shell,
+  .experience-container,
+  .work-container,
+  .work-container-v2,
+  .skills-container,
+  .certifications-container,
+  .contact-container,
+  .footer-container {
+    width: calc(100% - 40px) !important;
+    max-width: none !important;
+  }
+
+  .nav-container {
+    height: 68px;
+  }
+
+  .navbar {
+    min-height: 68px;
+  }
+
+  .hero {
+    min-height: auto !important;
+    padding-top: 96px !important;
+  }
+
+  .hero-inner {
+    min-height: auto !important;
+    padding-bottom: 30px !important;
+  }
+
+  .eyebrow {
+    margin-bottom: 38px;
+  }
+
+  #home .hero-title.hero-shutter-title {
+    font-size: clamp(3.9rem, 13.5vw, 7rem) !important;
+    line-height: 0.84 !important;
+  }
+
+  .hero-bottom {
+    gap: 28px;
+    margin-top: 58px;
+  }
+
+  .hero-copy {
+    max-width: 680px;
+  }
+
+  .hero-actions {
+    width: 100%;
+  }
+
+  .hero-actions .btn {
+    min-height: 46px;
+  }
+
+  .hero-meta {
+    margin-top: 54px;
+  }
+
+  /* About stacks cleanly: portrait first, content second. */
+  .about-premium-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 26px !important;
+  }
+
+  .about-section-premium .about-visual-column {
+    width: 100%;
+    min-height: 530px !important;
+  }
+
+  .about-showcase {
+    width: min(100%, 500px) !important;
+    margin-inline: auto;
+  }
+
+  .about-copy-column {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .about-premium-heading {
+    max-width: 100% !important;
+    font-size: clamp(2.55rem, 7.5vw, 4.2rem) !important;
+  }
+
+  .about-info-grid {
+    width: 100%;
+  }
+
+  .about-highlight-panel {
+    width: 100%;
+  }
+
+  /* Experience becomes a single-column card stack. */
+  #experience .experience-bento {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  #experience .experience-card-featured,
+  #experience .experience-card-education {
+    width: 100%;
+    min-width: 0;
+    min-height: 0 !important;
+  }
+
+  #experience .experience-card-main {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 18px !important;
+  }
+
+  /* Work browser stays the same concept, but scales to the viewport. */
+  .work-browser-window {
+    width: calc(100vw - 40px) !important;
+    max-width: none !important;
+  }
+
+  .work-browser-readme-body {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) !important;
+    gap: 18px !important;
+    padding: 22px !important;
+  }
+
+  .work-browser-access {
+    grid-column: 1 / -1 !important;
+    width: 100%;
+  }
+
+  .skills-grid.skills-flip-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  #certifications .certification-list.certification-pin-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  /* Settings remains fully inside the viewport. */
+  .settings-panel {
+    top: 76px !important;
+    right: 20px !important;
+    left: auto !important;
+    width: min(370px, calc(100vw - 40px)) !important;
+    max-height: calc(100svh - 92px);
+    overflow-y: auto;
+  }
+}
+
+/* ---------------- PHONE ---------------- */
+@media (max-width: 720px) {
+  :root {
+    --site-gutter: 16px;
+    --site-section-y: 42px;
+    --section-gutter: 16px;
+    --section-space-y: 42px;
+  }
+
+  .nav-container,
+  .hero-inner,
+  .about-shell,
+  .experience-container,
+  .work-container,
+  .work-container-v2,
+  .skills-container,
+  .certifications-container,
+  .contact-container,
+  .footer-container,
+  #certifications .certifications-container {
+    width: calc(100% - 32px) !important;
+    max-width: none !important;
+  }
+
+  .nav-container {
+    height: 64px !important;
+  }
+
+  .navbar {
+    min-height: 64px;
+  }
+
+  .brand {
+    font-size: 1.05rem;
+  }
+
+  .settings-trigger {
+    width: 40px !important;
+    height: 40px !important;
+    padding: 0 !important;
+  }
+
+  .settings-panel {
+    top: 72px !important;
+    right: 12px !important;
+    left: 12px !important;
+    width: auto !important;
+    max-width: none !important;
+    max-height: calc(100svh - 84px);
+    border-radius: 18px;
+  }
+
+  .hero {
+    padding-top: 88px !important;
+  }
+
+  .hero-inner {
+    padding-bottom: 24px !important;
+  }
+
+  .eyebrow {
+    max-width: 92%;
+    margin-bottom: 30px !important;
+    font-size: 0.58rem;
+    line-height: 1.5;
+  }
+
+  #home .hero-title.hero-shutter-title {
+    width: 100%;
+    font-size: clamp(3.15rem, 15.5vw, 5.3rem) !important;
+    line-height: 0.86 !important;
+    letter-spacing: -0.065em !important;
+  }
+
+  #home .hero-title.hero-shutter-title > .hero-shutter-line {
+    max-width: 100%;
+  }
+
+  #home .hero-title.hero-shutter-title > .hero-shutter-line-secondary {
+    margin-left: 0 !important;
+    margin-top: 10px !important;
+  }
+
+  .hero-bottom {
+    width: 100%;
+    margin-top: 44px !important;
+    gap: 24px !important;
+  }
+
+  .hero-copy {
+    max-width: none;
+    font-size: clamp(1.12rem, 5.4vw, 1.5rem);
+  }
+
+  .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    min-height: 46px;
+    display: grid;
+    place-items: center;
+    padding: 13px 16px;
+  }
+
+  .hero-meta {
+    margin-top: 44px !important;
+  }
+
+  .socials {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+  }
+
+  /* About */
+  .about-section-premium .about-visual-column {
+    min-height: 520px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .about-showcase {
+    width: 100% !important;
+    max-width: 410px;
+    min-height: 520px !important;
+  }
+
+  .about-showcase-stage,
+  .about-showcase-photo-wrap {
+    width: min(84vw, 350px) !important;
+  }
+
+  .about-showcase-stats {
+    width: 100%;
+  }
+
+  .about-premium-heading {
+    font-size: clamp(2.15rem, 10vw, 3.15rem) !important;
+    line-height: 0.99 !important;
+    overflow-wrap: break-word;
+  }
+
+  .about-info-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    margin-top: 30px !important;
+  }
+
+  .about-info-card,
+  .about-info-card + .about-info-card {
+    min-width: 0;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .about-highlight-panel.is-open {
+    max-height: none !important;
+  }
+
+  /* Experience */
+  .experience-heading h2,
+  .skills-heading h2,
+  .certifications-heading h2 {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    font-size: clamp(2rem, 9vw, 3rem) !important;
+    line-height: 1.02 !important;
+  }
+
+  #experience .experience-card-featured,
+  #experience .experience-card-education {
+    padding: 20px !important;
+    border-radius: 18px !important;
+  }
+
+  #experience .experience-card-top {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  #experience .experience-card .experience-role h3,
+  #experience .experience-card-education .experience-role h3 {
+    font-size: clamp(1.65rem, 8vw, 2.5rem) !important;
+    line-height: 1.02 !important;
+    overflow-wrap: break-word !important;
+  }
+
+  #experience .experience-description p {
+    font-size: 0.84rem !important;
+    line-height: 1.6 !important;
+  }
+
+  #experience .experience-highlights {
+    grid-template-columns: 1fr !important;
+  }
+
+  #experience .experience-highlight,
+  #experience .experience-highlight + .experience-highlight {
+    padding: 15px 0 !important;
+    border-left: 0 !important;
+  }
+
+  #experience .experience-highlight + .experience-highlight {
+    border-top: 1px solid rgba(255,255,255,0.07) !important;
+  }
+
+  .experience-tags {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  /* Work: compact browser chrome, readable single-column README. */
+  .work-browser-section {
+    min-height: calc(var(--work-stages) * 88svh) !important;
+  }
+
+  .work-browser-sticky {
+    top: 64px !important;
+    height: calc(100svh - 64px) !important;
+    align-items: flex-start !important;
+    padding-top: 12px;
+  }
+
+  .work-browser-window {
+    width: calc(100vw - 24px) !important;
+    height: min(80svh, 650px) !important;
+    border-radius: 14px !important;
+  }
+
+  .work-browser-tabs {
+    min-height: 42px !important;
+    gap: 3px !important;
+    padding: 5px 6px 0 !important;
+  }
+
+  .work-browser-tab {
+    min-width: 108px !important;
+    height: 34px !important;
+    padding-inline: 9px !important;
+    font-size: 0.5rem !important;
+  }
+
+  .work-browser-address {
+    min-height: 40px !important;
+    gap: 8px !important;
+    padding: 6px 9px !important;
+  }
+
+  .work-browser-url {
+    min-width: 0;
+    padding: 6px 10px !important;
+    font-size: 0.59rem !important;
+    overflow: hidden;
+  }
+
+  .work-browser-url > * {
+    min-width: 0;
+  }
+
+  .work-browser-repo {
+    min-width: 0;
+  }
+
+  .work-browser-repo-head {
+    flex-wrap: wrap;
+    gap: 9px !important;
+    padding: 10px 12px !important;
+  }
+
+  .work-browser-repo-name {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .work-browser-repo-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .work-browser-readme {
+    margin: 0 9px 12px !important;
+    min-width: 0;
+  }
+
+  .work-browser-readme-head {
+    min-height: 38px !important;
+    flex-wrap: wrap;
+    padding: 7px 10px !important;
+  }
+
+  .work-browser-statuses {
+    max-width: 100%;
+  }
+
+  .work-browser-readme-body {
+    grid-template-columns: minmax(0, 1fr) !important;
+    align-items: start !important;
+    gap: 14px !important;
+    padding: 14px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  .work-browser-media {
+    min-height: 128px !important;
+    aspect-ratio: 16 / 6 !important;
+  }
+
+  .work-browser-media strong {
+    font-size: clamp(1.65rem, 10vw, 2.8rem) !important;
+  }
+
+  .work-browser-narrative {
+    min-width: 0;
+  }
+
+  .work-browser-narrative h3 {
+    font-size: clamp(1.35rem, 7vw, 2rem) !important;
+  }
+
+  .work-browser-narrative p {
+    font-size: 0.68rem !important;
+    line-height: 1.55 !important;
+    overflow-wrap: break-word;
+  }
+
+  .work-browser-tech {
+    gap: 5px !important;
+  }
+
+  .work-browser-access {
+    grid-column: auto !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 7px !important;
+    width: 100%;
+  }
+
+  .work-browser-access .work-browser-label,
+  .work-browser-access .work-browser-primary {
+    grid-column: auto !important;
+  }
+
+  .work-browser-access a,
+  .work-browser-access button {
+    width: 100%;
+    min-height: 42px;
+  }
+
+  /* Skills */
+  .skills-grid.skills-flip-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 14px !important;
+  }
+
+  .skills-grid.skills-flip-grid .skill-flip-card,
+  .skills-grid.skills-flip-grid .skill-card-inner,
+  .skill-folder-shell {
+    width: 100% !important;
+  }
+
+  .skill-folder-title {
+    max-width: 72% !important;
+  }
+
+  .tech-stack-pager-head {
+    gap: 12px;
+  }
+
+  /* Certifications */
+  #certifications .certification-list.certification-pin-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  #certifications .certification-pin-grid .cert-pin {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  /* Project modal fits even short mobile screens. */
+  .project-modal-backdrop {
+    padding: 8px !important;
+  }
+
+  .project-modal-card {
+    width: calc(100vw - 16px) !important;
+    max-width: none !important;
+    max-height: calc(100svh - 16px) !important;
+    border-radius: 16px !important;
+  }
+
+  .project-modal-preview,
+  .project-modal-text-preview {
+    min-height: 122px !important;
+    height: 122px !important;
+  }
+
+  .project-modal-body {
+    padding: 17px 16px 20px !important;
+  }
+
+  .project-modal-actions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .project-modal-actions a,
+  .project-modal-actions button {
+    width: 100%;
+  }
+
+  /* Robot remains available without covering a large part of the phone. */
+  .robot-assistant,
+  .robot-section-home,
+  .robot-section-about,
+  .robot-section-experience,
+  .robot-section-work,
+  .robot-section-skills,
+  .robot-section-certifications,
+  .robot-section-contact {
+    width: 118px !important;
+    height: 134px !important;
+    transform:
+      translate3d(
+        calc(100vw - 130px),
+        calc(100svh - 148px),
+        0
+      ) !important;
+  }
+
+  .robot-stage {
+    width: 106px !important;
+    height: 116px !important;
+  }
+
+  .robot-actions {
+    right: -1px !important;
+    bottom: 0 !important;
+    gap: 5px !important;
+  }
+
+  .robot-action-button {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .robot-chat-card {
+    position: fixed !important;
+    right: 12px !important;
+    bottom: 142px !important;
+    width: min(320px, calc(100vw - 24px)) !important;
+    max-height: min(68svh, 520px);
+    overflow-y: auto;
+  }
+}
+
+/* ---------------- SMALL PHONE ---------------- */
+@media (max-width: 520px) {
+  :root {
+    --site-gutter: 14px;
+    --site-section-y: 38px;
+    --section-gutter: 14px;
+    --section-space-y: 38px;
+  }
+
+  .nav-container,
+  .hero-inner,
+  .about-shell,
+  .experience-container,
+  .work-container,
+  .work-container-v2,
+  .skills-container,
+  .certifications-container,
+  .contact-container,
+  .footer-container,
+  #certifications .certifications-container {
+    width: calc(100% - 28px) !important;
+  }
+
+  #home .hero-title.hero-shutter-title {
+    font-size: clamp(2.8rem, 14.7vw, 4.5rem) !important;
+  }
+
+  .hero-copy {
+    font-size: 1.08rem;
+  }
+
+  .about-section-premium .about-visual-column {
+    min-height: 500px !important;
+  }
+
+  .about-showcase {
+    max-width: 360px;
+    min-height: 500px !important;
+  }
+
+  .about-showcase-stage,
+  .about-showcase-photo-wrap {
+    width: min(82vw, 320px) !important;
+  }
+
+  .about-showcase-stat {
+    min-height: 72px !important;
+    padding: 10px 10px !important;
+  }
+
+  .about-showcase-stat strong {
+    font-size: 1.18rem !important;
+  }
+
+  .about-showcase-stat span {
+    font-size: 0.58rem !important;
+  }
+
+  .about-showcase-stat em {
+    font-size: 0.4rem !important;
+  }
+
+  .work-browser-window {
+    width: calc(100vw - 16px) !important;
+    height: min(79svh, 610px) !important;
+  }
+
+  .work-browser-tab {
+    min-width: 96px !important;
+    font-size: 0.47rem !important;
+  }
+
+  .work-browser-media {
+    min-height: 112px !important;
+  }
+
+  .skill-folder-surface {
+    padding-inline: 17px !important;
+  }
+
+  .skill-folder-footer {
+    left: 17px !important;
+    right: 17px !important;
+  }
+
+  .skill-folder-action {
+    right: 16px !important;
+  }
+
+  .tech-stack-pager-head {
+    align-items: flex-start;
+  }
+
+  .tech-stack-page {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  #certifications .certification-pin-grid .cert-pin-card {
+    padding-inline: 16px !important;
+  }
+
+  .settings-panel {
+    right: 8px !important;
+    left: 8px !important;
+  }
+}
+
+/* Extra-narrow devices still keep all content on-screen. */
+@media (max-width: 360px) {
+  :root {
+    --site-gutter: 12px;
+    --section-gutter: 12px;
+  }
+
+  .nav-container,
+  .hero-inner,
+  .about-shell,
+  .experience-container,
+  .work-container,
+  .work-container-v2,
+  .skills-container,
+  .certifications-container,
+  .contact-container,
+  .footer-container,
+  #certifications .certifications-container {
+    width: calc(100% - 24px) !important;
+  }
+
+  #home .hero-title.hero-shutter-title {
+    font-size: 2.65rem !important;
+  }
+
+  .about-premium-heading {
+    font-size: 2rem !important;
+  }
+
+  .tech-stack-page {
+    grid-template-columns: 1fr !important;
+  }
+
+  .work-browser-window {
+    width: calc(100vw - 12px) !important;
+  }
+}
+
