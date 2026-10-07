@@ -17646,3 +17646,179 @@ main > section {
   }
 }
 
+/* =========================================================
+   MOBILE PERFORMANCE — SMOOTH TRANSITIONS
+   Touch devices keep the same design but use compositor-friendly motion.
+========================================================= */
+
+@media (max-width: 720px), (pointer: coarse) {
+  /* Avoid expensive live blur sampling while the viewport is moving. */
+  .settings-panel,
+  .project-modal-backdrop,
+  .robot-chat-overlay,
+  .robot-chat-card,
+  .robot-action-button,
+  .tech-marquee,
+  .tech-library-marquee {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .settings-panel,
+  .robot-chat-card {
+    background-color: rgba(12, 12, 12, 0.97) !important;
+  }
+
+  .project-modal-backdrop,
+  .robot-chat-overlay {
+    background-color: rgba(0, 0, 0, 0.82) !important;
+  }
+
+  /* The desktop shutter effect duplicates every letter into three clipped
+     layers. Mobile keeps the entrance, but uses one transform/opacity layer. */
+  .hero-shutter-slice {
+    display: none !important;
+    animation: none !important;
+  }
+
+  .hero-shutter-base {
+    opacity: 0;
+    filter: none !important;
+    transform: translate3d(0, 7px, 0);
+    animation:
+      mobileHeroReveal 360ms cubic-bezier(.2,.72,.2,1)
+      var(--shutter-delay)
+      forwards !important;
+    will-change: transform, opacity;
+  }
+
+  /* One-time reveals stay short and GPU-friendly. */
+  [data-scroll-reveal] > * {
+    filter: none !important;
+    transition:
+      opacity 260ms ease-out,
+      transform 320ms cubic-bezier(.2,.72,.2,1) !important;
+    will-change: auto !important;
+  }
+
+  /* Remove static blur layers that must be re-rasterized during scroll. */
+  .about-showcase-glow {
+    filter: none !important;
+    opacity: 0.18 !important;
+  }
+
+  .about-showcase-stage::after {
+    display: none !important;
+  }
+
+  .gradient-blob-card__blob {
+    animation: none !important;
+    filter: blur(12px) !important;
+    opacity: 0.42 !important;
+  }
+
+  /* Keep interaction feedback, but shorten it on touch. */
+  .about-showcase,
+  .about-showcase-stage,
+  .about-showcase-photo-wrap,
+  .about-showcase-stat,
+  .about-highlight-panel,
+  .experience-card,
+  .experience-card-mark,
+  .skill-folder-surface,
+  .skills-grid.skills-flip-grid .skill-card-back,
+  .work-browser-tech > span,
+  .project-modal-card,
+  .robot-chat-card {
+    transition-duration: 280ms !important;
+  }
+
+  .skill-folder-surface,
+  .skills-grid.skills-flip-grid .skill-card-back,
+  .about-showcase-photo-wrap,
+  .about-showcase-stage {
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+
+  /* The assistant should glide, not animate filters/shadows while moving. */
+  .robot-assistant,
+  .robot-section-home,
+  .robot-section-about,
+  .robot-section-experience,
+  .robot-section-work,
+  .robot-section-skills,
+  .robot-section-certifications,
+  .robot-section-contact {
+    transition:
+      transform 300ms cubic-bezier(.2,.72,.2,1) !important;
+    filter: none !important;
+    will-change: transform;
+  }
+
+  .robot-stage,
+  .robot-stage::after {
+    filter: none !important;
+    animation: none !important;
+  }
+
+  .robot-cyber-tablet {
+    filter: none !important;
+  }
+
+  .robot-tablet-scanlines,
+  .cyber-portrait-ring,
+  .cyber-portrait-crosshair {
+    animation: none !important;
+  }
+
+  /* Keep horizontal tech motion composited and slower on phones. */
+  .tech-library-track {
+    animation-duration: 54s !important;
+    will-change: transform;
+  }
+
+  /* Prevent unnecessary hover-style repaint work on touch screens. */
+  .btn:hover,
+  .experience-card:hover,
+  .project-showcase-card:hover,
+  .skill-flip-card:hover,
+  .cert-pin:hover,
+  .work-browser-primary:hover {
+    transform: none !important;
+  }
+
+  button,
+  a {
+    touch-action: manipulation;
+  }
+}
+
+@keyframes mobileHeroReveal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 7px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Low-power mobile preference: no continuous decorative movement while still
+   preserving all content, click interactions, and section transitions. */
+@media (max-width: 520px) {
+  .tech-library-track {
+    animation-duration: 68s !important;
+  }
+
+  .about-showcase-stat {
+    animation-duration: 300ms !important;
+  }
+
+  .work-browser-typing-caret {
+    animation-duration: 900ms !important;
+  }
+}
+
