@@ -349,7 +349,7 @@ function RobotScene({ pointerRef }) {
   );
 }
 
-function RobotFrameTicker() {
+function RobotFrameTicker({ mobilePerformanceMode = false }) {
   const invalidate = useThree((state) => state.invalidate);
 
   useEffect(() => {
@@ -362,9 +362,12 @@ function RobotFrameTicker() {
       }
     };
 
-    // The robot is small on screen; ~30fps keeps its idle motion smooth
-    // without making Three.js compete with page scrolling at 60/120fps.
-    const frameTimer = window.setInterval(renderFrame, 34);
+    // Desktop keeps the current ~30fps idle motion. Phones use a lighter
+    // ~12fps idle loop so WebGL does not compete with touch scrolling.
+    const frameTimer = window.setInterval(
+      renderFrame,
+      mobilePerformanceMode ? 84 : 34,
+    );
 
     const handleScroll = () => {
       isScrolling = true;
@@ -377,7 +380,7 @@ function RobotFrameTicker() {
         isScrolling = false;
         scrollStopTimer = null;
         invalidate();
-      }, 140);
+      }, mobilePerformanceMode ? 190 : 140);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -391,7 +394,7 @@ function RobotFrameTicker() {
         window.clearTimeout(scrollStopTimer);
       }
     };
-  }, [invalidate]);
+  }, [invalidate, mobilePerformanceMode]);
 
   return null;
 }
@@ -775,6 +778,13 @@ export default function RobotAssistant() {
   const lastCursorTextRef = useRef("");
   const chatLogRef = useRef(null);
   const chatMessageIdRef = useRef(1);
+
+  const mobilePerformanceMode = useMemo(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 760px), (pointer: coarse)").matches,
+    [],
+  );
 
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
@@ -1183,6 +1193,12 @@ export default function RobotAssistant() {
   }, [chatOpen]);
 
   useEffect(() => {
+    if (mobilePerformanceMode) {
+      pointerRef.current.x = 0;
+      pointerRef.current.y = 0;
+      return undefined;
+    }
+
     let frameId = null;
     let latestX = 0;
     let latestY = 0;
@@ -1211,7 +1227,7 @@ export default function RobotAssistant() {
         window.cancelAnimationFrame(frameId);
       }
     };
-  }, []);
+  }, [mobilePerformanceMode]);
 
 
   useEffect(() => {
@@ -1584,16 +1600,20 @@ export default function RobotAssistant() {
         >
           <Canvas
             camera={{ position: [0, 0.18, 4.35], fov: 38 }}
-            dpr={[0.65, 0.9]}
+            dpr={mobilePerformanceMode ? [0.45, 0.6] : [0.65, 0.9]}
             frameloop="demand"
-            performance={{ min: 0.4, max: 0.9, debounce: 220 }}
+            performance={{
+              min: mobilePerformanceMode ? 0.25 : 0.4,
+              max: mobilePerformanceMode ? 0.65 : 0.9,
+              debounce: mobilePerformanceMode ? 320 : 220,
+            }}
             gl={{
               alpha: true,
               antialias: false,
               powerPreference: "high-performance",
             }}
           >
-            <RobotFrameTicker />
+            <RobotFrameTicker mobilePerformanceMode={mobilePerformanceMode} />
             <RobotScene pointerRef={pointerRef} />
           </Canvas>
         </div>
