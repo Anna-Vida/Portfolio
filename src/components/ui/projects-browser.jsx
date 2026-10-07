@@ -12,6 +12,12 @@ function repoSlug(project) {
 export default function ProjectsBrowser({ projects, onOpenProject }) {
   const featuredProjects = useMemo(() => projects.slice(0, 5), [projects]);
   const totalScrollStages = featuredProjects.length + 1;
+  const mobilePerformanceMode = useMemo(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 720px), (pointer: coarse)").matches,
+    [],
+  );
 
   const [activeTab, setActiveTab] = useState(0);
   const [openedTabs, setOpenedTabs] = useState(1);
@@ -177,13 +183,20 @@ export default function ProjectsBrowser({ projects, onOpenProject }) {
     if (reduceMotion) return undefined;
 
     const timer = window.setTimeout(() => {
+      const step = mobilePerformanceMode ? 3 : 1;
+
       setTypingProgress((current) =>
-        Math.min(current + 1, typingPlan.total),
+        Math.min(current + step, typingPlan.total),
       );
-    }, 12);
+    }, mobilePerformanceMode ? 30 : 12);
 
     return () => window.clearTimeout(timer);
-  }, [typingActive, typingProgress, typingPlan.total]);
+  }, [
+    typingActive,
+    typingProgress,
+    typingPlan.total,
+    mobilePerformanceMode,
+  ]);
 
   const repoProgress = Math.min(typingProgress, activeRepo.length);
   const titleProgress = Math.min(
