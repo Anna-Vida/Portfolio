@@ -20,12 +20,14 @@ const HeroHexBackground = () => {
     let isScrolling = false;
 
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const mobileQuery = window.matchMedia("(max-width: 760px), (pointer: coarse)");
     let reduceMotion = motionQuery.matches;
+    let mobileMode = mobileQuery.matches;
     let isVisible = true;
 
     let width = 1;
     let height = 1;
-    let dpr = Math.min(window.devicePixelRatio || 1, 1.25);
+    let dpr = mobileMode ? 1 : Math.min(window.devicePixelRatio || 1, 1.25);
 
     const pointer = {
       x: -9999,
@@ -98,7 +100,7 @@ const HeroHexBackground = () => {
 
       width = Math.max(rect.width, window.innerWidth, 1);
       height = Math.max(rect.height, window.innerHeight, 1);
-      dpr = Math.min(window.devicePixelRatio || 1, 1.25);
+      dpr = mobileMode ? 1 : Math.min(window.devicePixelRatio || 1, 1.25);
 
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
@@ -109,12 +111,14 @@ const HeroHexBackground = () => {
 
       createHexagons();
 
-      if (reduceMotion) {
+      if (reduceMotion || mobileMode) {
         renderStatic();
       }
     };
 
     const handlePointerMove = (event) => {
+      if (mobileMode) return;
+
       // The canvas fills the viewport, so client coordinates already match
       // its drawing space. Avoid getBoundingClientRect() on every pointer move.
       pointer.x = event.clientX;
@@ -129,7 +133,7 @@ const HeroHexBackground = () => {
     };
 
     const animate = (time = 0) => {
-      if (!isVisible || reduceMotion || isScrolling) {
+      if (!isVisible || reduceMotion || mobileMode || isScrolling) {
         animationFrameId = null;
         return;
       }
@@ -185,7 +189,13 @@ const HeroHexBackground = () => {
     };
 
     const startAnimation = () => {
-      if (!animationFrameId && isVisible && !reduceMotion && !isScrolling) {
+      if (
+        !animationFrameId &&
+        isVisible &&
+        !reduceMotion &&
+        !mobileMode &&
+        !isScrolling
+      ) {
         lastDrawTime = 0;
         animationFrameId = requestAnimationFrame(animate);
       }
@@ -219,10 +229,22 @@ const HeroHexBackground = () => {
     const handleMotionChange = (event) => {
       reduceMotion = event.matches;
 
-      if (reduceMotion) {
+      if (reduceMotion || mobileMode) {
         stopAnimation();
         renderStatic();
       } else {
+        startAnimation();
+      }
+    };
+
+    const handleMobileChange = (event) => {
+      mobileMode = event.matches;
+      pointer.active = false;
+
+      if (mobileMode) {
+        stopAnimation();
+        renderStatic();
+      } else if (!reduceMotion) {
         startAnimation();
       }
     };
@@ -238,7 +260,7 @@ const HeroHexBackground = () => {
           isVisible = entry.isIntersecting;
 
           if (isVisible) {
-            if (reduceMotion) {
+            if (reduceMotion || mobileMode) {
               renderStatic();
             } else {
               startAnimation();
@@ -257,7 +279,7 @@ const HeroHexBackground = () => {
       isVisible = !document.hidden;
 
       if (isVisible) {
-        if (reduceMotion) {
+        if (reduceMotion || mobileMode) {
           renderStatic();
         } else {
           startAnimation();
@@ -274,10 +296,11 @@ const HeroHexBackground = () => {
     window.addEventListener("blur", handlePointerLeave);
     document.addEventListener("visibilitychange", handleVisibilityChange);
     motionQuery.addEventListener?.("change", handleMotionChange);
+    mobileQuery.addEventListener?.("change", handleMobileChange);
 
     resizeCanvas();
 
-    if (reduceMotion) {
+    if (reduceMotion || mobileMode) {
       renderStatic();
     } else {
       startAnimation();
@@ -294,6 +317,7 @@ const HeroHexBackground = () => {
       window.removeEventListener("blur", handlePointerLeave);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       motionQuery.removeEventListener?.("change", handleMotionChange);
+      mobileQuery.removeEventListener?.("change", handleMobileChange);
 
       if (scrollStopTimer) {
         window.clearTimeout(scrollStopTimer);
