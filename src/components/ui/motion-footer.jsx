@@ -270,7 +270,9 @@ const footerStyles = `
     .cinematic-footer::after {
       width: 92vw;
       height: 42%;
-      filter: blur(42px);
+      filter: blur(22px);
+      animation: none;
+      opacity: 0.72;
     }
 
     .cinematic-footer__marquee {
@@ -278,6 +280,9 @@ const footerStyles = `
       margin-top: 24px;
       margin-left: -4%;
       padding: 12px 0;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: rgba(11, 11, 11, 0.94);
     }
 
     .cinematic-footer__marquee-track {
@@ -311,6 +316,7 @@ const footerStyles = `
       margin-bottom: 18px;
       font-size: clamp(2.25rem, 11vw, 3.8rem);
       line-height: 0.98;
+      filter: none;
     }
 
     .cinematic-footer__subtext {
@@ -348,6 +354,10 @@ const footerStyles = `
 
     .cinematic-footer__bottom p:last-child {
       text-align: center;
+    }
+
+    .cinematic-footer__heart {
+      animation: none;
     }
 
     .cinematic-footer__top {
@@ -397,6 +407,9 @@ const MagneticLink = forwardRef(function MagneticLink(
     const element = localRef.current;
     if (!element) return undefined;
 
+    const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
+    if (coarsePointer) return undefined;
+
     const move = (event) => {
       const rect = element.getBoundingClientRect();
       const x = event.clientX - rect.left - rect.width / 2;
@@ -443,7 +456,29 @@ function CinematicFooter() {
     const wrapper = wrapperRef.current;
     if (!wrapper) return undefined;
 
+    const mobilePerformanceMode = window.matchMedia(
+      "(max-width: 700px), (pointer: coarse)",
+    ).matches;
+
     const context = gsap.context(() => {
+      if (mobilePerformanceMode) {
+        gsap.set(giantTextRef.current, {
+          y: 0,
+          scale: 1,
+          opacity: 1,
+        });
+
+        gsap.set(
+          [headingRef.current, subtextRef.current, linksRef.current],
+          {
+            y: 0,
+            opacity: 1,
+          },
+        );
+
+        return;
+      }
+
       gsap.fromTo(
         giantTextRef.current,
         { y: "10vh", scale: 0.82, opacity: 0 },
@@ -452,7 +487,12 @@ function CinematicFooter() {
           scale: 1,
           opacity: 1,
           ease: "power1.out",
-          scrollTrigger: { trigger: wrapper, start: "top 80%", end: "bottom bottom", scrub: 1 },
+          scrollTrigger: {
+            trigger: wrapper,
+            start: "top 80%",
+            end: "bottom bottom",
+            scrub: 1,
+          },
         }
       );
 
@@ -464,7 +504,12 @@ function CinematicFooter() {
           opacity: 1,
           stagger: 0.15,
           ease: "power3.out",
-          scrollTrigger: { trigger: wrapper, start: "top 45%", end: "bottom bottom", scrub: 1 },
+          scrollTrigger: {
+            trigger: wrapper,
+            start: "top 45%",
+            end: "bottom bottom",
+            scrub: 1,
+          },
         }
       );
     }, wrapper);
